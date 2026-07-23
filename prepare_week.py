@@ -27,6 +27,7 @@ def week_label(monday: date) -> str:
 
 def save_week(day_plans: dict, monday: date = None):
     """day_plans: {"Monday": {"image_path": "<repo 내 images/... 절대/상대경로>",
+                               "image_url": "<힉스필드 rawUrl, 발행 시 이걸 그대로 사용>",
                                "product": "매트|밴드", "hook": "Drop In", "caption": "...", "hashtags": "..."}, ...}
     """
     if monday is None:
@@ -69,6 +70,7 @@ def save_week(day_plans: dict, monday: date = None):
             "product": info.get("product", ""),
             "hook": info.get("hook", ""),
             "image": f"images/{week_dir_name}/{image_filename}",
+            "image_url": info.get("image_url", ""),
             "caption": info.get("caption", ""),
             "hashtags": info.get("hashtags", ""),
             "posted": False,

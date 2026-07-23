@@ -42,7 +42,8 @@ def main():
         print(f"{day_key} 게시물은 이미 게시됐습니다.")
         return
 
-    image_url = f"{PAGES_BASE}/{post['image']}"
+    # 힉스필드 CDN rawUrl을 우선 사용 (이미 공개 URL). 없으면 GitHub Pages 폴백.
+    image_url = post.get("image_url") or f"{PAGES_BASE}/{post['image']}"
     caption = post["caption"]
     if post.get("hashtags"):
         caption = f"{caption}\n\n{post['hashtags']}"
