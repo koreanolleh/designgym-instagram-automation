@@ -3,13 +3,15 @@ import os
 import time
 import requests
 
-GRAPH_VERSION = "v19.0"
+GRAPH_VERSION = "v21.0"
+# Instagram 로그인 기반 토큰(IGAA...)은 graph.facebook.com이 아니라 graph.instagram.com을 사용한다.
+GRAPH_HOST = "https://graph.instagram.com"
 
 
 def post_image(image_url: str, caption: str) -> str:
     token = os.environ["IG_ACCESS_TOKEN"]
     ig_user_id = os.environ["IG_BUSINESS_ACCOUNT_ID"]
-    base = f"https://graph.facebook.com/{GRAPH_VERSION}/{ig_user_id}"
+    base = f"{GRAPH_HOST}/{GRAPH_VERSION}/{ig_user_id}"
 
     create_resp = requests.post(f"{base}/media", data={
         "image_url": image_url,
