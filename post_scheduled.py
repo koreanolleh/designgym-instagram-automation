@@ -1,10 +1,10 @@
-"""매일 저녁 7시반에 실행 — pending_posts.json에서 오늘 이미지를 꺼내 인스타에 게시한다."""
+"""매일 저녁 7시반에 실행 — pending_posts.json에서 오늘 이미지(1~3장)를 꺼내 인스타에 게시한다."""
 import os
 import json
 from datetime import date
 from dotenv import load_dotenv
 
-from ig_post import post_image
+from ig_post import post_images
 
 load_dotenv()
 
@@ -42,14 +42,20 @@ def main():
         print(f"{day_key} 게시물은 이미 게시됐습니다.")
         return
 
-    # 힉스필드 CDN rawUrl을 우선 사용 (이미 공개 URL). 없으면 GitHub Pages 폴백.
-    image_url = post.get("image_url") or f"{PAGES_BASE}/{post['image']}"
+    images = post.get("images", [])
+    if not images:
+        print(f"{day_key} 게시할 이미지가 없습니다.")
+        return
+
+    # 힉스필드 CDN rawUrl 우선 사용, 없으면 GitHub Pages 폴백
+    image_urls = [img.get("image_url") or f"{PAGES_BASE}/{img['path']}" for img in images]
+
     caption = post["caption"]
     if post.get("hashtags"):
         caption = f"{caption}\n\n{post['hashtags']}"
 
-    print(f"게시 중 [{day_key}]: {image_url}")
-    post_id = post_image(image_url, caption)
+    print(f"게시 중 [{day_key}] {len(image_urls)}장: {image_urls}")
+    post_id = post_images(image_urls, caption)
 
     plan["posts"][day_key]["posted"] = True
     plan["posts"][day_key]["post_id"] = post_id
