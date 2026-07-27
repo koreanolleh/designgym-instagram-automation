@@ -1,3 +1,91 @@
 {
   "week_of": "2026-07-27",
-  "posts
+  "posts": {
+    "Monday": {
+      "date": "2026-07-27",
+      "product": "요가매트 (Active steps)",
+      "hook": "사람 포함 (모델A) - 앉아서 스트레칭",
+      "images": [
+        {
+          "path": "images/2026-07-27/mon_1_forwardfold.png",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260727_011202_8a9de0ae-dcda-41f4-aa86-abe4cd01b38e.png"
+        },
+        {
+          "path": "images/2026-07-27/mon_2_crosslegged.png",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260727_020250_30fedd14-27ea-4b19-8dd2-468150b2510d.png"
+        }
+      ],
+      "caption": "월요일 아침, 눈뜨자마자 매트부터 폈어요. 커피 내리기 전에 딱 10분, 몸을 깨우는 시간.\n창가에 앉아 스트레칭 하나만 해도 하루 시작하는 마음이 달라지더라고요.\n이번 주도 나를 위한 루틴으로 시작해봐요 🌤️",
+      "hashtags": "#디자인짐 #요가매트 #모닝루틴 #홈트 #셀프케어 #월요병탈출 #요가스타그램",
+      "posted": false
+    },
+    "Tuesday": {
+      "date": "2026-07-28",
+      "product": "요가매트 (Before sunrise)",
+      "hook": "제품만 - 근경 크롭으로 로고 프레임 밖 처리",
+      "images": [
+        {
+          "path": "images/2026-07-27/tue_1_productonly.png",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260727_021438_06669b15-9d7b-49b6-b026-ab5547d7fc4f.png"
+        }
+      ],
+      "caption": "스웨이드 매트 보면 다들 미끄러울 것 같다고 하는데, 사실 반대예요.\n땀나고 물기 있을수록 오히려 손발이 착 붙어서 그립감이 더 좋아져요.\n다운독 할 때 손 미끄러지는 스트레스, 이제 안녕 👋",
+      "hashtags": "#디자인짐 #요가매트 #스웨이드매트 #홈트꿀팁 #요가매트추천 #운동용품",
+      "posted": false
+    },
+    "Wednesday": {
+      "date": "2026-07-29",
+      "product": "요가매트 (Warm sunlight)",
+      "hook": "사람 포함 (모델A) - 침실창가 3연속 포즈",
+      "images": [
+        {
+          "path": "images/2026-07-27/wed_1_sidestretch.png",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260727_020254_42816fbf-8d73-4e96-80fd-308fb6c38064.png"
+        },
+        {
+          "path": "images/2026-07-27/wed_2_forwardfold.png",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260727_020257_f7fc7d2b-4bad-4570-8b56-a064bc98c67c.png"
+        },
+        {
+          "path": "images/2026-07-27/wed_3_rollmat.png",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260727_020303_d7b17ce5-084b-4d53-937f-47db62f5854d.png"
+        }
+      ],
+      "caption": "창가에 매트 하나 펴두고 몸을 이리저리 늘려보는 시간.\n대단한 동작 아니어도 괜찮아요. 그냥 오늘 하루도 내 몸을 챙겼다는 것만으로 충분하니까.\n정리하는 순간까지도 기분 좋은 루틴이에요 🤍",
+      "hashtags": "#디자인짐 #요가매트 #스트레칭 #홈트일상 #데일리루틴 #자기관리",
+      "posted": false
+    },
+    "Thursday": {
+      "date": "2026-07-30",
+      "product": "힙업밴드",
+      "hook": "사람 포함 (모델B) - 착용컷 2종",
+      "images": [
+        {
+          "path": "images/2026-07-27/thu_1_bandwalk.png",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260727_011254_aa6f2f67-960e-4c84-a13f-d506c4288860.png"
+        },
+        {
+          "path": "images/2026-07-27/thu_2_clamshell.png",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260727_020306_358ec944-f3b2-4e0f-a257-c1d162a15d6e.png"
+        }
+      ],
+      "caption": "힙업밴드 끼고 운동하다 보면 자꾸 밑으로 흘러내리는 거, 다들 한 번쯤 겪어보셨죠?\n그거 밴드 탓 아니에요. 대부분 밴드가 안쪽이 매끈해서 땀나면 미끄러지는 거예요.\n디자인짐은 안쪽 실리콘 마감으로 고정력을 확실히 챙겼어요. 흘러내릴 걱정 없이 운동에만 집중하세요 💪",
+      "hashtags": "#디자인짐 #힙업밴드 #홈트 #하체운동 #클램쉘 #밴드운동 #힙운동",
+      "posted": false
+    },
+    "Friday": {
+      "date": "2026-07-31",
+      "product": "요가매트 (Active steps)",
+      "hook": "사람 포함 (모델A) - 캣카우",
+      "images": [
+        {
+          "path": "images/2026-07-27/fri_1_catcow.png",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260727_015226_86677b52-8e3d-464a-869c-092d6439f3df.png"
+        }
+      ],
+      "caption": "한 주 마무리, 오늘도 잘 버텼어요. 매트 위에서 천천히 몸을 풀면서 다음 주를 준비해봐요.\n화려한 운동기구보다 매일 손이 가는 물건 하나가 진짜 루틴을 만든다고 생각해요.\n나를 디자인하다, Design:Gym 🖤",
+      "hashtags": "#디자인짐 #DesignGym #요가매트 #금요일루틴 #홈트 #나를디자인하다",
+      "posted": false
+    }
+  }
+}
