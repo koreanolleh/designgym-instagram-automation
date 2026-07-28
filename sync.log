@@ -1,0 +1,259 @@
+--- 2026-07-27 22:00:17 sync 시작
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
+✏️  Tuesday caption 수정 반영
+pending_posts.json 업데이트 완료
+push 완료
+--- 2026-07-27 22:07:53 sync 시작
+Traceback (most recent call last):
+  File "/Users/jeong-uihyeob/designgym-instagram-automation/sync_from_obsidian.py", line 96, in <module>
+    main()
+  File "/Users/jeong-uihyeob/designgym-instagram-automation/sync_from_obsidian.py", line 61, in main
+    with open(note_path, "r", encoding="utf-8") as f:
+PermissionError: [Errno 1] Operation not permitted: '/Users/jeong-uihyeob/Library/Mobile Documents/iCloud~md~obsidian/Documents/메이크앤&옵시디언/03_프로젝트/디자인짐_콘텐츠_자동화/인스타_자동화/주간초안/2026-07 7월 4주차/2026-07 7월 4주차.md'
+
+--- 2026-07-27 22:10:26 sync 시작
+--- 2026-07-27 22:10:26 sync 시작
+fatal: Cannot rebase onto multiple branches.
+✏️  Tuesday caption 수정 반영
+pending_posts.json 업데이트 완료
+Traceback (most recent call last):
+  File "/Users/jeong-uihyeob/designgym-instagram-automation/sync_from_obsidian.py", line 96, in <module>
+    main()
+  File "/Users/jeong-uihyeob/designgym-instagram-automation/sync_from_obsidian.py", line 61, in main
+    with open(note_path, "r", encoding="utf-8") as f:
+PermissionError: [Errno 1] Operation not permitted: '/Users/jeong-uihyeob/Library/Mobile Documents/iCloud~md~obsidian/Documents/메이크앤&옵시디언/03_프로젝트/디자인짐_콘텐츠_자동화/인스타_자동화/주간초안/2026-07 7월 4주차/2026-07 7월 4주차.md'
+
+push 완료
+--- 2026-07-27 22:11:26 sync 시작
+Traceback (most recent call last):
+  File "/Users/jeong-uihyeob/designgym-instagram-automation/sync_from_obsidian.py", line 96, in <module>
+    main()
+  File "/Users/jeong-uihyeob/designgym-instagram-automation/sync_from_obsidian.py", line 61, in main
+    with open(note_path, "r", encoding="utf-8") as f:
+PermissionError: [Errno 1] Operation not permitted: '/Users/jeong-uihyeob/Library/Mobile Documents/iCloud~md~obsidian/Documents/메이크앤&옵시디언/03_프로젝트/디자인짐_콘텐츠_자동화/인스타_자동화/주간초안/2026-07 7월 4주차/2026-07 7월 4주차.md'
+
+--- 2026-07-27 22:14:29 sync 시작
+Traceback (most recent call last):
+  File "/Users/jeong-uihyeob/designgym-instagram-automation/sync_from_obsidian.py", line 96, in <module>
+    main()
+  File "/Users/jeong-uihyeob/designgym-instagram-automation/sync_from_obsidian.py", line 61, in main
+    with open(note_path, "r", encoding="utf-8") as f:
+PermissionError: [Errno 1] Operation not permitted: '/Users/jeong-uihyeob/Library/Mobile Documents/iCloud~md~obsidian/Documents/메이크앤&옵시디언/03_프로젝트/디자인짐_콘텐츠_자동화/인스타_자동화/주간초안/2026-07 7월 4주차/2026-07 7월 4주차.md'
+
+--- 2026-07-27 22:16:12 sync 시작
+Traceback (most recent call last):
+  File "/Users/jeong-uihyeob/designgym-instagram-automation/sync_from_obsidian.py", line 96, in <module>
+    main()
+  File "/Users/jeong-uihyeob/designgym-instagram-automation/sync_from_obsidian.py", line 62, in main
+    content = f.read()
+OSError: [Errno 11] Resource deadlock avoided
+
+--- 2026-07-27 22:19:27 sync 시작
+✏️  Tuesday caption 수정 반영
+pending_posts.json 업데이트 완료
+push 완료
+--- 2026-07-27 22:20:28 sync 시작
+수정된 내용 없음
+--- 2026-07-27 22:21:28 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-27 22:23:16 sync 시작
+✏️  Tuesday caption 수정 반영
+pending_posts.json 업데이트 완료
+push 완료
+--- 2026-07-27 22:24:16 sync 시작
+수정된 내용 없음
+--- 2026-07-27 22:27:17 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 08:30:58 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 08:45:15 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 09:15:33 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 09:23:00 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 09:53:17 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 10:23:33 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 10:53:50 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 11:24:06 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 11:54:22 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 12:24:37 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 12:54:55 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 13:25:12 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 13:55:26 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 14:25:45 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 14:56:01 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 15:26:17 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 15:56:34 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 16:26:50 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 16:57:06 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 17:27:22 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 17:57:38 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 18:27:55 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 18:58:11 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 19:28:27 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 19:58:41 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-07-28 20:29:00 sync 시작
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
