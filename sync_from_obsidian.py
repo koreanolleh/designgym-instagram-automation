@@ -1,6 +1,7 @@
 """옵시디언 주간 노트에서 사용자가 수정한 캡션/해시태그를 읽어 pending_posts.json에 반영한다."""
 import os
 import re
+import time
 import json
 from datetime import date, timedelta, datetime
 
@@ -58,8 +59,18 @@ def main():
         print("이번 주 옵시디언 노트 없음 — 스킵")
         return False
 
-    with open(note_path, "r", encoding="utf-8") as f:
-        content = f.read()
+    content = None
+    for attempt in range(5):  # iCloud 동기화 중이면 EDEADLK가 날 수 있어 재시도
+        try:
+            with open(note_path, "r", encoding="utf-8") as f:
+                content = f.read()
+            break
+        except OSError as e:
+            print(f"노트 읽기 재시도 {attempt + 1}/5: {e}")
+            time.sleep(3)
+    if content is None:
+        print("노트 읽기 최종 실패 — 스킵")
+        return False
 
     parsed = parse_obsidian(content)
     if not parsed:
