@@ -28,13 +28,15 @@ def parse_obsidian(content: str) -> dict:
     for match in re.finditer(pattern, content):
         day_kr = match.group(1)
         body = match.group(2)
-        caption_match = re.search(r"캡션:\s*\n([\s\S]*?)\n해시태그:", body)
-        hashtag_match = re.search(r"해시태그:\s*\n([\s\S]*?)\Z", body)
+        caption_match = re.search(r"캡션:\s*\n([\s\S]*?)\n(?:해시태그|틱톡제목):", body)
+        hashtag_match = re.search(r"해시태그:\s*\n([\s\S]*?)(?=\n틱톡제목:|\Z)", body)
+        tiktok_match = re.search(r"틱톡제목:\s*\n([\s\S]*?)\Z", body)
         if day_kr in DAYS_KR:
             idx = DAYS_KR.index(day_kr)
             result[DAYS_EN[idx]] = {
                 "caption": caption_match.group(1).strip() if caption_match else "",
                 "hashtags": hashtag_match.group(1).strip() if hashtag_match else "",
+                "tiktok_title": tiktok_match.group(1).strip() if tiktok_match else "",
             }
     return result
 
@@ -85,8 +87,10 @@ def main():
         post = plan["posts"].get(day_en)
         if not post or post.get("posted"):
             continue
-        for field in ("caption", "hashtags"):
-            new_val = fields[field]
+        for field in ("caption", "hashtags", "tiktok_title"):
+            new_val = fields.get(field, "")
+            if field == "tiktok_title" and not new_val:
+                continue  # 노트에 틱톡제목 줄이 없으면 건드리지 않음
             if post.get(field, "").strip() != new_val.strip():
                 print(f"✏️  {day_en} {field} 수정 반영")
                 save_edit(day_en, field, post.get(field, ""), new_val)
