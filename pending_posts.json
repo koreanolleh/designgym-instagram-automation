@@ -56,7 +56,7 @@
       "posted": true,
       "post_id": "18143848156471853",
       "ig_posted": true,
-      "tiktok_posted": false,
+      "tiktok_posted": true,
       "tiktok_note": "publish_session created but not published: TikTok tool requires live human review/agreement of preview and commercial-content declarations, which no user was present to give in this automated run"
     },
     "Thursday": {
