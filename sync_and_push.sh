@@ -9,6 +9,9 @@ echo "--- $(date '+%F %T') sync 시작" >> "$LOG"
 # 발행 루틴의 posted 커밋을 먼저 받아와야 충돌이 없다
 git -c rebase.autoStash=true pull --rebase --quiet origin main >> "$LOG" 2>&1
 
+# 이번 주 노트가 없으면 JSON에서 생성 (월요일 클라우드 생성 후 첫 실행 시)
+./venv/bin/python make_weekly_note.py >> "$LOG" 2>&1
+
 OUT=$(./venv/bin/python sync_from_obsidian.py 2>> "$LOG")
 echo "$OUT" >> "$LOG"
 
