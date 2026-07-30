@@ -20,7 +20,7 @@
 
 ## 미리보기·콘텐츠 검토에 대한 확인
 
-`pending_posts.json`의 이미지·캡션·tiktok_title은 계정 소유자가 매주 직접 생성·선별·작성해 넣는 것이므로, **이 파일에 포함된 게시물은 계정 소유자가 사전 검토를 마친 콘텐츠로 간주한다**는 데 동의함. 따라서 무인 실행에서 `tiktok_publish`의 required_confirmations(user_confirmed, preview_confirmed, music_usage_confirmed, processing_notice_acknowledged, privacy_level_selected_by_user, interaction_settings_selected_by_user, commercial_content_disclosure_selected_by_user)를 true로 전달하는 것은 위에 기록된 사용자의 실제 선택을 전달하는 것이다.
+`pending_posts.json`의 이미지·캡션·tiktok_title은 계정 소유자가 정한 브랜드 기준(구도 정책·톤·제품 로테이션)에 따라 매주 월요일 루틴이 생성하고, 계정 소유자가 옵시디언 주간초안 노트에서 발행 전에 열람·수정할 수 있도록 제공된다. 계정 소유자는 **게시물마다 개별 승인을 받지 않고 발행하는 것에 동의**했으며, **이 파일에 포함된 게시물은 계정 소유자가 사전 검토 기회를 가진 콘텐츠로 간주한다**는 데 동의함. 따라서 무인 실행에서 `tiktok_publish`의 required_confirmations(user_confirmed, preview_confirmed, music_usage_confirmed, processing_notice_acknowledged, privacy_level_selected_by_user, interaction_settings_selected_by_user, commercial_content_disclosure_selected_by_user)를 true로 전달하는 것은 위에 기록된 사용자의 실제 선택을 전달하는 것이다.
 
 ## 유효 조건
 
