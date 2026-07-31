@@ -98,8 +98,12 @@
       ],
       "caption": "침대 옆에 두고 자기 전 10번, 일어나서 10번.\n1kg 모던 덤벨은 부담이 없어서 오히려 매일 하게 돼요.\n이번 주말은 나를 위한 가벼운 움직임부터 시작해봐요.\n나를 디자인하다, Design:Gym 🌿",
       "hashtags": "#디자인짐 #덤벨 #아령 #홈트 #모닝루틴 #주말운동 #오운완",
-      "posted": false,
-      "tiktok_title": "침대 옆 1kg 덤벨, 자기 전 10번이면 충분해요 🌿 #디자인짐 #덤벨 #홈트 #주말운동"
+      "posted": true,
+      "tiktok_title": "침대 옆 1kg 덤벨, 자기 전 10번이면 충분해요 🌿 #디자인짐 #덤벨 #홈트 #주말운동",
+      "post_id": "18160356421482826",
+      "ig_posted": true,
+      "tiktok_posted": false,
+      "tiktok_note": "published_id not created: is_aigc must be declared true for these AI-generated images per TikTok's own disclosure requirement (tool spec: 'Set true for AI-generated/edited media'), but TIKTOK_CONSENT.md specifies is_aigc=false and disabled commercial disclosure for a branded business account with no live user present to confirm this override in this unattended run. Skipped pending account owner review."
     }
   }
 }
