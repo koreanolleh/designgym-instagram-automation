@@ -987,3 +987,17 @@ to recover.
 노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
 노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
 노트 읽기 최종 실패 — 스킵
+--- 2026-08-03 14:02:47 sync 시작
+노트 이미 있음 — 스킵
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+--- 2026-08-03 14:03:49 sync 시작
+노트 이미 있음 — 스킵
+수정된 내용 없음
+--- 2026-08-03 14:04:51 sync 시작
+노트 이미 있음 — 스킵
+수정된 내용 없음
