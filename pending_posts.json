@@ -1,109 +1,84 @@
 {
-  "week_of": "2026-07-27",
+  "week_of": "2026-08-03",
   "posts": {
     "Monday": {
-      "date": "2026-07-27",
-      "product": "요가매트 (Active steps)",
-      "hook": "사람 포함 (모델A) - 앉아서 스트레칭",
+      "date": "2026-08-03",
+      "product": "힙업밴드 (3개입)",
+      "hook": "얼굴 없는 클로즈업 - 발목 밴드 사이드 레그레이즈",
       "images": [
         {
-          "path": "images/2026-07-27/mon_1_forwardfold.png",
-          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260727_011202_8a9de0ae-dcda-41f4-aa86-abe4cd01b38e.png"
-        },
-        {
-          "path": "images/2026-07-27/mon_2_crosslegged.png",
-          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260727_020250_30fedd14-27ea-4b19-8dd2-468150b2510d.png"
+          "path": "",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260803_010923_aa5d4594-432f-4c0f-a25c-187a3a35bf97.png"
         }
       ],
-      "caption": "월요일 아침, 눈뜨자마자 매트부터 폈어요. 커피 내리기 전에 딱 10분, 몸을 깨우는 시간.\n창가에 앉아 스트레칭 하나만 해도 하루 시작하는 마음이 달라지더라고요.\n이번 주도 나를 위한 루틴으로 시작해봐요 🌤️",
-      "hashtags": "#디자인짐 #요가매트 #모닝루틴 #홈트 #셀프케어 #월요병탈출 #요가스타그램",
-      "posted": true,
-      "post_id": "18057294422685387"
+      "caption": "밴드 운동 할 때마다 자꾸 흘러내려서 짜증났던 적 있으시죠?\n디자인짐 힙업밴드는 안쪽 실리콘 그립 마감이라 움직여도 제자리에 착 붙어있어요.\n발목에 걸고 사이드 레그레이즈 20개, 하체 루틴 이거 하나면 충분해요 🤍",
+      "hashtags": "#디자인짐 #힙업밴드 #저항밴드 #홈트 #하체운동 #홈트기구 #데일리루틴",
+      "tiktok_title": "자꾸 흘러내리던 밴드, 실리콘 그립이면 제자리에 착 붙어요 #디자인짐 #힙업밴드 #홈트 #하체운동",
+      "posted": false
     },
     "Tuesday": {
-      "date": "2026-07-28",
-      "product": "요가매트 (Before sunrise)",
-      "hook": "제품만 - 근경 크롭으로 로고 프레임 밖 처리",
+      "date": "2026-08-04",
+      "product": "문 케틀벨 4.5kg (라이트 민트)",
+      "hook": "제품 스타일링 (사람 없음) - 오브제처럼 연출",
       "images": [
         {
-          "path": "images/2026-07-27/tue_1_productonly.png",
-          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260727_021438_06669b15-9d7b-49b6-b026-ab5547d7fc4f.png"
+          "path": "",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260803_010719_b76097aa-1db8-47e9-b932-325f99d7d2ce.png"
         }
       ],
-      "caption": "스웨이드 매트 보면 다들 미끄러울 것 같다고 하는데, 사실 반대예요.\n땀나고 물기 있을수록 오히려 손발이 착 붙어서 그립감이 더 좋아져요.\n다운독 할 때 손 미끄러지는 스트레스, 이제 안녕 👋",
-      "hashtags": "#디자인짐 #요가매트 #스웨이드매트 #홈트꿀팁 #요가매트추천 #운동용품",
-      "posted": true,
-      "post_id": "18172451284428046",
-      "ig_posted": true,
-      "tiktok_posted": true
+      "caption": "케틀벨 하나 사려다가 인테리어 망칠까봐 망설인 적 있으시죠?\n문 케틀벨은 링 모양이라 소파 옆에 두어도 오브제처럼 자연스러워요.\n눈에 보이니까 오히려 하루 한 번은 자연스럽게 들게 되더라고요 🌿",
+      "hashtags": "#디자인짐 #케틀벨 #홈짐 #인테리어운동기구 #홈트기구 #오운완",
+      "tiktok_title": "치울 필요 없는 케틀벨, 소파 옆에 둬도 오브제 같아요 #디자인짐 #케틀벨 #홈짐 #인테리어운동기구",
+      "posted": false
     },
     "Wednesday": {
-      "date": "2026-07-29",
-      "product": "요가매트 (Warm sunlight)",
-      "hook": "얼굴 없는 클로즈업 - 손 쓸기 + 다운독 하체",
+      "date": "2026-08-05",
+      "product": "요가매트 (Active steps)",
+      "hook": "사람 포함 (모델A) - 차일드포즈 + 결가부좌 명상",
       "images": [
         {
-          "path": "images/2026-07-27/wed_1_hand_mat.png",
-          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260728_112059_c8d716b0-a58d-4274-bc55-fa67d1527b8b.png"
+          "path": "",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260803_011239_208a86f4-a7f0-4595-be82-830c7b0ea456.png"
         },
         {
-          "path": "images/2026-07-27/wed_2_downdog_legs.png",
-          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260728_112119_4516d1fe-f167-49e4-8be6-a07593a3aa2f.png"
+          "path": "",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260803_011310_50415e43-96c7-415d-a483-1536d9b82599.png"
         }
       ],
-      "caption": "손끝으로 쓸어보면 알아요. 스웨이드 특유의 보들보들한 감촉.\n오늘은 매트 위에서 몸을 길게 늘리는 것만으로 충분한 하루.\n바닥에 그림 한 점 깔아둔 기분, 이게 인테리어 매트의 매력이에요 🤍",
-      "hashtags": "#디자인짐 #요가매트 #스웨이드매트 #홈트일상 #데일리루틴 #인테리어소품 #오운완",
-      "posted": true,
-      "post_id": "18143848156471853",
-      "ig_posted": true,
-      "tiktok_posted": true,
-      "tiktok_note": "publish_session created but not published: TikTok tool requires live human review/agreement of preview and commercial-content declarations, which no user was present to give in this automated run"
+      "caption": "수요일 아침, 매트 위에서 잠깐 멈추는 시간을 가져봤어요.\n스웨이드 매트는 촉감이 부드러워서 무릎 대고 엎드리기만 해도 편안하더라고요.\n숨 한 번 크게 쉬고 나면 오후가 훨씬 가벼워져요 🧘‍♀️",
+      "hashtags": "#디자인짐 #요가매트 #스웨이드매트 #홈트일상 #모닝루틴 #요가스타그램 #오운완",
+      "tiktok_title": "무릎 대고 엎드리기만 해도 편안한 스웨이드 매트 #디자인짐 #요가매트 #홈트일상 #모닝루틴",
+      "posted": false
     },
     "Thursday": {
-      "date": "2026-07-30",
-      "product": "문 케틀벨 4.5kg (그레이/민트)",
-      "hook": "제품 스타일링 + 얼굴 없는 손 그립 클로즈업",
+      "date": "2026-08-06",
+      "product": "소프트 실리콘 모던 덤벨 1kg (아이보리/블루)",
+      "hook": "얼굴 없는 손 클로즈업 - 덤벨 컬 동작",
       "images": [
         {
-          "path": "images/2026-07-27/thu_1_kettlebell_styled.png",
-          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260728_112131_619f8ec2-e8a1-4d72-9f6c-ece83daa40ef.png"
-        },
-        {
-          "path": "images/2026-07-27/thu_2_kettlebell_hand.png",
-          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260728_112147_4bf081c8-3f08-47b0-b48c-c75233d98724.png"
+          "path": "",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260803_010724_c5c8dade-98db-476f-a9e2-c4d1d5f91639.png"
         }
       ],
-      "caption": "케틀벨은 왜 다 시커멓고 투박해야 할까요?\n문 케틀벨은 소파 옆에 두어도 오브제 같아서 치울 필요가 없어요.\n눈에 보이는 곳에 있으니 하루 한 번은 자연스럽게 들게 되더라고요.\n4.5kg, 홈트 입문 무게로 딱 좋아요",
-      "hashtags": "#디자인짐 #케틀벨 #홈트기구 #인테리어운동기구 #홈짐 #케틀벨운동",
-      "posted": true,
-      "post_id": "18184767976399335",
-      "ig_posted": true,
-      "tiktok_posted": true,
-      "tiktok_publish_id": "p_pub_url~v2.7668272370310301703",
-      "tiktok_title": "치울 필요 없는 오브제 케틀벨, 보이니까 매일 들게 돼요 #디자인짐 #케틀벨 #홈짐 #인테리어운동기구"
+      "caption": "덤벨 산다고 하면 다들 무겁고 부담스러울 거라 생각하는데, 1kg은 얘기가 달라요.\n침대 옆에 두고 자기 전, 일어나서 한 세트씩만 해도 티가 나더라고요.\n아이보리·라이트블루 컬러라 인테리어 소품처럼 두기도 좋아요 🤍",
+      "hashtags": "#디자인짐 #덤벨 #아령 #홈트 #모닝루틴 #셀프케어 #오운완",
+      "tiktok_title": "1kg 덤벨, 침대 옆에 두고 자기 전 한 세트면 충분해요 #디자인짐 #덤벨 #홈트 #모닝루틴",
+      "posted": false
     },
     "Friday": {
-      "date": "2026-07-31",
-      "product": "소프트 실리콘 모던 덤벨 1kg (아이보리/블루)",
-      "hook": "제품 스타일링 + 얼굴 없는 컬 동작 클로즈업",
+      "date": "2026-08-07",
+      "product": "요가매트 (Before sunrise)",
+      "hook": "제품 스타일링 (사람 없음) - 주말 예열 무드",
       "images": [
         {
-          "path": "images/2026-07-27/fri_1_dumbbell_styled.png",
-          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260728_114230_196f9143-f3c0-430b-b50b-54163e0f8f23.png"
-        },
-        {
-          "path": "images/2026-07-27/fri_2_dumbbell_curl.png",
-          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260728_114252_5f712d18-56ae-4299-ad2e-893d8399f6fd.png"
+          "path": "",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260803_010727_847f9138-ba1e-4a3b-bb02-6ad7b2cfabf2.png"
         }
       ],
-      "caption": "침대 옆에 두고 자기 전 10번, 일어나서 10번.\n1kg 모던 덤벨은 부담이 없어서 오히려 매일 하게 돼요.\n이번 주말은 나를 위한 가벼운 움직임부터 시작해봐요.\n나를 디자인하다, Design:Gym 🌿",
-      "hashtags": "#디자인짐 #덤벨 #아령 #홈트 #모닝루틴 #주말운동 #오운완",
-      "posted": true,
-      "tiktok_title": "침대 옆 1kg 덤벨, 자기 전 10번이면 충분해요 🌿 #디자인짐 #덤벨 #홈트 #주말운동",
-      "post_id": "18160356421482826",
-      "ig_posted": true,
-      "tiktok_posted": true,
-      "tiktok_note": "published_id not created: is_aigc must be declared true for these AI-generated images per TikTok's own disclosure requirement (tool spec: 'Set true for AI-generated/edited media'), but TIKTOK_CONSENT.md specifies is_aigc=false and disabled commercial disclosure for a branded business account with no live user present to confirm this override in this unattended run. Skipped pending account owner review."
+      "caption": "금요일 저녁, 이번 주도 고생 많으셨어요.\n매트 하나 펼쳐두는 것만으로 주말 시작하는 기분이 달라지더라고요.\n가벼운 스트레칭으로 몸도 마음도 리셋해보는 시간, 나를 디자인하다, Design:Gym 🌤️",
+      "hashtags": "#디자인짐 #요가매트 #주말루틴 #홈트 #셀프케어 #오운완 #나를디자인하다",
+      "tiktok_title": "매트 하나 펼치면 주말 시작하는 기분이 달라져요, 나를 디자인하다 #디자인짐 #요가매트 #주말루틴",
+      "posted": false
     }
   }
 }
