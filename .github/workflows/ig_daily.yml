@@ -1,0 +1,46 @@
+name: 디자인짐 인스타 매일 발행
+
+on:
+  workflow_dispatch:  # 클라우드 루틴이 매일 19:36 KST에 호출 (주 경로)
+    inputs:
+      dry_run:
+        description: '1이면 발행 없이 점검만'
+        required: false
+        default: ''
+  schedule:
+    - cron: '30 9 * * 1-5'  # 백업: UTC 9:30 = KST 18:30 (+GitHub 지연). ig_posted 플래그로 중복 안전
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install requests
+
+      - name: 오늘자 발행
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_BUSINESS_ACCOUNT_ID: ${{ secrets.IG_BUSINESS_ACCOUNT_ID }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: python server_ig_publish.py
+
+      - name: posted 상태 커밋
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add pending_posts.json
+          git diff --staged --quiet && exit 0
+          git commit -m "✅ $(TZ=Asia/Seoul date '+%Y-%m-%d') IG 발행 (Actions)"
+          for i in 1 2 3; do
+            git push && break
+            git pull --rebase --autostash || git rebase --abort
+            sleep 5
+          done
