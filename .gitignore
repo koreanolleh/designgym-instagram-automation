@@ -4,3 +4,4 @@ ig_token.txt
 __pycache__/
 *.pyc
 .DS_Store
+tiktok-review-demo/.env
