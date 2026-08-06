@@ -1,0 +1,42 @@
+name: 틱톡 발행 감시
+
+on:
+  schedule:
+    - cron: '30 13 * * 1-5'  # UTC 13:30 = KST 22:30 (+지연) — 저녁 발행 확인용
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 오늘 틱톡 발행 여부 확인
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TODAY=$(TZ=Asia/Seoul date +%F)
+          MISSING=$(python3 -c "
+          import json
+          d = json.load(open('pending_posts.json'))
+          for p in d['posts'].values():
+              if p.get('date') == '$TODAY':
+                  print('no' if p.get('tiktok_posted') else 'yes')
+                  break
+          else:
+              print('no')  # 오늘자 게시물 없음 = 정상
+          ")
+          if [ "$MISSING" = "yes" ]; then
+            TITLE="⚠️ $TODAY 틱톡 미발행"
+            if ! gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
+              gh issue create --title "$TITLE" \
+                --body "오늘 저녁 클라우드 루틴이 틱톡을 발행하지 못했습니다. tiktok_publish.log에 보류 사유가 있는지 확인하고, 없으면 로컬 Claude 세션에 '틱톡 올려줘'라고 요청하세요. (인스타는 별도 워크플로가 발행하므로 이 알림과 무관)"
+            fi
+            echo "미발행 — 이슈 생성"
+          else
+            echo "발행 확인됨 또는 오늘자 없음 — 정상"
+          fi
