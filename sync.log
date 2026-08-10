@@ -1660,3 +1660,26 @@ push 완료
 pending_posts.json 업데이트 완료
 push 완료
 --- 2026-08-10 17:09:29 sync 시작
+warning: fetch updated the current branch head.
+fast-forwarding your working tree from
+commit a6c35e4a0c11df4180368799479e56a66581449f.
+error: Your local changes to the following files would be overwritten by merge:
+	images/2026-08-10/fri_1_yoga_back.png
+	images/2026-08-10/mon_1_mat_warmsunlight.png
+	images/2026-08-10/thu_1_kettlebell_lowangle.png
+	pending_posts.json
+	sync.log
+Please commit your changes or stash them before you merge.
+Aborting
+fatal: Cannot fast-forward your working tree.
+After making sure that you saved anything precious from
+$ git diff a6c35e4a0c11df4180368799479e56a66581449f
+output, run
+$ git reset --hard
+to recover.
+노트 이미 있음 — 스킵
+수정된 내용 없음
+--- 2026-08-10 17:10:29 sync 시작
+노트 이미 있음 — 스킵
+수정된 내용 없음
+--- 2026-08-10 17:24:34 sync 시작
