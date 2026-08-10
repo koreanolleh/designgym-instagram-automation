@@ -1755,3 +1755,24 @@ to recover.
 --- 2026-08-10 17:59:16 sync 시작
 노트 이미 있음 — 스킵
 수정된 내용 없음
+--- 2026-08-10 18:15:49 sync 시작
+warning: fetch updated the current branch head.
+fast-forwarding your working tree from
+commit 35cfbe800dbb4abdd28efe188c1b6cff18b7c1b8.
+error: Your local changes to the following files would be overwritten by merge:
+	images/2026-08-10/fri_1_yoga_back.png
+	images/2026-08-10/mon_1_mat_warmsunlight.png
+	pending_posts.json
+Please commit your changes or stash them before you merge.
+Aborting
+fatal: Cannot fast-forward your working tree.
+After making sure that you saved anything precious from
+$ git diff 35cfbe800dbb4abdd28efe188c1b6cff18b7c1b8
+output, run
+$ git reset --hard
+to recover.
+노트 이미 있음 — 스킵
+수정된 내용 없음
+--- 2026-08-10 18:16:50 sync 시작
+노트 이미 있음 — 스킵
+수정된 내용 없음
