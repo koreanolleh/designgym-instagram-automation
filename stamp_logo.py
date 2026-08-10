@@ -46,7 +46,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--photo", required=True)
     ap.add_argument("--logo", required=True)
-    ap.add_argument("--quad", required=True, help="매트 네 모서리: 먼좌 먼우 근우 근좌")
+    ap.add_argument("--quad", help="매트 네 모서리: 먼좌 먼우 근우 근좌 (--u/--v/--width 와 함께)")
+    ap.add_argument("--dstquad", help="로고가 놓일 네 꼭짓점을 직접 지정: 좌상 우상 우하 좌하. "
+                                      "매트 아랫변과 평행하게 잡으면 면에 정확히 붙는다")
     ap.add_argument("--u", type=float, default=0.85)
     ap.add_argument("--v", type=float, default=0.5)
     ap.add_argument("--width", type=float, default=0.5, help="매트 폭 대비 로고 폭")
@@ -59,6 +61,25 @@ def main():
 
     photo = Image.open(args.photo).convert("RGBA")
     logo = Image.open(args.logo).convert("RGBA")
+
+    if args.dstquad:
+        # 로고 이미지 자체를 네 꼭짓점으로 직접 매핑 (가장 정확한 제어)
+        dst = parse_quad(args.dstquad)
+        lw, lh = logo.size
+        src = [(0, 0), (lw, 0), (lw, lh), (0, lh)]
+        coeffs = perspective_coeffs(src, dst)
+        warped = logo.transform(photo.size, Image.PERSPECTIVE, coeffs, Image.BICUBIC)
+        if args.blur > 0:
+            warped = warped.filter(ImageFilter.GaussianBlur(args.blur))
+        if args.opacity < 1.0:
+            ch = warped.getchannel("A").point(lambda q: int(q * args.opacity))
+            warped.putalpha(ch)
+        Image.alpha_composite(photo, warped).convert("RGB").save(args.out)
+        print(f"합성 완료(직접지정) → {args.out}")
+        return
+
+    if not args.quad:
+        raise SystemExit("--quad 또는 --dstquad 중 하나가 필요합니다")
 
     # 1) 매트 평면 캔버스에 로고를 정위치로 놓는다
     mat_h = args.plane_h
