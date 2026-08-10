@@ -1,0 +1,63 @@
+name: 주간 초안 생성 감시
+
+on:
+  schedule:
+    - cron: '30 3 * * 1'   # UTC 3:30 = KST 12:30 월요일 (루틴은 KST 10시 실행)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 이번 주 초안이 생성됐는지 확인
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          MONDAY=$(TZ=Asia/Seoul date -d "last monday" +%F 2>/dev/null || TZ=Asia/Seoul date +%F)
+          # 오늘이 월요일이면 오늘이 곧 이번 주 월요일
+          [ "$(TZ=Asia/Seoul date +%u)" = "1" ] && MONDAY=$(TZ=Asia/Seoul date +%F)
+
+          STATE=$(python3 -c "
+          import json
+          d = json.load(open('pending_posts.json'))
+          if d.get('week_of') != '$MONDAY':
+              print('missing')
+          else:
+              posts = d.get('posts', {})
+              no_img = [k for k,v in posts.items() if not v.get('images')]
+              no_cap = [k for k,v in posts.items() if not (v.get('caption') or '').strip()]
+              if len(posts) < 5 or no_img:
+                  print('partial:이미지 없음 ' + ','.join(no_img) if no_img else 'partial:요일 부족')
+              elif no_cap:
+                  print('partial:캡션 없음 ' + ','.join(no_cap))
+              else:
+                  print('ok')
+          ")
+
+          echo "판정: $STATE (기준 월요일 $MONDAY)"
+          [ "$STATE" = "ok" ] && exit 0
+
+          if [ "$STATE" = "missing" ]; then
+            TITLE="⚠️ $MONDAY 주차 인스타 초안 미생성"
+            BODY="월요일 클라우드 루틴이 이번 주 초안을 만들지 못했습니다. pending_posts.json의 week_of가 $MONDAY 가 아닙니다.
+
+          오늘 저녁 게시할 콘텐츠가 없는 상태입니다. 로컬 Claude 세션에 '이번 주 인스타 초안 만들어줘'라고 요청하세요."
+          else
+            TITLE="⚠️ $MONDAY 주차 인스타 초안 불완전"
+            BODY="이번 주 초안이 일부만 저장됐습니다 — $STATE
+
+          루틴이 중간에 멈춘 것으로 보입니다. 로컬 Claude 세션에 확인을 요청하세요."
+          fi
+
+          if ! gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
+            gh issue create --title "$TITLE" --body "$BODY"
+            echo "이슈 생성함"
+          else
+            echo "이미 열린 이슈 있음 — 중복 생성 안 함"
+          fi
