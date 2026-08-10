@@ -35,11 +35,29 @@
 ## 4. 품질 규칙 (프롬프트에 반드시 문장으로 넣을 것)
 
 1. **매트**: `LONG full-size rectangular yoga mat, roughly 3:1 length-to-width (180x61cm), printed artwork runs ALONG THE LENGTH, do NOT render as a small square rug`
-2. **로고** — 가장 중요. 절대 "흐리게/소프트포커스로" 라고 쓰지 말 것(뭉개진 얼룩이 생긴다). 둘 중 하나만:
-   - **(A) 노출** (제품이 주인공인 컷 — 이쪽을 우선): `the brand wordmark reads exactly "Design:Gym" - spelled D-e-s-i-g-n colon G-y-m, capital D and capital G, clean thin modern sans-serif, small, subtly embossed, crisp and perfectly legible, correctly spelled. Do NOT blur, smudge, warp or distort the lettering, do NOT invent any other words.`
+2. **로고** — 가장 중요. 절대 "흐리게/소프트포커스로" 라고 쓰지 말 것(뭉개진 얼룩이 생긴다).
+
+   **★ 실제 로고 형태 (2026-08-10 실물 확인)**: 텍스트만 있는 게 아니라 **아이콘 + 워드마크 2단 세트**다.
+   위에 미니멀 라인아트 덤벨 픽토그램(좌우 대칭 D자 아웃라인 캡 두 개가 마주보고, 가운데를 짧은 굵은 가로바가 연결),
+   그 **바로 아래** 아주 얇은 산세리프로 **자간을 넓게** 벌린 `Design:Gym`.
+   영문 프롬프트로 이렇게 쓴다:
+   `THE BRAND LOGO - reproduce it EXACTLY as this two-part lockup and nothing else: on top, a minimal line-art dumbbell pictogram made of two mirrored D-shaped outline caps facing each other, joined in the middle by one short solid horizontal bar, in thin uniform strokes. Directly BELOW the pictogram, the wordmark reads exactly "Design:Gym" - spelled D-e-s-i-g-n colon G-y-m, capital D and capital G, in a very thin light-weight modern sans-serif with WIDE letter-spacing. Small, crisp, sharp, perfectly legible. Do NOT write any other words, do NOT use a bold font, do NOT blur or smudge it.`
+
+   **방향 지정 필수** — 안 쓰면 180도 뒤집혀 나온다:
+   `LOGO ORIENTATION IS CRITICAL: printed RIGHT-SIDE UP as seen by the camera, so the viewer reads "Design:Gym" normally left to right with the pictogram ABOVE the word. NOT upside down, NOT rotated 180 degrees, NOT mirrored, NOT sideways.`
+   매트 컷은 **로고가 있는 네이비/어두운 끝을 카메라 가까운 쪽(프레임 하단)에 두면** 방향이 안정적으로 맞는다.
+
+   - **(A) 노출** (제품이 주인공인 컷 — 이쪽을 우선): 위 문구 그대로 사용. 매트는 어두운 색 블록 위에 흰색으로 인쇄.
    - **(B) 숨김** (사람이 제품을 잡거나 올라탄 컷): 프레임 밖으로 자르거나 신체로 완전히 가리고 `there must be NO text, NO lettering, NO logo and NO blurred smudge anywhere on the product surface`
-3. **제품 형태**는 레퍼런스와 완전 동일 (케틀벨=링 실루엣, 덤벨=알약 실루엣)
+   - **케틀벨은 로고 세트가 아니라 각인 배지**다: 바닥 가까운 앞면에 얕게 파인 타원 플레이트, 한 줄로 `Design:Gym | 10LB | KETTLEBELL`, 아주 얇은 산세리프, 본체보다 살짝 어두운 톤온톤.
+3. **제품 형태**는 레퍼런스와 완전 동일. 생성 전에 레퍼런스 이미지를 **직접 Read로 열어 형태를 확인**할 것 — 말로만 옮기면 틀린다(2026-08-10 케틀벨 오생성).
+   - **케틀벨(문 케틀벨)**: 좌우 대칭 도넛이 **아니다**. 바깥은 두꺼운 원반인데 **바닥이 직선으로 잘려 평평**해서 혼자 선다. 큰 원형 구멍이 **중앙이 아니라 위쪽·약간 오른쪽으로 치우쳐** 있어서 위쪽 테두리는 얇고 아래쪽에 살이 몰린 **초승달** 형태. 통짜 성형품이라 위에 별도 손잡이 고리가 없고, 그 구멍 자체가 손잡이. 표면은 미세한 요철이 있는 무광.
+     영문: `the outer body is a thick rounded disc whose BOTTOM IS CUT FLAT into a wide straight base; a single LARGE CIRCULAR HOLE is set OFF-CENTRE, pushed UP and slightly to the upper-right, so material is THIN along the top-right rim and THICK along the bottom-left, forming a crescent of mass; one seamless moulded body, NO metal bell, NO separate looped handle, the hole itself is the handle; matte with a fine subtle pebbled texture`
+   - **덤벨**: 알약(캡슐) 실루엣, 소프트 실리콘 무광, 금속·널링·육각 플레이트 없음
 4. **사람 컷**: 손가락/팔다리 개수 명시(`ONE hand five fingers`, `TWO legs` 등) + `natural realistic human proportions`
+   **AI 티가 나지 않게** 할 것(2026-08-10 지적). 프롬프트에 넣는다:
+   `Photorealistic documentary-style photograph shot on a full-frame camera with an 85mm lens. A real Korean woman in her late twenties. Photographic skin with visible natural texture, fine pores, subtle unevenness - NOT smooth plastic skin, NOT airbrushed, NOT waxy, NOT a CGI mannequin. Hair tied in a low bun with a few natural loose strands. realistic film-like grain, candid editorial feel.`
+   **의상은 진짜 운동복으로**: 매끈한 단색 보디슈트 금지. 예) `a fitted charcoal-grey sports top with a racerback and visible flatlock seams, matching high-waisted leggings with a visible waistband seam, realistic stretch wrinkles and natural creases where the body bends`
 5. **밴드**는 허벅지(무릎 위)에 착용하고 **맨발**. 발목 착용·양말 금지. 텐션 차이를 색으로 표현 금지
 6. **파스텔 색상은 말로도 명시**:
    - 아이보리 = `warm off-white IVORY, almost white, NOT beige, NOT tan, NOT cream-yellow`
