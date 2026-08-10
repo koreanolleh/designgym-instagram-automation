@@ -1,40 +1,87 @@
 {
-  "week_of": "2026-09-01",
+  "week_of": "2026-08-10",
   "posts": {
     "Monday": {
-      "date": "2026-09-01",
-      "product": "테스트제품",
-      "hook": "테스트 구도",
+      "date": "2026-08-10",
+      "product": "요가매트 (Warm sunlight)",
+      "hook": "제품 스타일링(사람 없음) - 창가 반쯤 말린 매트 + 로고 노출",
       "images": [
         {
           "path": "",
-          "image_url": "https://example.com/a.png"
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260810_071511_6f6d72ce-cd15-4e3b-9227-bd5ff92acf3a.png"
         }
       ],
-      "caption": "테스트 캡션",
-      "hashtags": "#디자인짐",
-      "tiktok_title": "테스트 제목 #디자인짐",
+      "caption": "월요일 아침, 매트 한 장 펼치는 걸로 하루가 시작돼요.\n\n돌돌 말아두면 티 안 나고, 펼치면 그림 한 점 깔린 것처럼 방 분위기가 달라져요.\n스웨이드 상판이라 손바닥이 밀리지 않는 것도 은근한 차이예요 🌤\n\n이번 주도 잘 부탁드려요.",
+      "hashtags": "#디자인짐 #요가매트 #홈트 #홈트인테리어 #모닝루틴 #요가 #홈요가",
+      "tiktok_title": "말아두면 안 보이고 펼치면 그림 한 점, 디자인 요가매트 #디자인짐 #요가매트 #홈트",
       "posted": false,
       "ig_posted": null,
       "tiktok_posted": null
     },
     "Tuesday": {
-      "date": "2026-09-02",
-      "product": "테스트2",
-      "hook": "구도2",
+      "date": "2026-08-11",
+      "product": "소프트 실리콘 모던 덤벨 1kg (라이트블루)",
+      "hook": "제품 스타일링(사람 없음) - 우드 선반 위 정물, 로고 노출",
       "images": [
         {
           "path": "",
-          "image_url": "https://example.com/b.png"
-        },
-        {
-          "path": "",
-          "image_url": "https://example.com/c.png"
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260810_071511_86f118fc-2e42-4c95-bd00-50518124bbfa.png"
         }
       ],
-      "caption": "",
-      "hashtags": "",
-      "tiktok_title": "",
+      "caption": "운동기구는 꼭 어딘가에 숨겨둬야 한다고 생각했는데요.\n\n1kg 모던 덤벨은 선반에 그냥 올려둬요.\n책 옆에 둬도 어색하지 않고, 눈에 보이니까 지나가다 한 번씩 들게 돼요 🤍\n\n숨기지 않아도 되는 운동기구.",
+      "hashtags": "#디자인짐 #덤벨 #모던덤벨 #홈트 #홈트용품 #인테리어소품 #가벼운운동",
+      "tiktok_title": "선반에 올려둬도 어색하지 않은 1kg 덤벨 #디자인짐 #덤벨 #홈트 #인테리어",
+      "posted": false,
+      "ig_posted": null,
+      "tiktok_posted": null
+    },
+    "Wednesday": {
+      "date": "2026-08-12",
+      "product": "힙업밴드 (3개입)",
+      "hook": "얼굴 없는 하체 - 매트 위 옆으로 누운 클램쉘, 맨발",
+      "images": [
+        {
+          "path": "",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260810_071511_21a2acfc-9a6b-4add-8a10-69aa26c145c5.png"
+        }
+      ],
+      "caption": "누워서 무릎만 열었다 닫는 동작인데, 이게 은근히 힘들어요.\n\n밴드가 허벅지에서 자꾸 말려 올라가면 집중이 안 되잖아요.\n안쪽에 실리콘 라인이 들어가 있어서 제자리에 그대로 있어요.\n\n오늘은 딱 10번씩 세 세트만 🙂",
+      "hashtags": "#디자인짐 #힙업밴드 #하체운동 #홈트 #클램쉘 #운동밴드 #홈트루틴",
+      "tiktok_title": "허벅지에서 안 말려 올라가는 밴드, 실리콘 라인 덕분이에요 #디자인짐 #힙업밴드 #하체운동",
+      "posted": false,
+      "ig_posted": null,
+      "tiktok_posted": null
+    },
+    "Thursday": {
+      "date": "2026-08-13",
+      "product": "문 케틀벨 4.5kg (라이트그레이)",
+      "hook": "제품 스타일링(사람 없음) - 창가 바닥 로우앵글, 긴 그림자, 로고 노출",
+      "images": [
+        {
+          "path": "",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260810_071511_a0a3cccd-ce31-47ed-9ce4-f882fe2c5067.png"
+        }
+      ],
+      "caption": "오후 햇살 들어올 때 이 자리에 있는 게 제일 예뻐요.\n\n가운데가 뻥 뚫린 링 모양이라 손잡이를 어떻게 잡아도 편하고,\n운동 끝나고 굳이 치우지 않아도 그냥 오브제처럼 놓여 있어요 🌙\n\n4.5kg, 생각보다 딱 좋은 무게예요.",
+      "hashtags": "#디자인짐 #케틀벨 #문케틀벨 #홈짐 #홈트 #인테리어운동기구 #홈트용품",
+      "tiktok_title": "운동 끝나고 안 치워도 되는 케틀벨, 그냥 오브제예요 #디자인짐 #케틀벨 #홈짐",
+      "posted": false,
+      "ig_posted": null,
+      "tiktok_posted": null
+    },
+    "Friday": {
+      "date": "2026-08-14",
+      "product": "요가매트 (Active steps)",
+      "hook": "얼굴 안 보이는 뒷모습 - 앉아서 팔 위로 스트레칭, 낮은 번",
+      "images": [
+        {
+          "path": "",
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20260810_071511_030c805d-bb45-48a5-a953-889849ff48e3.png"
+        }
+      ],
+      "caption": "금요일 저녁, 주말로 넘어가기 전에 한 번 쭉.\n\n거창한 운동 아니어도 매트 위에 앉아서 팔만 올려도\n하루가 정리되는 기분이 들어요 ✨\n\n나를 디자인하다, Design:Gym",
+      "hashtags": "#디자인짐 #요가매트 #홈요가 #스트레칭 #주말루틴 #홈트 #저녁루틴",
+      "tiktok_title": "매트 위에 앉아 팔만 올려도 하루가 정리돼요 #디자인짐 #요가매트 #스트레칭 #주말루틴",
       "posted": false,
       "ig_posted": null,
       "tiktok_posted": null
