@@ -11,9 +11,9 @@
           "image_url": "https://example.com/a.png"
         }
       ],
-      "caption": "",
-      "hashtags": "",
-      "tiktok_title": "",
+      "caption": "테스트 캡션",
+      "hashtags": "#디자인짐",
+      "tiktok_title": "테스트 제목 #디자인짐",
       "posted": false,
       "ig_posted": null,
       "tiktok_posted": null
