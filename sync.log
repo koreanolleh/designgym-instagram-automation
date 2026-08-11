@@ -1807,3 +1807,43 @@ to recover.
 노트 이미 있음 — 스킵
 수정된 내용 없음
 --- 2026-08-10 18:41:25 sync 시작
+warning: fetch updated the current branch head.
+fast-forwarding your working tree from
+commit 3f0234690b107665c11b4b4079c1a13fb6b0a373.
+error: Your local changes to the following files would be overwritten by merge:
+	images/2026-08-10/mon_1_mat_warmsunlight.png
+	pending_posts.json
+	sync.log
+Please commit your changes or stash them before you merge.
+error: The following untracked working tree files would be overwritten by merge:
+	images/2026-08-10/mon_1_alt_close.png
+Please move or remove them before you merge.
+Aborting
+fatal: Cannot fast-forward your working tree.
+After making sure that you saved anything precious from
+$ git diff 3f0234690b107665c11b4b4079c1a13fb6b0a373
+output, run
+$ git reset --hard
+to recover.
+노트 이미 있음 — 스킵
+수정된 내용 없음
+--- 2026-08-10 18:42:25 sync 시작
+노트 이미 있음 — 스킵
+수정된 내용 없음
+--- 2026-08-10 19:00:47 sync 시작
+노트 이미 있음 — 스킵
+✏️  Monday caption 수정 반영
+pending_posts.json 업데이트 완료
+push 완료
+--- 2026-08-10 19:01:47 sync 시작
+노트 이미 있음 — 스킵
+✏️  Monday caption 수정 반영
+pending_posts.json 업데이트 완료
+push 완료
+--- 2026-08-11 09:02:29 sync 시작
+fatal: unable to access 'https://github.com/koreanolleh/designgym-instagram-automation.git/': Could not resolve host: github.com
+노트 이미 있음 — 스킵
+수정된 내용 없음
+--- 2026-08-11 09:14:18 sync 시작
+노트 이미 있음 — 스킵
+수정된 내용 없음
