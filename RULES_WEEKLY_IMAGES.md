@@ -71,7 +71,13 @@
    **AI 티가 나지 않게** 할 것(2026-08-10 지적). 프롬프트에 넣는다:
    `Photorealistic documentary-style photograph shot on a full-frame camera with an 85mm lens. A real Korean woman in her late twenties. Photographic skin with visible natural texture, fine pores, subtle unevenness - NOT smooth plastic skin, NOT airbrushed, NOT waxy, NOT a CGI mannequin. Hair tied in a low bun with a few natural loose strands. realistic film-like grain, candid editorial feel.`
    **의상은 진짜 운동복으로**: 매끈한 단색 보디슈트 금지. 예) `a fitted charcoal-grey sports top with a racerback and visible flatlock seams, matching high-waisted leggings with a visible waistband seam, realistic stretch wrinkles and natural creases where the body bends`
-5. **밴드**는 허벅지(무릎 위)에 착용하고 **맨발**. 발목 착용·양말 금지. 텐션 차이를 색으로 표현 금지
+5. **밴드 — 실물 확인 완료 (2026-08-18)**: "3개입"은 **서로 다른 디자인 3종 세트**다. 같은 무늬 3개로 복제하면 반려.
+   - ① 크림 바탕 + 브라운 야자잎 + 머스타드 옐로 오벌 + 브라운 원
+   - ② 네이비/슬레이트블루 바탕 + 크림 야자잎 + 브라운 (착용 컷에 주로 쓰는 것)
+   - ③ 크림 바탕 + 큰 틸블루 유기적 도형 + 베이지 (가장 미니멀)
+   - 각 밴드 가운데에 **검정 원단 라벨**(흰색 소형 덤벨 아이콘 + Design:Gym)이 감겨 있다. 제품 정물 컷에서는 라벨 노출.
+   - **원단이라 흐물함**: 세우거나 훌라후프처럼 둥근 링으로 그리지 말 것. 눕히면 납작한 2겹 스트립(끝이 둥글게 접힘).
+   - 착용은 허벅지(무릎 위) + **맨발**. 발목 착용·양말 금지. 텐션 차이를 색으로 표현 금지 (실제 3종은 디자인 차이지 텐션 색코딩이 아님)
 6. **파스텔 색상은 말로도 명시**:
    - 아이보리 = `warm off-white IVORY, almost white, NOT beige, NOT tan, NOT cream-yellow`
    - 라이트블루 = `barely-blue cool white, extremely subtle pale blue tint`
