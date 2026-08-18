@@ -34,7 +34,7 @@
 
 ## 4. 품질 규칙 (프롬프트에 반드시 문장으로 넣을 것)
 
-1. **매트**: `LONG full-size rectangular yoga mat, roughly 3:1 length-to-width (180x61cm), printed artwork runs ALONG THE LENGTH, do NOT render as a small square rug`
+1. **매트 (★두께 8mm — 얇게 그리면 반려)**: `LONG full-size rectangular yoga mat, roughly 3:1 length-to-width (180x61cm), a THICK CUSHIONED mat about 8MM thick - the edge shows clear visible thickness like a firm cushion, NOT a thin 2-3mm travel mat - printed artwork runs ALONG THE LENGTH, do NOT render as a small square rug`
 2. **로고** — 가장 중요. 절대 "흐리게/소프트포커스로" 라고 쓰지 말 것(뭉개진 얼룩이 생긴다).
 
    **★★ 매트 로고는 AI에게 그리게 하지 말 것 (2026-08-10 확정)**: 프롬프트로 아무리 자세히 써도
