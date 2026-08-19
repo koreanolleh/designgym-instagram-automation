@@ -2,5 +2,20 @@
   "week_of": null,
   "account": "designgym.ceo",
   "note": "사장 계정 캐러셀 발행 대기열. 월요일 루틴이 주간 3건(화/목/토)을 채운다.",
-  "posts": {}
+  "posts": {
+    "Wednesday": {
+      "date": "2026-08-19",
+      "product": "토큰 점검용 임시 항목 (드라이런 전용)",
+      "images": [
+        {
+          "path": "",
+          "image_url": "https://example.com/placeholder.png"
+        }
+      ],
+      "caption": "토큰 점검",
+      "hashtags": "",
+      "posted": false,
+      "ig_posted": false
+    }
+  }
 }
