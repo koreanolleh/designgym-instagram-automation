@@ -88,7 +88,10 @@ def main():
 
     with open(sys.argv[1], encoding="utf-8") as f:
         week = json.load(f)
-    bg_dir = week["bg_dir"]
+    # bg_dir가 없거나 존재하지 않으면 레포 안의 backgrounds/를 쓴다(클라우드 실행 대비)
+    bg_dir = week.get("bg_dir") or ""
+    if not os.path.isdir(bg_dir):
+        bg_dir = os.path.join(BASE_DIR, "backgrounds")
 
     plan = {"week_of": week["week_of"], "account": "designgym.ceo",
             "note": "사장 계정 캐러셀 발행 대기열. 월요일 루틴이 주간 3건(화/목/토)을 채운다.",
