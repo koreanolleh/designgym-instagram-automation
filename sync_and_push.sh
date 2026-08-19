@@ -15,8 +15,21 @@ git -c rebase.autoStash=true pull --rebase --quiet origin main >> "$LOG" 2>&1
 OUT=$(./venv/bin/python sync_from_obsidian.py 2>> "$LOG")
 echo "$OUT" >> "$LOG"
 
+# 사장 계정(designgym.ceo) 노트도 같은 주기로 반영한다
+OUT_CEO=$(./venv/bin/python sync_from_obsidian_ceo.py 2>> "$LOG")
+echo "$OUT_CEO" >> "$LOG"
+
+CHANGED=0
 if [[ "$OUT" == *"업데이트 완료"* ]]; then
   git add pending_posts.json edit_history.json 2>> "$LOG"
+  CHANGED=1
+fi
+if [[ "$OUT_CEO" == *"업데이트 완료"* ]]; then
+  git add pending_posts_ceo.json edit_history_ceo.json 2>> "$LOG"
+  CHANGED=1
+fi
+
+if [[ $CHANGED -eq 1 ]]; then
   git commit -q -m "✏️ 옵시디언 수정 반영 $(date '+%m/%d %H:%M')" >> "$LOG" 2>&1
   git push --quiet origin main >> "$LOG" 2>&1 && echo "push 완료" >> "$LOG" || echo "push 실패" >> "$LOG"
 fi
