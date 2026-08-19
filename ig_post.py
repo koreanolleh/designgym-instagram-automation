@@ -21,9 +21,10 @@ def _wait_until_finished(base: str, container_id: str, token: str):
         time.sleep(3)
 
 
-def post_images(image_urls: list, caption: str) -> str:
-    token = os.environ["IG_ACCESS_TOKEN"]
-    ig_user_id = os.environ["IG_BUSINESS_ACCOUNT_ID"]
+def post_images(image_urls: list, caption: str, token: str = None, ig_user_id: str = None) -> str:
+    # 계정별로 토큰/ID를 넘겨 쓰고, 안 넘기면 기존처럼 환경변수를 쓴다(official 경로 호환).
+    token = token or os.environ["IG_ACCESS_TOKEN"]
+    ig_user_id = ig_user_id or os.environ["IG_BUSINESS_ACCOUNT_ID"]
     account_base = f"{GRAPH_HOST}/{GRAPH_VERSION}/{ig_user_id}"
     node_base = f"{GRAPH_HOST}/{GRAPH_VERSION}"
 
