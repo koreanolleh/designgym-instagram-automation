@@ -63,7 +63,7 @@ def crop_45(im):
     return im.resize((W, H), Image.LANCZOS)
 
 
-TARGET_MEAN = 78   # 8/13 B 샘플 배경 밝기(68~91)의 중앙값에 맞춘 값
+TARGET_MEAN = 104  # 2026-08-19 사장 피드백 "너무 어둡다" 반영해 상향(기존 78)
 
 
 def duotone(im, tone, target_mean=TARGET_MEAN):
@@ -94,7 +94,7 @@ def scrim(size=(W, H)):
     grad = Image.new("L", (1, h))
     for y in range(h):
         r = y / (h - 1)
-        a = 0 if r < 0.30 else int(round(((r - 0.30) / 0.70) ** 1.4 * 150))
+        a = 0 if r < 0.42 else int(round(((r - 0.42) / 0.58) ** 1.5 * 112))
         grad.putpixel((0, y), a)
     mask = grad.resize((w, h))
     layer = Image.new("RGBA", (w, h), (0, 0, 0, 255))
