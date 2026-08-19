@@ -1,6 +1,124 @@
 {
-  "week_of": null,
+  "week_of": "2026-08-24",
   "account": "designgym.ceo",
   "note": "사장 계정 캐러셀 발행 대기열. 월요일 루틴이 주간 3건(화/목/토)을 채운다.",
-  "posts": {}
+  "posts": {
+    "Tuesday": {
+      "date": "2026-08-25",
+      "cover": "운동 전 스트레칭은 꼭 이렇게 하세요",
+      "images": [
+        {
+          "path": "images/ceo/2026-08-25/01_cover.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-25/01_cover.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-25/02_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-25/02_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-25/03_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-25/03_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-25/04_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-25/04_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-25/05_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-25/05_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-25/06_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-25/06_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-25/07_closing.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-25/07_closing.jpg"
+        }
+      ],
+      "caption": "저도 오랫동안 운동 전에 다리 쭉쭉 늘리고 시작했어요. 그런데 \"운동 전 스트레칭은 하면 안 된다\"는 말이 돌길래 찾아봤습니다.\n\n금지가 아니라 시간 문제였어요. 한 근육군을 1분 넘게 붙잡고 있으면 직후 근력이 4.6% 떨어지는데, 1분 미만이면 1.1% 수준이라 사실상 차이가 없습니다.\n\n미국스포츠의학회 권고도 한 부위당 10~30초씩 2~4회, 합쳐서 1분이에요. 주 2~3일이면 되고요. 대신 늘리기 전에 관절을 크게 쓰는 동작으로 몸을 데우는 게 낫습니다. 동적 스트레칭은 오히려 수행력이 조금 올라갔거든요.\n\n하나만 더. 스트레칭으로 알배김을 막을 수는 없습니다. 2,597명을 모아 분석했는데 효과가 없었어요. 저는 이걸 알고 나서 운동 전엔 가볍게 데우고, 유연성은 따로 시간 내서 합니다.\n\n📌 출처: Behm et al., Applied Physiology Nutrition and Metabolism, 2016 / ACSM Position Stand, 2011 / Cochrane Review, 2011",
+      "hashtags": "#디자인짐 #스트레칭 #운동전스트레칭 #홈트 #요가 #운동루틴 #준비운동 #운동상식",
+      "source": "Behm et al., Applied Physiology Nutrition and Metabolism, 2016 / ACSM Position Stand, 2011 / Cochrane Review, 2011",
+      "posted": false,
+      "ig_posted": false
+    },
+    "Thursday": {
+      "date": "2026-08-27",
+      "cover": "운동 습관 만들려면 주 4회씩 6주",
+      "images": [
+        {
+          "path": "images/ceo/2026-08-27/01_cover.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-27/01_cover.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-27/02_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-27/02_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-27/03_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-27/03_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-27/04_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-27/04_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-27/05_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-27/05_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-27/06_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-27/06_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-27/07_closing.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-27/07_closing.jpg"
+        }
+      ],
+      "caption": "\"66일만 버티면 습관이 된대\" 저도 이 말 믿고 달력에 66일을 세어본 적이 있어요.\n\n그런데 더 잡기 쉬운 기준이 있더라고요. 헬스장 신규 회원 111명을 추적했더니, 운동 습관이 자리 잡는 최소 조건은 주 4회 이상을 6주간 이어가는 것이었습니다.\n\n붙이면 좋은 조건도 있어요. 저녁보다 아침에 하는 루틴이 더 강하게 굳었고, 남이 정해준 운동보다 내가 고른 운동이 오래갔습니다. 초반 몇 주의 반복이 후반보다 효과가 컸고요.\n\n66일은 어떻게 된 거냐면, 원 논문에서 그건 평균이 아니라 중간값이었어요. 개인차가 18일에서 254일까지 벌어졌고 그 지점에 도달한 사람은 48%뿐이었습니다. 숫자 하나 세는 것보다 주 4회를 6주 채우는 쪽이 훨씬 현실적이더라고요.\n\n저는 이래서 아침에 매트를 미리 깔아둡니다.\n\n📌 출처: Lally et al., European Journal of Social Psychology, 2010 / Kaushal & Rhodes, Journal of Behavioral Medicine, 2015",
+      "hashtags": "#디자인짐 #홈트 #운동습관 #66일 #습관형성 #모닝루틴 #운동시작 #홈트레이닝",
+      "source": "Lally et al., European Journal of Social Psychology, 2010 / Kaushal & Rhodes, Journal of Behavioral Medicine, 2015",
+      "posted": false,
+      "ig_posted": false
+    },
+    "Saturday": {
+      "date": "2026-08-29",
+      "cover": "러닝 부상 없이 즐기는 법",
+      "images": [
+        {
+          "path": "images/ceo/2026-08-29/01_cover.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-29/01_cover.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-29/02_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-29/02_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-29/03_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-29/03_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-29/04_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-29/04_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-29/05_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-29/05_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-29/06_content.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-29/06_content.jpg"
+        },
+        {
+          "path": "images/ceo/2026-08-29/07_closing.jpg",
+          "image_url": "https://koreanolleh.github.io/designgym-instagram-automation/images/ceo/2026-08-29/07_closing.jpg"
+        }
+      ],
+      "caption": "러닝 시작할 때 \"주간 거리는 10%씩만 늘려라\"는 말, 저도 그대로 지켰어요. 그런데 정작 중요한 건 다른 데 있더라고요.\n\n부상을 가장 잘 예측한 건 지난 1년 안에 다친 적이 있는지였습니다. 위험이 2~2.7배였어요. 저처럼 예전에 발목 접질렸던 사람은 거리보다 여기를 먼저 챙기는 게 맞겠더라고요.\n\n늘리는 속도는 2주 사이 30% 이상 급증을 피하면 됩니다. 부위는 무릎과 종아리에 초보 부상의 60%가 몰려 있어요.\n\n그리고 신발. 11,240명을 분석한 리뷰에서 신발 종류를 바꿔도 하지 부상이 줄지 않았습니다. 10% 룰도 532명을 나눠 비교했더니 부상률이 20.8% 대 20.3%로 차이가 없었어요. 방향은 맞지만 그 숫자 자체에 근거가 있는 건 아니었습니다.\n\n※ 통증이 이어지면 전문가 상담을 권합니다.\n\n📌 출처: Buist et al., American Journal of Sports Medicine, 2008 / Nielsen et al., JOSPT, 2014 / JOSPT, 2021",
+      "hashtags": "#디자인짐 #러닝 #달리기 #러닝초보 #러닝부상 #10퍼센트룰 #조깅 #러닝크루",
+      "source": "Buist et al., American Journal of Sports Medicine, 2008 / Nielsen et al., JOSPT, 2014 / JOSPT, 2021",
+      "posted": false,
+      "ig_posted": false
+    }
+  }
 }
