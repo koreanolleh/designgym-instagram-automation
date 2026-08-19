@@ -1,0 +1,77 @@
+name: 사장계정 주간 캐러셀 렌더
+
+# 월요일 루틴이 weeks/<주차>.json 을 푸시하면 자동으로 렌더한다.
+# 맥이 꺼져 있어도 도는 것이 목적. 렌더 결과는 이 레포에 커밋되고
+# GitHub Pages로 서빙되어 ig_ceo.yml(화·목·토 19:30)이 발행에 쓴다.
+
+on:
+  push:
+    paths:
+      - 'weeks/*.json'
+  workflow_dispatch:
+    inputs:
+      spec:
+        description: '원고 파일 경로 (비우면 가장 최근 weeks/*.json)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install pillow
+
+      - name: 대상 원고 결정
+        id: pick
+        run: |
+          SPEC="${{ github.event.inputs.spec }}"
+          if [ -z "$SPEC" ]; then
+            SPEC=$(ls -1 weeks/*.json | sort | tail -1)
+          fi
+          echo "spec=$SPEC" >> $GITHUB_OUTPUT
+          echo "원고: $SPEC"
+
+      - name: 렌더 + 발행 큐 갱신
+        run: python make_week_ceo.py "${{ steps.pick.outputs.spec }}"
+
+      - name: 렌더 결과 검증
+        run: |
+          python - <<'PY'
+          import json, os, sys
+          plan = json.load(open('pending_posts_ceo.json', encoding='utf-8'))
+          bad = []
+          for day, p in plan['posts'].items():
+              if len(p['images']) != 7:
+                  bad.append(f"{day}: 이미지 {len(p['images'])}장")
+              for im in p['images']:
+                  if not os.path.exists(im['path']):
+                      bad.append(f"{day}: 파일 없음 {im['path']}")
+              if not p['caption'].strip():
+                  bad.append(f"{day}: 캡션 비어 있음")
+          if bad:
+              print("검증 실패:", *bad, sep="\n  ")
+              sys.exit(1)
+          print(f"검증 통과 — {len(plan['posts'])}건, 각 7장")
+          PY
+
+      - name: 커밋
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add images/ceo pending_posts_ceo.json
+          git diff --staged --quiet && exit 0
+          git commit -m "🎨 사장계정 캐러셀 렌더 $(TZ=Asia/Seoul date '+%Y-%m-%d')"
+          for i in 1 2 3; do
+            git push && break
+            git pull --rebase --autostash || git rebase --abort
+            sleep 5
+          done
