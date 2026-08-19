@@ -94,7 +94,11 @@ def scrim(size=(W, H)):
     grad = Image.new("L", (1, h))
     for y in range(h):
         r = y / (h - 1)
+        # 아래쪽: 표지·본문이 앉는 자리라 진하게
         a = 0 if r < 0.42 else int(round(((r - 0.42) / 0.58) ** 1.5 * 112))
+        # 위쪽: top 레이아웃과 배지가 밝은 사진 위에 놓일 때를 대비해 옅게
+        if r < 0.38:
+            a = max(a, int(round(((0.38 - r) / 0.38) ** 1.3 * 96)))
         grad.putpixel((0, y), a)
     mask = grad.resize((w, h))
     layer = Image.new("RGBA", (w, h), (0, 0, 0, 255))
@@ -112,40 +116,136 @@ def draw_chrome(draw):
     draw.rectangle([INSET, INSET, W - INSET, H - INSET], outline=AMBER + (150,), width=2)
     draw.rectangle([INSET, H - INSET - BAR_H, W - INSET, H - INSET], fill=AMBER)
     f = font(30)
-    draw.text(((W - text_w(draw, WATERMARK, f)) // 2, H - INSET - BAR_H - 60),
-              WATERMARK, font=f, fill=WHITE + (190,))
+    draw.text(((W - text_w(draw, WATERMARK, f)) // 2, 1215),
+              WATERMARK, font=f, fill=WHITE + (235,))
 
 
 def draw_cover(draw, slide):
+    # 8/13 샘플 실측: 글자높이 75px(=폰트 85), 줄 간격 109px, 첫 줄 글자 top 842
     lines = slide["lines"]
-    f = font(104)
-    y = 843
+    f = font(85)
+    y = 829
     for line in lines:
         draw.text((112, y), line, font=f, fill=WHITE)
-        y += 108
-    draw.rectangle([112, y + 26, 112 + 116, y + 31], fill=AMBER)
+        y += 109
+    draw.rectangle([112, y + 24, 112 + 116, y + 29], fill=AMBER)
+
+
+BODY_X = 140              # 본문 문단 좌측 기준선
+BODY_MAX_W = W - BODY_X * 2
+BODY_SIZE = 43
+BODY_LEADING = 68
+BODY_MAX_LINES = 5
+
+
+def wrap(draw, text, f, max_w):
+    """어절 단위로 접고, 한 어절이 너무 길면 글자 단위로 쪼갠다."""
+    lines, cur = [], ""
+    for word in text.split(" "):
+        trial = f"{cur} {word}".strip()
+        if text_w(draw, trial, f) <= max_w:
+            cur = trial
+            continue
+        if cur:
+            lines.append(cur)
+        cur = ""
+        for ch in word:
+            if text_w(draw, cur + ch, f) <= max_w:
+                cur += ch
+            else:
+                lines.append(cur)
+                cur = ch
+    if cur:
+        lines.append(cur)
+    return lines
+
+
+def draw_badge(draw, text, y0=103):
+    fb = font(34)
+    tw = text_w(draw, text, fb)
+    pad_x, pad_y = 28, 16
+    x0 = 108
+    x1, y1 = x0 + tw + pad_x * 2, y0 + 34 + pad_y * 2
+    draw.rounded_rectangle([x0, y0, x1, y1], radius=(y1 - y0) // 2, fill=AMBER)
+    draw.text((x0 + pad_x, y0 + pad_y - 4), text, font=fb, fill=(30, 26, 18))
+
+
+def draw_block(draw, lines, f, y, align, leading):
+    """여러 줄을 정렬 방식에 맞춰 그린다."""
+    for line in lines:
+        x = BODY_X if align == "left" else (W - text_w(draw, line, f)) // 2
+        draw.text((x, y), line, font=f, fill=WHITE)
+        y += leading
+    return y
 
 
 def draw_content(draw, slide):
-    # 좌상단 앰버 필 배지
-    if slide.get("badge"):
-        fb = font(34)
-        tw = text_w(draw, slide["badge"], fb)
-        pad_x, pad_y = 28, 16
-        x0, y0 = 108, 150
-        x1, y1 = x0 + tw + pad_x * 2, y0 + 34 + pad_y * 2
-        draw.rounded_rectangle([x0, y0, x1, y1], radius=(y1 - y0) // 2, fill=AMBER)
-        draw.text((x0 + pad_x, y0 + pad_y - 4), slide["badge"], font=fb, fill=(30, 26, 18))
+    """레이아웃 5종. 슬라이드마다 분량·배치를 바꿔 단조로움을 없앤다.
 
-    fm = font(52)
+    classic : 소제목 가운데 + 구분선 + 본문 (기본, 중간 분량)
+    bottom  : 아래쪽에 소제목·본문을 붙인 편집형 (긴 설명용)
+    top     : 위쪽에 붙여 사진 아래를 비우는 배치
+    big     : 문장 하나만 크게 (짧은 핵심용, 본문 없음)
+    stat    : 숫자 하나를 크게 + 짧은 설명
+    """
+    layout = slide.get("layout", "classic")
+    badge = slide.get("badge")
     main = slide.get("main", "")
-    draw.text(((W - text_w(draw, main, fm)) // 2, 600), main, font=fm, fill=WHITE)
+    body = slide.get("body") or slide.get("sub", "")
 
-    draw.rectangle([W // 2 - 58, 690, W // 2 + 58, 694], fill=AMBER)
+    if layout == "big":
+        if badge:
+            draw_badge(draw, badge)
+        f = font(66)
+        lines = wrap(draw, main, f, W - 150 * 2)
+        h = len(lines) * 84
+        draw_block(draw, lines, f, (H - h) // 2 + 40, "center", 84)
+        return
 
-    fs = font(44)
-    sub = slide.get("sub", "")
-    draw.text(((W - text_w(draw, sub, fs)) // 2, 748), sub, font=fs, fill=WHITE)
+    if layout == "stat":
+        if badge:
+            draw_badge(draw, badge)
+        fn = font(180)
+        num = slide.get("number", main)
+        draw.text(((W - text_w(draw, num, fn)) // 2, 520), num, font=fn, fill=WHITE)
+        draw.rectangle([W // 2 - 58, 790, W // 2 + 58, 794], fill=AMBER)
+        fb2 = font(44)
+        lines = wrap(draw, body, fb2, W - 150 * 2)
+        draw_block(draw, lines, fb2, 850, "center", 62)
+        return
+
+    fb2 = font(BODY_SIZE)
+    lines = wrap(draw, body, fb2, BODY_MAX_W) if body else []
+    if len(lines) > BODY_MAX_LINES:
+        raise ValueError(f"본문이 {BODY_MAX_LINES}줄을 넘습니다({len(lines)}줄): {body[:30]}…")
+
+    if layout == "bottom":
+        if badge:
+            draw_badge(draw, badge)
+        fm = font(56)
+        body_h = len(lines) * BODY_LEADING
+        y_main = 1120 - body_h - 110
+        draw.text((BODY_X, y_main), main, font=fm, fill=WHITE)
+        draw.rectangle([BODY_X, y_main + 88, BODY_X + 116, y_main + 93], fill=AMBER)
+        draw_block(draw, lines, fb2, y_main + 130, "left", BODY_LEADING)
+        return
+
+    if layout == "top":
+        if badge:
+            draw_badge(draw, badge)
+        fm = font(56)
+        draw.text((BODY_X, 250), main, font=fm, fill=WHITE)
+        draw.rectangle([BODY_X, 338, BODY_X + 116, 343], fill=AMBER)
+        draw_block(draw, lines, fb2, 386, "left", BODY_LEADING)
+        return
+
+    # classic
+    if badge:
+        draw_badge(draw, badge)
+    fm = font(50)
+    draw.text(((W - text_w(draw, main, fm)) // 2, 470), main, font=fm, fill=WHITE)
+    draw.rectangle([W // 2 - 58, 596, W // 2 + 58, 600], fill=AMBER)
+    draw_block(draw, lines, fb2, 660, "left", BODY_LEADING)
 
 
 def draw_closing(draw, slide):

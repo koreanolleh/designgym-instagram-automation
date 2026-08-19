@@ -68,7 +68,9 @@ def build_spec(car, bg_dir):
     for i, s in enumerate(car["slides"], start=1):
         slides.append({
             "type": "content", "bg": bgs[i],
-            "badge": s.get("badge", ""), "main": s.get("main", ""), "sub": s.get("sub", ""),
+            "badge": s.get("badge", ""), "main": s.get("main", ""),
+            "body": s.get("body", ""), "sub": s.get("sub", ""),
+            "layout": s.get("layout", "classic"), "number": s.get("number", ""),
         })
     slides.append({
         "type": "closing", "bg": bgs[-1],
