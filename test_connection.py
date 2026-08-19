@@ -15,8 +15,9 @@ def main():
         "access_token": TOKEN,
     }).json()
     print(r)
-    if r.get("account_type") == "BUSINESS":
-        print("✅ 비즈니스 계정 확인, 발행 가능")
+    # Instagram 로그인 API는 프로페셔널 계정(BUSINESS / MEDIA_CREATOR) 모두 발행 가능
+    if r.get("account_type") in ("BUSINESS", "MEDIA_CREATOR"):
+        print(f"✅ 프로페셔널 계정({r['account_type']}) 확인, 발행 가능")
 
 
 if __name__ == "__main__":

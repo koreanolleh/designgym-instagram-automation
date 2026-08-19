@@ -1,0 +1,49 @@
+name: 디자인짐 사장계정 인스타 발행 (화·목·토)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '1이면 발행 없이 점검만'
+        required: false
+        default: ''
+  schedule:
+    # UTC 10:30 = KST 19:30 / 화(2)·목(4)·토(6). ig_posted 플래그로 중복 안전
+    - cron: '30 10 * * 2,4,6'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install requests
+
+      - name: 오늘자 발행 (사장 계정)
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_CEO_ACCESS_TOKEN }}
+          IG_BUSINESS_ACCOUNT_ID: ${{ secrets.IG_CEO_ACCOUNT_ID }}
+          IG_PENDING_FILE: pending_posts_ceo.json
+          IG_ACCOUNT_LABEL: ceo
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: python server_ig_publish.py
+
+      - name: posted 상태 커밋
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add pending_posts_ceo.json
+          git diff --staged --quiet && exit 0
+          git commit -m "✅ $(TZ=Asia/Seoul date '+%Y-%m-%d') 사장계정 IG 발행 (Actions)"
+          for i in 1 2 3; do
+            git push && break
+            git pull --rebase --autostash || git rebase --abort
+            sleep 5
+          done

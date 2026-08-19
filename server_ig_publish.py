@@ -6,6 +6,10 @@
 - DRY_RUN=1이면 발행 없이 대상 확인 + 토큰 유효성만 점검
 
 시크릿: IG_ACCESS_TOKEN, IG_BUSINESS_ACCOUNT_ID (GitHub Secrets → env)
+
+계정 전환: IG_PENDING_FILE로 발행 대상 파일을 바꾼다.
+  - official  : 기본값 pending_posts.json
+  - 사장(ceo) : IG_PENDING_FILE=pending_posts_ceo.json + 해당 계정 토큰/ID
 """
 import os
 import json
@@ -17,7 +21,9 @@ import requests
 from ig_post import post_images, GRAPH_HOST, GRAPH_VERSION
 
 KST = timezone(timedelta(hours=9))
-PENDING = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pending_posts.json")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PENDING = os.path.join(BASE_DIR, os.environ.get("IG_PENDING_FILE", "pending_posts.json"))
+ACCOUNT_LABEL = os.environ.get("IG_ACCOUNT_LABEL", "official")
 
 
 def main():
@@ -32,11 +38,11 @@ def main():
             break
 
     if not entry:
-        print(f"[{today}] 오늘자 게시물 없음 — 종료")
+        print(f"[{today}][{ACCOUNT_LABEL}] 오늘자 게시물 없음 — 종료")
         return
 
     if entry.get("ig_posted"):
-        print(f"[{today}] {day_key} 이미 IG 게시됨 — 스킵")
+        print(f"[{today}][{ACCOUNT_LABEL}] {day_key} 이미 IG 게시됨 — 스킵")
         return
 
     urls = [im["image_url"] for im in entry.get("images", []) if im.get("image_url")]
@@ -52,11 +58,11 @@ def main():
             params={"fields": "id,username", "access_token": token},
             timeout=30,
         )
-        print(f"[DRY_RUN] {day_key} {today} / 이미지 {len(urls)}장 / 토큰 점검: {me.status_code} {me.json()}")
+        print(f"[DRY_RUN][{ACCOUNT_LABEL}] {day_key} {today} / 이미지 {len(urls)}장 / 토큰 점검: {me.status_code} {me.json()}")
         return
 
     media_id = post_images(urls, caption)
-    print(f"[{today}] {day_key} IG 게시 완료: media {media_id}")
+    print(f"[{today}][{ACCOUNT_LABEL}] {day_key} IG 게시 완료: media {media_id}")
 
     entry["posted"] = True
     entry["ig_posted"] = True
