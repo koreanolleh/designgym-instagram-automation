@@ -16,7 +16,8 @@ from prepare_week import week_label
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGES_ROOT = os.path.join(BASE_DIR, "images", "ceo")
-OBSIDIAN_CEO_BASE = os.path.expanduser(
+# GitHub Actions에서는 볼트 체크아웃 경로를 CEO_NOTE_BASE로 넘긴다
+OBSIDIAN_CEO_BASE = os.environ.get("CEO_NOTE_BASE") or os.path.expanduser(
     "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/메이크앤&옵시디언/"
     "03_프로젝트/디자인짐_콘텐츠_자동화/사장계정_주간초안"
 )
