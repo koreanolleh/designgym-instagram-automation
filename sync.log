@@ -2208,3 +2208,9 @@ push 완료
 노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
 노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
 노트 읽기 최종 실패 — 스킵
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
