@@ -6,3 +6,4 @@ __pycache__/
 .DS_Store
 tiktok-review-demo/.env
 ig_token_ceo.txt
+.hf_oauth.json

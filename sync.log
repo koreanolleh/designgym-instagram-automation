@@ -2182,3 +2182,21 @@ push 완료
 --- 2026-08-18 11:41:40 sync 시작
 노트 이미 있음 — 스킵
 수정된 내용 없음
+--- 2026-08-20 09:33:22 sync 시작
+노트 이미 있음 — 스킵
+수정된 내용 없음
+수정된 내용 없음
+--- 2026-08-20 09:43:18 sync 시작
+노트 이미 있음 — 스킵
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
+노트 읽기 재시도 1/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 2/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 3/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 4/5: [Errno 11] Resource deadlock avoided
+노트 읽기 재시도 5/5: [Errno 11] Resource deadlock avoided
+노트 읽기 최종 실패 — 스킵
