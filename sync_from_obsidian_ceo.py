@@ -20,7 +20,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PENDING_PATH = os.path.join(BASE_DIR, "pending_posts_ceo.json")
 EDIT_HISTORY_PATH = os.path.join(BASE_DIR, "edit_history_ceo.json")
 
-OBSIDIAN_CEO_BASE = os.path.expanduser(
+# GitHub Actions에서는 클론한 볼트 경로를 CEO_NOTE_BASE로 넘긴다(스레드 자동화와 동일 방식)
+OBSIDIAN_CEO_BASE = os.environ.get("CEO_NOTE_BASE") or os.path.expanduser(
     "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/메이크앤&옵시디언/"
     "03_프로젝트/디자인짐_콘텐츠_자동화/사장계정_주간초안"
 )
