@@ -26,6 +26,21 @@ jobs:
 
       - run: pip install requests
 
+      - name: 볼트에서 사장 수정본 반영 (발행 직전 최종 sync — 스레드 자동화와 동일 방식)
+        run: |
+          if [ -z "${{ secrets.VAULT_PUSH_TOKEN }}" ]; then
+            echo "⚠️ VAULT_PUSH_TOKEN 없음 — 옵시디언 수정본 반영 건너뜀(기존 캡션으로 발행)"
+            exit 0
+          fi
+          git clone --depth 1 "https://x-access-token:${{ secrets.VAULT_PUSH_TOKEN }}@github.com/koreanolleh/obsidian-vault.git" /tmp/vault || {
+            echo "볼트 클론 실패 — 기존 캡션으로 진행"; exit 0; }
+          BASE="/tmp/vault/03_프로젝트/디자인짐_콘텐츠_자동화/사장계정_주간초안"
+          if [ -d "$BASE" ]; then
+            CEO_NOTE_BASE="$BASE" python sync_from_obsidian_ceo.py || echo "sync 실패 — 기존 캡션으로 진행"
+          else
+            echo "볼트에 사장계정 주간초안 폴더 없음 — 건너뜀"
+          fi
+
       - name: 오늘자 발행 (사장 계정)
         env:
           IG_ACCESS_TOKEN: ${{ secrets.IG_CEO_ACCESS_TOKEN }}
@@ -39,7 +54,7 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add pending_posts_ceo.json
+          git add pending_posts_ceo.json edit_history_ceo.json
           git diff --staged --quiet && exit 0
           git commit -m "✅ $(TZ=Asia/Seoul date '+%Y-%m-%d') 사장계정 IG 발행 (Actions)"
           for i in 1 2 3; do
