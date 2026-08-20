@@ -12,6 +12,10 @@ on:
         description: '1이면 실제 게시 없이 준비까지만'
         required: false
         default: '0'
+      selftest:
+        description: '1이면 인증·토큰회전·MCP 연결만 점검'
+        required: false
+        default: '0'
 
 permissions:
   contents: write
@@ -38,6 +42,7 @@ jobs:
           HF_REFRESH_TOKEN: ${{ secrets.HF_REFRESH_TOKEN }}
           TIKTOK_CONNECTOR_ID: ${{ secrets.TIKTOK_CONNECTOR_ID }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
+          SELFTEST: ${{ github.event.inputs.selftest }}
           # 갱신토큰은 1회용이라 매 실행 후 새 값을 시크릿에 되돌려 써야 한다
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: python3 tt_publish.py

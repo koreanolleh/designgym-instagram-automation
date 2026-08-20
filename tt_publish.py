@@ -198,6 +198,20 @@ def pick_song(mcp, connector):
 
 def main():
     connector = os.environ["TIKTOK_CONNECTOR_ID"]
+
+    if os.environ.get("SELFTEST") == "1":
+        # 인증·토큰회전·MCP 연결만 확인한다. 발행일이 아닌 날에도 파이프라인 건강검진용.
+        mcp = Mcp(access_token())
+        tools = [t["name"] for t in mcp._call("tools/list", {}).get("tools", [])]
+        need = {"tiktok_prepare_publish", "tiktok_publish", "media_upload"}
+        missing = need - set(tools)
+        if missing:
+            raise SystemExit(f"필수 도구 없음: {missing}")
+        accounts = mcp.tool("tiktok_accounts", {})
+        log(f"자가진단 통과 — 도구 {len(tools)}개, 틱톡 계정 연결 확인")
+        log(f"계정: {json.dumps(accounts, ensure_ascii=False)[:200]}")
+        return 0
+
     data, day, entry = today_entry()
     if entry is None:
         log("오늘자 항목 없음 — 종료")
