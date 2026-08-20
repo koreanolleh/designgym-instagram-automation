@@ -1,0 +1,54 @@
+name: 틱톡 매일 발행
+
+# 클라우드 세션(claude.ai)이 죽어서 8/17~19 3일 연속 미발행이 난 뒤 만든 워크플로.
+# 힉스필드 MCP를 HTTP로 직접 호출하므로 세션이 죽을 일이 없다. 인스타(ig_daily.yml)와 동일 구조.
+
+on:
+  schedule:
+    - cron: '30 10 * * 1-5'   # UTC 10:30 = KST 19:30
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '1이면 실제 게시 없이 준비까지만'
+        required: false
+        default: '0'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tiktok-daily
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install --quiet pillow
+
+      - name: 오늘자 틱톡 발행
+        env:
+          HF_CLIENT_ID: ${{ secrets.HF_CLIENT_ID }}
+          HF_REFRESH_TOKEN: ${{ secrets.HF_REFRESH_TOKEN }}
+          TIKTOK_CONNECTOR_ID: ${{ secrets.TIKTOK_CONNECTOR_ID }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+          # 갱신토큰은 1회용이라 매 실행 후 새 값을 시크릿에 되돌려 써야 한다
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: python3 tt_publish.py
+
+      - name: 발행 기록 커밋
+        if: github.event.inputs.dry_run != '1'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pending_posts.json tiktok_publish.log tiktok_music.log
+          git diff --staged --quiet || {
+            git commit -m "✅ $(TZ=Asia/Seoul date +%F) 틱톡 발행 (Actions)"
+            for i in 1 2 3; do git push && break || { git pull --rebase --autostash; sleep 3; }; done
+          }
