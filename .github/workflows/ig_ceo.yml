@@ -54,7 +54,8 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add pending_posts_ceo.json edit_history_ceo.json
+          git add pending_posts_ceo.json
+          [ -f edit_history_ceo.json ] && git add edit_history_ceo.json || true
           git diff --staged --quiet && exit 0
           git commit -m "✅ $(TZ=Asia/Seoul date '+%Y-%m-%d') 사장계정 IG 발행 (Actions)"
           for i in 1 2 3; do
