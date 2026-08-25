@@ -16,7 +16,43 @@ const BLOG_ID = 'rjsrkdwlzladl1004';
 const IMAGES_ROOT = path.resolve(__dirname, '../images/ceo');
 
 // 마크다운 → 에디터 평문. **굵게** 표시는 제거하고 문단 구조만 살린다.
-const toPlain = md => md.split('\n').map(l => l.replace(/\*\*/g, '').replace(/^- /, '· ').trimEnd());
+// 구분선(---)은 에디터에서 의미가 없으므로 버린다.
+const toPlain = md => md.split('\n')
+  .map(l => l.replace(/\*\*/g, '').replace(/^- /, '· ').trimEnd())
+  .filter(l => !/^-{3,}$/.test(l.trim()));
+
+// 배치 계획이 없을 때: 표지=맨위, 마무리=맨끝, 나머지는 소제목마다.
+function fallbackPlan(md, files) {
+  const heads = md.split('\n').filter(l => /^\*\*.+\*\*$/.test(l.trim())).map(l => l.trim().replace(/\*\*/g, ''));
+  const mid = files.slice(1, -1);
+  const plan = [{ after: 'top', images: files.slice(0, 1) }];
+  heads.forEach((h, i) => { if (mid[i]) plan.push({ after: h, images: [mid[i]] }); });
+  if (files.length > 1) plan.push({ after: 'end', images: files.slice(-1) });
+  return plan;
+}
+
+// 본문 줄 + 배치 계획 → [{텍스트 줄들}, {이미지}] 순서 시퀀스
+function buildSequence(lines, plan) {
+  const at = new Map();               // 줄 인덱스 → 그 줄 뒤에 넣을 이미지들
+  let top = [], end = [];
+  for (const step of plan) {
+    if (step.after === 'top') { top = step.images; continue; }
+    if (step.after === 'end') { end = step.images; continue; }
+    const idx = lines.findIndex(l => l.includes(step.after));
+    if (idx === -1) { console.log(`  ⚠️ 소제목 못 찾음: ${step.after}`); continue; }
+    at.set(idx, (at.get(idx) || []).concat(step.images));
+  }
+  const seq = [];
+  if (top.length) seq.push({ img: top });
+  let buf = [];
+  lines.forEach((l, i) => {
+    buf.push(l);
+    if (at.has(i)) { seq.push({ text: buf }); buf = []; seq.push({ img: at.get(i) }); }
+  });
+  if (buf.length) seq.push({ text: buf });
+  if (end.length) seq.push({ img: end });
+  return seq;
+}
 
 async function clickAt(page, locator, label = '') {
   await locator.scrollIntoViewIfNeeded().catch(() => {});
@@ -56,11 +92,16 @@ async function prepareEditor(frame, page) {
 
   const title = car.blog_title;
   const lines = toPlain(car.blog);
-  const cover = path.join(IMAGES_ROOT, date, '01_cover.jpg');
-  const hasCover = fs.existsSync(cover);
+  // 캐러셀 이미지를 본문 소제목 자리에 나눠 넣는다(blog_image_plan).
+  // 계획이 없으면 표지는 맨 위, 마무리는 맨 끝, 나머지는 소제목마다 하나씩.
+  const imgDir = path.join(IMAGES_ROOT, date);
+  const allImgs = fs.existsSync(imgDir)
+    ? fs.readdirSync(imgDir).filter(f => f.endsWith('.jpg')).sort() : [];
+  const plan = car.blog_image_plan || fallbackPlan(car.blog, allImgs);
+  const planned = plan.reduce((n, s) => n + s.images.length, 0);
 
   console.log(`제목: ${title}`);
-  console.log(`본문: ${lines.length}줄 / 카테고리: ${CATEGORY} / 대표이미지: ${hasCover ? '있음' : '없음'}`);
+  console.log(`본문: ${lines.length}줄 / 카테고리: ${CATEGORY} / 이미지: ${planned}장 (${plan.length}곳 분산)`);
 
   const browser = await chromium.launch({ headless: !HEADED });
   const context = await browser.newContext({
@@ -71,6 +112,13 @@ async function prepareEditor(frame, page) {
   await page.goto(`https://blog.naver.com/${BLOG_ID}?Redirect=Write`, { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(6000);
 
+  // 로그인 쿠키가 만료되면 로그인 페이지로 튕긴다. 에디터 못 찾음과 구분해서 알려준다.
+  if (page.url().includes('nid.naver.com')) {
+    console.log('❌ 네이버 로그인이 만료됐습니다. `node login.js`로 다시 로그인하세요.');
+    await browser.close();
+    process.exit(2);
+  }
+
   const frame = page.frames().find(f => f.url().includes('PostWriteForm'));
   if (!frame) { console.log('❌ 에디터 프레임 못 찾음'); await browser.close(); process.exit(1); }
   await prepareEditor(frame, page);
@@ -80,50 +128,117 @@ async function prepareEditor(frame, page) {
   await page.keyboard.type(title, { delay: 12 });
   await page.waitForTimeout(600);
 
-  // 본문 첫 위치에 대표 이미지 먼저
+  // 본문: 시퀀스대로 텍스트와 이미지를 번갈아 넣는다
+  const seq = buildSequence(lines, plan);
   await clickAt(page, frame.locator('.se-component.se-text .se-text-paragraph').last(), '본문');
-  if (hasCover) {
-    const [chooser] = await Promise.all([
-      page.waitForEvent('filechooser', { timeout: 15000 }),
-      clickAt(page, frame.locator('button:has-text("사진")').first(), '사진'),
-    ]);
-    await chooser.setFiles([cover]);
-    await page.waitForTimeout(9000);
-    console.log(`이미지 삽입: ${await frame.locator('.se-component.se-image').count()}장`);
-    // 이미지 뒤로 커서 이동
-    await clickAt(page, frame.locator('.se-component.se-text .se-text-paragraph').last(), '본문 복귀');
-  }
 
-  // 본문
-  for (let i = 0; i < lines.length; i++) {
-    if (lines[i]) await page.keyboard.type(lines[i], { delay: 3 });
-    if (i < lines.length - 1) await page.keyboard.press('Enter');
-  }
-  await page.waitForTimeout(1500);
+  let inserted = 0;
+  for (let si = 0; si < seq.length; si++) {
+    const step = seq[si];
 
-  // 발행 패널 열기 → 카테고리 지정 (최종 발행은 누르지 않음)
-  await clickAt(page, frame.locator('button.publish_btn__m9KHH').first(), '발행 패널');
-  await page.waitForTimeout(2500);
+    if (step.text) {
+      for (let i = 0; i < step.text.length; i++) {
+        if (step.text[i]) await page.keyboard.type(step.text[i], { delay: 3 });
+        if (i < step.text.length - 1) await page.keyboard.press('Enter');
+      }
+      if (si < seq.length - 1) await page.keyboard.press('Enter');
+      await page.waitForTimeout(400);
+      continue;
+    }
 
-  const selBox = frame.locator('button.selectbox_button__jb1Dt').first();
-  const current = (await selBox.innerText().catch(() => '')).trim();
-  if (current !== CATEGORY) {
-    await clickAt(page, selBox, '카테고리 드롭다운');
-    await page.waitForTimeout(1200);
-    const opt = frame.locator(`:text-is("${CATEGORY}")`);
-    let picked = false;
-    for (let k = 0; k < await opt.count(); k++) {
-      const box = await opt.nth(k).boundingBox().catch(() => null);
-      if (box && box.x > 950 && box.y > 0) {
-        await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
-        picked = true; break;
+    const files = step.img.map(f => path.join(imgDir, f));
+    const before = await frame.locator('.se-component.se-image').count();
+    console.log(`  [${si + 1}/${seq.length}] 이미지 ${files.length}장 삽입 시도 (현재 ${before}장)`);
+
+    let done = false;
+    for (let tryN = 1; tryN <= 3 && !done; tryN++) {
+      try {
+        // 삽입 전 상태 정리: 도움말 패널이 툴바를 가릴 수 있다
+        const help = frame.locator('.se-help-panel-close-button').first();
+        if (await help.count() && await help.isVisible().catch(() => false)) {
+          await clickAt(page, help, '도움말 닫기');
+        }
+        // 본문에 커서를 확실히 둔다(이미지가 선택된 상태면 사진 버튼이 다르게 동작)
+        await clickAt(page, frame.locator('.se-component.se-text .se-text-paragraph').last(), '커서 배치');
+
+        const [chooser] = await Promise.all([
+          page.waitForEvent('filechooser', { timeout: 20000 }),
+          clickAt(page, frame.locator('button:has-text("사진")').first(), '사진'),
+        ]);
+        await chooser.setFiles(files);
+
+        // 2장 이상이면 "사진 첨부 방식"(개별사진/콜라주/슬라이드) 선택창이 뜬다.
+        // 블로그 본문에는 개별사진이 맞다. 안 뜨면 그냥 지나간다.
+        if (files.length > 1) {
+          const layout = frame.locator(':text-is("개별사진")').first();
+          try {
+            await layout.waitFor({ state: 'visible', timeout: 12000 });
+            await clickAt(page, layout, '개별사진 선택');
+            console.log('     첨부 방식: 개별사진');
+            await page.waitForTimeout(1500);
+          } catch { console.log('     첨부 방식 선택창 없음'); }
+        }
+
+        for (let waited = 0; waited < 90000; waited += 2000) {
+          await page.waitForTimeout(2000);
+          if (await frame.locator('.se-component.se-image').count() >= before + files.length) { done = true; break; }
+        }
+        if (!done) console.log(`     업로드 대기 초과 (시도 ${tryN})`);
+      } catch (e) {
+        console.log(`     실패 ${tryN}: ${e.message.split('\n')[0].slice(0, 50)}`);
+        if (tryN === 1) {
+          await page.screenshot({ path: `/tmp/fail_step${si + 1}.png` });
+          const toast = await frame.locator('[class*="toast"], [class*="alert"], [data-group="popupLayer"]').first()
+            .innerText().catch(() => '');
+          if (toast) console.log(`     화면 알림: ${toast.replace(/\n+/g, ' / ').slice(0, 100)}`);
+        }
+        await page.waitForTimeout(2000);
       }
     }
-    await page.waitForTimeout(1000);
-    console.log(picked ? `카테고리 선택: ${CATEGORY}` : `⚠️ 카테고리 "${CATEGORY}"를 찾지 못함`);
-  } else {
-    console.log(`카테고리 이미 ${CATEGORY}`);
+    inserted = await frame.locator('.se-component.se-image').count();
+    console.log(`     → 누적 ${inserted}/${planned}장`);
+    await clickAt(page, frame.locator('.se-component.se-text .se-text-paragraph').last(), '본문 복귀');
   }
+  console.log(`\n이미지 삽입 완료: ${inserted}/${planned}장`);
+  await page.waitForTimeout(1200);
+
+  // 발행 패널 열기 → 카테고리 지정 (최종 발행 버튼은 절대 누르지 않는다)
+  // 이미지 업로드 중 도움말 패널이 다시 뜨면 발행 버튼을 가리므로 매번 닫고 재시도한다.
+  let catResult = '실패';
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const help = frame.locator('.se-help-panel-close-button').first();
+      if (await help.count() && await help.isVisible().catch(() => false)) {
+        await clickAt(page, help, '도움말 닫기');
+      }
+      await clickAt(page, frame.locator('button.publish_btn__m9KHH').first(), '발행 패널');
+
+      const selBox = frame.locator('button.selectbox_button__jb1Dt').first();
+      await selBox.waitFor({ state: 'visible', timeout: 8000 });
+
+      const current = (await selBox.innerText()).trim();
+      if (current === CATEGORY) { catResult = `${CATEGORY} (이미 지정됨)`; break; }
+
+      await clickAt(page, selBox, '카테고리 드롭다운');
+      await page.waitForTimeout(1200);
+      const opt = frame.locator(`:text-is("${CATEGORY}")`);
+      for (let k = 0; k < await opt.count(); k++) {
+        const box = await opt.nth(k).boundingBox().catch(() => null);
+        if (box && box.x > 950 && box.y > 0) {
+          await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+          await page.waitForTimeout(1000);
+          break;
+        }
+      }
+      const after = (await selBox.innerText().catch(() => '')).trim();
+      if (after === CATEGORY) { catResult = CATEGORY; break; }
+      catResult = `선택 안 됨 (현재: ${after})`;
+    } catch (e) {
+      console.log(`  카테고리 시도 ${attempt} 실패: ${e.message.split('\n')[0].slice(0, 60)}`);
+      await page.waitForTimeout(2000);
+    }
+  }
+  console.log('카테고리:', catResult);
 
   // 임시저장 (발행 아님)
   await clickAt(page, frame.locator('button.save_btn__bzc5B').first(), '저장');

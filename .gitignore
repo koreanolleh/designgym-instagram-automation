@@ -7,3 +7,8 @@ __pycache__/
 tiktok-review-demo/.env
 ig_token_ceo.txt
 .hf_oauth.json
+
+blog_drafts.log
+naver_automation/auth.json
+naver_automation/profile/
+naver_automation/node_modules/
