@@ -1,0 +1,138 @@
+{
+  "_note": "주간 이미지 자동 생성용 프롬프트 라이브러리. 2026-08-24에 실물 레퍼런스를 직접 열어 확인한 스펙이 들어 있다. 제품 형태를 바꿀 일이 있으면 반드시 실물 사진을 먼저 확인하고 여기를 고칠 것 — 프롬프트를 즉석에서 지어내면 매번 반려된다.",
+
+  "shared": {
+    "quality": "Muted natural colour grading, premium lifestyle brand photography, shallow depth of field, realistic film-like grain. Do NOT add any yoga mat, rug or cork mat that is not described above.",
+    "no_branding": "ABSOLUTELY NO BRANDING: NO text, NO lettering, NO words, NO logo, NO wordmark, NO icon, NO pictogram and NO blurred smudge anywhere in the frame.",
+    "person": "Photorealistic documentary-style photograph shot on a full-frame camera with an 85mm lens. A real Korean woman in her late twenties. Photographic skin with visible natural texture, fine pores, subtle unevenness - NOT smooth plastic skin, NOT airbrushed, NOT waxy, NOT a CGI mannequin. Hair tied in a low bun with a few natural loose strands, never covering the face. Wardrobe: a fitted charcoal-grey sports top with a racerback and visible flatlock seams, matching high-waisted leggings with a visible waistband seam, realistic stretch wrinkles and natural creases where the body bends. Natural realistic human proportions, barefoot.",
+    "mat_body": "LONG full-size rectangular yoga mat, roughly 3:1 length-to-width (180x61cm), lying COMPLETELY UNROLLED AND FLAT - NOT rolled, NOT half-rolled, NOT folded, NOT curled at either end. A THICK CUSHIONED mat about 8MM thick - the near long edge shows clear visible thickness like a firm dense cushion with a slim dark edge band, NOT a thin 2-3mm travel mat, NOT a fluffy pile rug. Suede-like matte microfibre top with a fine soft fabric texture so the print looks absorbed into the fabric.",
+    "mat_artwork_rule": "THE PRINTED SHAPES ARE LARGE AND FILL ALMOST THE ENTIRE WIDTH of the mat - each shape stretches from very close to one long edge to very close to the other, leaving only a THIN cream margin along the top and bottom edges. They are WIDE ovals, noticeably wider across the mat than they are tall, sitting in a row down the length and nearly touching each other. Do NOT draw small round circles floating in the middle with wide empty cream borders. All shapes have soft irregular watercolour edges with paper-like blooming and visible mottled texture."
+  },
+
+  "products": {
+    "mat_active_steps": {
+      "label": "요가매트 Active steps",
+      "media": "ac1255f8-cd4f-4464-9618-944a4a36f140",
+      "kind": "mat",
+      "spec": "On a warm cream / off-white ground, in order along the length: a very PALE DUSTY BLUE-GREY watercolour oval; a warm GOLDEN-YELLOW oval crossed OVER by a translucent band of deep TEAL-GREEN wash that runs ACROSS THE MAT'S WIDTH (perpendicular to the long direction), blending into deep olive where they overlap; and a large DUSTY GREY-PURPLE oval - muted greyed-off mauve, more grey than violet, not bright lavender."
+    },
+    "mat_before_sunrise": {
+      "label": "요가매트 Before sunrise",
+      "media": "40b1f8bd-b58b-41ce-8814-20414b3ad39f",
+      "kind": "mat",
+      "spec": "On a cream ground: a deep NAVY-SLATE watercolour wash and soft APRICOT-PINK oval forms, with fine copper-orange line accents."
+    },
+    "mat_warm_sunlight": {
+      "label": "요가매트 Warm sunlight",
+      "media": "df98632b-00e9-4b4d-8e4f-59ddbe7be358",
+      "kind": "mat",
+      "spec": "On a cream ground: soft APRICOT-PINK oval forms, a warm YELLOW ring outline and a SLATE-NAVY block."
+    },
+    "band": {
+      "label": "힙업밴드 (3개입)",
+      "media": "86ffefa1-7898-4dee-8c72-bd4e683bc3ea",
+      "kind": "band",
+      "spec": "Thick woven jacquard elastic about 8cm wide with fine stitched edges. THE SET IS THREE DIFFERENT DESIGNS, never three copies of one pattern: (1) cream ground with brown palm fronds, a mustard-yellow oval and brown circles; (2) deep navy and slate-blue ground with cream palm leaves and a muted brown shape; (3) cream ground with large teal-blue organic shapes and beige patches. Each band carries a narrow BLACK fabric label wrapped around its middle, printed in small white with a minimal line-art dumbbell pictogram above the wordmark \"Design:Gym\". Soft floppy fabric - when laid down it collapses into a FLAT two-layer strip with softly rounded folded ends; it can never stand up or hold a round hoop shape."
+    },
+    "kettlebell_grey": {
+      "label": "문 케틀벨 4.5kg (라이트그레이)",
+      "media": "1861e4e2-bd35-4470-9e91-a87e1a7e4ad0",
+      "kind": "object",
+      "spec": "The outer body is a thick rounded disc whose BOTTOM IS CUT FLAT into a wide straight base so it stands on its own; a single LARGE CIRCULAR HOLE is set OFF-CENTRE, pushed UP and slightly to the upper-right, so material is THIN along the top-right rim and THICK along the bottom-left, forming a crescent of mass. One seamless moulded body, NO metal bell, NO separate looped handle, NO chain - the hole itself is the handle. Matte with a fine subtle pebbled texture. Colour is soft light warm grey, gently desaturated, NOT white, NOT charcoal, NOT beige or tan. ENGRAVED BADGE on the front face near the flat base: a shallow recessed oval plate carrying ONE line of text reading exactly \"Design:Gym | 10LB | KETTLEBELL\" in a very thin sans-serif, tone-on-tone slightly darker than the body, crisp and read normally left to right."
+    },
+    "kettlebell_mint": {
+      "label": "문 케틀벨 4.5kg (라이트민트)",
+      "media": "5fda9835-12a7-49fa-9066-6066e2a0ae55",
+      "kind": "object",
+      "spec": "Same shape as the grey moon kettlebell: thick rounded disc, BOTTOM CUT FLAT into a wide straight base, one LARGE OFF-CENTRE CIRCULAR HOLE pushed up and slightly right so the mass forms a crescent, one seamless moulded body with no metal bell and no separate handle. Matte finely pebbled surface. Colour is soft pale MINT green with a clearly visible gentle mint tint, not washed out to white. ENGRAVED BADGE near the flat base: shallow recessed oval plate reading exactly \"Design:Gym | 10LB | KETTLEBELL\" in a very thin tone-on-tone sans-serif, read normally left to right."
+    },
+    "dumbbell_blue": {
+      "label": "소프트 실리콘 모던 덤벨 1kg (라이트블루)",
+      "media": "bfcfd08b-b8c0-451e-8529-4c7523b3551e",
+      "kind": "object",
+      "spec": "A PAIR of them. Each one is a SMOOTH ELONGATED CAPSULE - a long stadium / lozenge shape: a rounded rectangle with fully semicircular ends and perfectly straight parallel long sides, gently domed on top like a smooth river pebble, one seamless soft-silicone moulded piece with a soft glossy sheen. THE SILHOUETTE IS CRITICAL - NO narrow middle, NO waist, NO pinch, NO grip bar, NO bulbous end weights: it is NOT a classic bone-shaped dumbbell and NOT two balls joined by a stick, and NOT a flat paddle or spatula. NO metal, NO knurling, NO chrome. Colour is glossy cool white with an extremely subtle pale blue tint, almost pure white. BRANDING - WORDMARK ONLY: the wordmark reads exactly \"Design:Gym\" printed SMALL in a soft muted blue-grey, very thin sans-serif with wide letter-spacing, running along the capsule. That text is the ONLY marking: absolutely NO icon, NO pictogram, NO human figure, NO monogram, NO other words."
+    },
+    "dumbbell_ivory": {
+      "label": "소프트 실리콘 모던 덤벨 1kg (아이보리)",
+      "media": "860d359b-be34-48a7-8a2a-b06df2f1d400",
+      "kind": "object",
+      "spec": "A PAIR of them. Each is a SMOOTH ELONGATED CAPSULE - a stadium / lozenge shape with fully semicircular ends and straight parallel long sides, gently domed, one seamless soft-silicone piece with a soft glossy sheen. NO waist, NO grip bar, NO bulbous ends - NOT a bone-shaped dumbbell, NOT a flat paddle. NO metal or knurling. Colour is warm off-white IVORY, almost white, NOT beige, NOT tan, NOT cream-yellow. BRANDING - WORDMARK ONLY: \"Design:Gym\" printed small in a soft muted grey, thin sans-serif with wide letter-spacing. NO icon, NO pictogram, NO other words."
+    }
+  },
+
+  "scenes": {
+    "mat_styled_corner": {
+      "hook": "제품 정물(사람 없음) - 창가 코너에 펼쳐둔 매트",
+      "prompt": "Editorial interior photograph, no people. A calm sunlit corner of a warm minimal Korean apartment: pale oak floor, a white linen curtain at the left, a low rattan stool with a small ceramic vase of dried branches against the wall. The mat lies spread flat on the floor running away from the camera at a slight diagonal, shot from a low three-quarter angle. Soft diffused morning window light from the left."
+    },
+    "mat_topdown": {
+      "hook": "탑다운 플랫레이(사람 없음) - 위에서 내려다본 매트",
+      "prompt": "Editorial flat-lay photograph shot straight down from directly above, no people. The mat lies spread flat on a pale oak floor, filling the frame along its length. A cork yoga block and a clear glass of water rest on the floor beside the mat, not on it. Soft even daylight, gentle natural shadows."
+    },
+    "mat_balasana": {
+      "hook": "얼굴 안 보이는 뒷모습 - 매트 위 아기자세",
+      "prompt": "Camera pulled back and slightly elevated, looking down the length of the mat from beyond its far end. The mat runs from the bottom of the frame to the top, its long axis pointing away from the camera, and the woman is positioned SQUARELY ON THE MAT AND ALIGNED WITH IT - her spine along the mat's centre line, head toward the far end, folded knees toward the near end. EVERY PART OF HER IS ON THE MAT: both knees, shins, torso, arms and hands rest on the printed surface; nothing touches the bare floor. Pose: BALASANA (child's pose) seen from behind and above - hips settled back on her heels, torso folded down, forehead toward the mat, both arms stretched forward with palms down, so her FACE IS COMPLETELY HIDDEN by the pose. Plenty of empty mat surface visible in front of her hands and behind her feet. Warm minimal Korean apartment, pale oak floor, late afternoon sunlight raking in low from the left through a linen curtain."
+    },
+    "mat_seated_side": {
+      "hook": "얼굴 안 보이는 옆모습 - 매트 위 앉은 사이드 스트레치",
+      "prompt": "Side view at seated eye level. The woman sits ON THE MAT with both legs folded, reaching one arm up and over into a seated side stretch, her head turned away and tipped down so her FACE IS OUT OF FRAME. Her whole body and both hands rest on the mat, nothing on the bare floor; the mat runs across the frame with generous empty surface visible at both ends. Warm minimal Korean apartment, pale oak floor, late afternoon golden light from the left."
+    },
+    "band_flatlay": {
+      "hook": "제품 정물(사람 없음) - 원목 바닥에 3종 플랫레이, 검정 라벨 노출",
+      "prompt": "Editorial product photograph, no people. Warm minimal Korean apartment, soft window light from the upper left, pale oak wood floor. All three bands lie FLAT on the floor side by side at a slight relaxed angle, each collapsed into a flattened two-layer strip with softly rounded folded ends, their black centre labels facing the camera. A small glass of water and a rolled beige linen towel near the top edge, softly out of focus."
+    },
+    "band_glute_bridge": {
+      "hook": "얼굴 프레임 밖 - 매트 위 글루트 브릿지, 밴드 허벅지 착용",
+      "prompt": "Fitness photograph, camera low near floor level, viewed from the SIDE in profile. A GLUTE BRIDGE mid-exercise: she lies on her back ON A YOGA MAT, knees bent with both feet flat on the mat, HIPS LIFTED HIGH into a straight line from knees to shoulders, glutes squeezing, thighs pressing outward against the band; shoulders, upper back and arms stay grounded on the mat. She is ENTIRELY ON THE MAT, nothing on the bare floor. Cropped at the shoulders so the FACE AND HEAD ARE COMPLETELY OUT OF FRAME. ONE band is worn flat around BOTH THIGHS together, sitting squarely just ABOVE THE KNEES, perpendicular to the thighs and pulled visibly TAUT - it must wrap both thighs evenly, NOT diagonal, NOT twisted, NOT over one leg only, NOT slipping toward the hip. Bright side window light, warm minimal apartment, pale oak floor around the mat."
+    },
+    "band_clamshell": {
+      "hook": "얼굴 프레임 밖 - 매트 위 클램쉘, 밴드 허벅지 착용",
+      "prompt": "Fitness photograph, camera at floor level from the SIDE. A CLAMSHELL mid-exercise: she lies on her side ON A YOGA MAT with knees bent and stacked, lifting the top knee upward against the band's resistance while her feet stay together. She is ENTIRELY ON THE MAT, nothing on the bare floor. Cropped at the shoulders so the FACE AND HEAD ARE COMPLETELY OUT OF FRAME. ONE band is worn flat around BOTH THIGHS just ABOVE THE KNEES, perpendicular to the thighs and visibly stretched by the lift - wrapping both thighs evenly, never diagonal or twisted. Soft window light, warm minimal apartment, pale oak floor around the mat."
+    },
+    "object_shelf": {
+      "hook": "제품 정물(사람 없음) - 오크 선반 위",
+      "prompt": "Editorial product photograph, no people. A slim pale oak wall shelf in a bright minimal Korean living room, softly blurred white wall behind, a small trailing plant and two stacked art books at the far end of the shelf. The product rests on the shelf, lit by soft daylight from the left."
+    },
+    "object_floor_low": {
+      "hook": "제품 정물(사람 없음) - 로우앵글 바닥, 오후 햇빛",
+      "prompt": "Editorial product photograph, no people. LOW CAMERA ANGLE, lens almost at floor level looking slightly up. Pale oak floor of a warm minimal Korean apartment, softly blurred living room and a linen sofa edge far behind, late afternoon sun casting one long soft shadow across the floor. The product stands by itself on the floor, filling much of the frame."
+    },
+    "object_bedside": {
+      "hook": "제품 정물(사람 없음) - 침실 협탁 위, 아침 무드",
+      "prompt": "Editorial product photograph, no people. A pale oak bedside table in a bright minimal Korean bedroom, rumpled white linen bedding softly blurred behind, a small ceramic cup and a folded book on the table. The product rests on the table in soft early-morning window light."
+    },
+    "object_window_bench": {
+      "hook": "제품 정물(사람 없음) - 창가 벤치 위",
+      "prompt": "Editorial product photograph, no people. A low pale oak bench under a bright window in a warm minimal Korean apartment, a white linen curtain moving slightly at the edge of frame, a small potted plant on the floor beside the bench. The product sits on the bench in soft daylight with a long gentle shadow."
+    }
+  },
+
+  "week_plans": [
+    [["mat_active_steps", "mat_styled_corner"], ["dumbbell_blue", "object_shelf"], ["band", "band_glute_bridge"], ["kettlebell_grey", "object_floor_low"], ["mat_before_sunrise", "mat_balasana"]],
+    [["kettlebell_mint", "object_window_bench"], ["mat_before_sunrise", "mat_topdown"], ["dumbbell_ivory", "object_bedside"], ["band", "band_flatlay"], ["mat_warm_sunlight", "mat_seated_side"]],
+    [["mat_warm_sunlight", "mat_styled_corner"], ["band", "band_clamshell"], ["kettlebell_grey", "object_bedside"], ["dumbbell_blue", "object_window_bench"], ["mat_active_steps", "mat_balasana"]],
+    [["dumbbell_ivory", "object_shelf"], ["mat_active_steps", "mat_topdown"], ["kettlebell_mint", "object_floor_low"], ["band", "band_glute_bridge"], ["mat_warm_sunlight", "mat_balasana"]]
+  ],
+
+  "captions": {
+    "mat": [
+      {"c": "펼쳐두면 결국 한 번은 올라가게 돼요.\n\n치우지 않아도 어색하지 않은 게\n이 매트의 진짜 장점입니다 🌿\n\n8mm라 무릎 닿아도 안 배깁니다.", "t": "펼쳐두면 결국 올라가게 되는 8mm 요가매트", "h": "#디자인짐 #요가매트 #홈요가 #홈트 #인테리어소품 #모닝루틴"},
+      {"c": "위에서 내려다보면 그림 같죠.\n\n스웨이드 재질이라 손바닥이 밀리지 않아서\n다운독 할 때 차이가 확실해요 🌅", "t": "손바닥이 안 밀리는 스웨이드 요가매트", "h": "#디자인짐 #요가매트 #홈요가 #플랫레이 #홈트 #다운독"},
+      {"c": "운동기구가 아니라 공간의 무드로 두는 매트.\n\n펴는 순간 나한테 집중하는 시간이 시작돼요 🤍", "t": "펴는 순간 시작되는 나만의 시간, 디자인 요가매트", "h": "#디자인짐 #요가매트 #홈트인테리어 #리빙스타그램 #홈요가"}
+    ],
+    "band": [
+      {"c": "밴드 운동하다 제일 짜증나는 게\n자꾸 말려 올라가는 거잖아요.\n\n안쪽 실리콘 라인 덕분에\n힘줄 때도 그 자리에 그대로 있어요 🔥", "t": "힘줘도 안 말려 올라가는 힙업밴드", "h": "#디자인짐 #힙업밴드 #힙업운동 #하체운동 #홈트 #운동밴드"},
+      {"c": "3개가 한 세트인 이유,\n디자인이 전부 다르거든요.\n\n오늘은 어떤 무늬로 할까 —\n고르는 재미로 시작하게 됩니다 🌿", "t": "오늘은 어떤 걸로 할까, 디자인 3종 힙업밴드", "h": "#디자인짐 #힙업밴드 #하체운동 #홈트 #운동밴드 #거실인테리어"}
+    ],
+    "kettlebell": [
+      {"c": "운동 끝나고 구석에 밀어두지 않아요.\n\n거실 한가운데 그냥 둬도\n오브제처럼 보이니까요.\n\n치울 일이 없으니 다음 날 또 들게 됩니다 🤍", "t": "치울 필요가 없어서 매일 들게 되는 케틀벨", "h": "#디자인짐 #케틀벨 #문케틀벨 #홈짐 #홈트 #거실인테리어"},
+      {"c": "지나갈 때마다 눈에 들어와서\n한 번씩 들게 돼요.\n\n숨겨두지 않아도 되는 운동기구,\n그게 시작하기 쉬운 이유입니다 🌿", "t": "숨겨두지 않아도 되는 문 케틀벨", "h": "#디자인짐 #케틀벨 #홈짐 #홈트 #인테리어운동기구"}
+    ],
+    "dumbbell": [
+      {"c": "선반에 그냥 올려둡니다.\n\n운동기구처럼 안 생겨서\n책이랑 화분 사이에 둬도 안 튀어요 ☁️\n\n1kg이라 지나가다 한 번씩 드는 게 전부인데,\n그게 매일 하게 되는 이유더라고요.", "t": "책 사이에 둬도 안 튀는 1kg 덤벨", "h": "#디자인짐 #덤벨 #모던덤벨 #홈트 #1kg덤벨 #인테리어운동기구"},
+      {"c": "일어나자마자 10번, 자기 전에 10번.\n\n1kg이라 부담이 없어서\n오히려 매일 하게 돼요 ☁️", "t": "아침저녁 10번씩, 부담 없는 1kg 덤벨", "h": "#디자인짐 #덤벨 #홈트 #미라클모닝 #가벼운운동 #침실인테리어"}
+    ]
+  },
+
+  "friday_tail": "\n\n나를 디자인하다, Design:Gym"
+}

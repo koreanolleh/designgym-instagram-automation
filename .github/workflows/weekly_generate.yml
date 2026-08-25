@@ -1,0 +1,75 @@
+name: 주간 이미지 생성
+
+# 2026-08-24 개편: 클라우드 루틴(claude.ai)은 저장소 push가 플랫폼에서 차단돼 있어
+# 주간 생성이 계속 실패했다. 발행과 마찬가지로 힉스필드 MCP를 Actions에서 직접 호출한다.
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'      # UTC 00:00 = KST 09:00 월요일
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '1이면 생성 없이 배분 계획만 출력'
+        required: false
+        default: '0'
+      week_of:
+        description: '대상 주 월요일 (YYYY-MM-DD). 비우면 이번 주'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly-generate
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install --quiet pillow
+
+      - name: 다음 주 이미지 5종 생성
+        env:
+          HF_CLIENT_ID: ${{ secrets.HF_CLIENT_ID }}
+          HF_REFRESH_TOKEN: ${{ secrets.HF_REFRESH_TOKEN }}
+          TIKTOK_CONNECTOR_ID: ${{ secrets.TIKTOK_CONNECTOR_ID }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+          WEEK_OF: ${{ github.event.inputs.week_of }}
+        run: python3 weekly_generate.py
+
+      - name: 결과 커밋
+        if: github.event.inputs.dry_run != '1'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pending_posts.json images
+          git diff --staged --quiet || {
+            git commit -m "🎨 $(TZ=Asia/Seoul date +%F) 주간 이미지 생성 (Actions)"
+            for i in 1 2 3; do git push && break || { git pull --rebase --autostash; sleep 3; }; done
+          }
+
+      - name: 컨펌 요청 이슈 생성
+        if: github.event.inputs.dry_run != '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          WEEK=$(python3 -c "import json;print(json.load(open('pending_posts.json'))['week_of'])")
+          TITLE="🎨 $WEEK 주간 이미지 컨펌 요청"
+          if ! gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
+            gh issue create --title "$TITLE" --body "이번 주 이미지 5장이 생성됐습니다.
+
+          저장소 \`images/$WEEK/\` 에서 확인하시고, 고칠 부분이 있으면 로컬 Claude 세션에 말씀해주세요.
+          컨펌 후 옵시디언 반영까지 진행합니다.
+
+          발행은 컨펌과 무관하게 인스타 18:30 / 틱톡 19:30 에 자동으로 나갑니다 —
+          바꿀 게 있으면 그 전에 알려주세요."
+          fi
