@@ -8,6 +8,20 @@ GRAPH_VERSION = "v21.0"
 GRAPH_HOST = "https://graph.instagram.com"
 
 
+def _check(resp, what: str):
+    """실패 시 메타가 돌려준 사유를 로그에 남긴다. raise_for_status만으로는 본문이 사라진다."""
+    if resp.ok:
+        return resp
+    try:
+        err = resp.json().get("error", {})
+        detail = err.get("error_user_msg") or err.get("message") or resp.text[:300]
+        code = f"{err.get('code','')}/{err.get('error_subcode','')}".strip("/")
+    except ValueError:
+        detail, code = resp.text[:300], ""
+    print(f"❌ {what} 실패 [{resp.status_code} {code}] {detail}", flush=True)
+    resp.raise_for_status()
+
+
 def _wait_until_finished(base: str, container_id: str, token: str):
     for _ in range(20):
         status = requests.get(f"{base}/{container_id}", params={
@@ -34,7 +48,7 @@ def post_images(image_urls: list, caption: str, token: str = None, ig_user_id: s
             "caption": caption,
             "access_token": token,
         })
-        create_resp.raise_for_status()
+        _check(create_resp, "단일 이미지 컨테이너")
         creation_id = create_resp.json()["id"]
         _wait_until_finished(node_base, creation_id, token)
     else:
@@ -47,7 +61,7 @@ def post_images(image_urls: list, caption: str, token: str = None, ig_user_id: s
                 "is_carousel_item": "true",
                 "access_token": token,
             })
-            child_resp.raise_for_status()
+            _check(child_resp, "캐러셀 낱장")
             child_id = child_resp.json()["id"]
             _wait_until_finished(node_base, child_id, token)
             child_ids.append(child_id)
@@ -58,7 +72,7 @@ def post_images(image_urls: list, caption: str, token: str = None, ig_user_id: s
             "caption": caption,
             "access_token": token,
         })
-        carousel_resp.raise_for_status()
+        _check(carousel_resp, "캐러셀 컨테이너")
         creation_id = carousel_resp.json()["id"]
         _wait_until_finished(node_base, creation_id, token)
 
@@ -66,7 +80,7 @@ def post_images(image_urls: list, caption: str, token: str = None, ig_user_id: s
         "creation_id": creation_id,
         "access_token": token,
     })
-    publish_resp.raise_for_status()
+    _check(publish_resp, "게시")
     return publish_resp.json()["id"]
 
 

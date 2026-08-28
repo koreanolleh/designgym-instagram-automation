@@ -97,6 +97,15 @@ def main():
             "note": "사장 계정 캐러셀 발행 대기열. 월요일 루틴이 주간 3건(화/목/토)을 채운다.",
             "posts": {}}
 
+    # 기존 큐의 발행 기록을 읽어둔다. 같은 주를 다시 렌더할 때 이미 올라간 글을
+    # 미발행으로 되돌리면 중복 게시가 난다.
+    if os.path.exists(PENDING):
+        try:
+            with open(PENDING, encoding="utf-8") as f:
+                plan["posts"] = json.load(f).get("posts", {})
+        except (json.JSONDecodeError, OSError) as e:
+            print(f"⚠️ 기존 큐를 읽지 못했습니다 ({e}) — 새로 만듭니다")
+
     for car in week["carousels"]:
         date = car["date"]
         weekday = DAY_KO[datetime.strptime(date, "%Y-%m-%d").weekday()]
@@ -114,6 +123,13 @@ def main():
         if car.get("source"):
             caption += f"\n\n📌 출처: {car['source']}"
 
+        # 같은 날짜가 이미 게시됐다면 그 기록을 유지한다.
+        # 렌더가 다시 돌 때 플래그를 False로 되돌리면 이미 올라간 글이 중복 게시된다.
+        prev = plan["posts"].get(weekday) or {}
+        keep = prev.get("date") == date and prev.get("ig_posted")
+        if keep:
+            print(f"  → {date}({weekday}) 이미 게시됨 — 발행 기록 유지")
+
         plan["posts"][weekday] = {
             "date": date,
             "cover": " ".join(car["cover"]),
@@ -121,9 +137,11 @@ def main():
             "caption": caption,
             "hashtags": car.get("hashtags", ""),
             "source": car.get("source", ""),
-            "posted": False,
-            "ig_posted": False,
+            "posted": bool(keep),
+            "ig_posted": bool(keep),
         }
+        if keep and prev.get("post_id"):
+            plan["posts"][weekday]["post_id"] = prev["post_id"]
         print(f"  → {date}({weekday}) {len(rel)}장 준비 완료")
 
     if dry:
