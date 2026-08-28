@@ -6,8 +6,12 @@ claude.ai 클라우드 세션뿐이었다. 그런데 그 세션이 예고 없이
 갱신토큰만 있으면 GitHub Actions(안 죽는 인프라)에서 직접 호출할 수 있다.
 
 사용:
-  python3 hf_auth.py            # 브라우저 1회 승인 → refresh_token 출력
-  python3 hf_auth.py --refresh  # 저장된 refresh_token으로 access_token 발급 테스트
+  python3 hf_auth.py            # 브라우저 1회 승인 → GitHub Secrets에 심고 로컬 사본 삭제
+  python3 hf_auth.py --keep     # 로컬에 토큰을 남긴다 (디버깅용, 평소 쓰지 말 것)
+
+★ 갱신토큰은 GitHub Secrets 한 곳에만 둔다. 로컬에 사본을 남기고 나중에 그걸로 실행하면,
+서버가 '이미 폐기된 토큰 재사용'으로 보고 **체인 전체를 무효화**한다 — 그러면 정상이던
+Actions 쪽 토큰까지 같이 죽는다(2026-08-28에 실제로 이렇게 발행이 멈췄다).
 """
 import argparse
 import base64
@@ -78,7 +82,7 @@ class Catcher(http.server.BaseHTTPRequestHandler):
         pass
 
 
-def login():
+def login(keep_local=False):
     client = register_client()
     cid = client["client_id"]
     verifier = base64.urlsafe_b64encode(secrets.token_bytes(64)).decode().rstrip("=")
@@ -123,14 +127,37 @@ def login():
         "resource": "https://mcp.higgsfield.ai/mcp",
     }, form=True)
 
-    data = {"client_id": cid, "refresh_token": tok.get("refresh_token"),
-            "access_token": tok.get("access_token")}
+    rt = tok.get("refresh_token")
+    if not rt:
+        raise SystemExit("갱신토큰이 안 내려왔습니다 — offline_access 스코프를 확인하세요")
+
+    if keep_local:
+        with open(STORE, "w") as f:
+            json.dump({"client_id": cid, "refresh_token": rt}, f, indent=2)
+        os.chmod(STORE, 0o600)
+        print(f"\n로컬 저장 → {STORE}  (★ 이걸로 발행 스크립트를 돌리지 말 것)")
+        return
+
+    seed_secrets(cid, rt)
+
+
+def seed_secrets(cid, rt):
+    """토큰을 GitHub Secrets에만 심고 로컬 사본은 남기지 않는다."""
+    import subprocess
+    for name, val in (("HF_CLIENT_ID", cid), ("HF_REFRESH_TOKEN", rt)):
+        r = subprocess.run(["gh", "secret", "set", name, "--body", val],
+                           capture_output=True, text=True,
+                           cwd=os.path.dirname(os.path.abspath(__file__)))
+        if r.returncode != 0:
+            raise SystemExit(f"시크릿 {name} 설정 실패: {r.stderr[:300]}")
+        print(f"GitHub Secret {name} 갱신 완료")
+    # 로컬에는 토큰을 남기지 않는다 (재사용 감지로 체인이 죽는 사고 방지)
     with open(STORE, "w") as f:
-        json.dump(data, f, indent=2)
+        json.dump({"client_id": cid,
+                   "note": "갱신토큰은 GitHub Secrets에만 있다. 로컬 실행 금지."}, f,
+                  ensure_ascii=False, indent=2)
     os.chmod(STORE, 0o600)
-    print(f"\n저장 완료 → {STORE}")
-    print(f"refresh_token 있음: {bool(tok.get('refresh_token'))}")
-    print(f"만료(초): {tok.get('expires_in')}")
+    print(f"로컬 사본 제거 완료 → {STORE} (client_id만 남김)")
 
 
 def refresh():
@@ -152,6 +179,7 @@ def refresh():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--refresh", action="store_true")
+    ap.add_argument("--keep", action="store_true",
+                    help="로컬에 토큰을 남긴다(디버깅용). 평소에는 쓰지 말 것")
     a = ap.parse_args()
-    refresh() if a.refresh else login()
+    login(keep_local=a.keep)

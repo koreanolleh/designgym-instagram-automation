@@ -33,10 +33,30 @@ def log(m):
     print(f"[{datetime.now(KST):%H:%M:%S}] {m}", flush=True)
 
 
+def _guard_local():
+    """로컬에서 갱신토큰을 쓰지 못하게 막는다.
+
+    2026-08-28: 로컬에 남아있던 옛 갱신토큰으로 실행했더니, 서버가 '폐기된 토큰 재사용'으로
+    보고 토큰 체인 전체를 무효화했다. 그 바람에 정상이던 GitHub Secrets 쪽 토큰까지 죽어
+    발행이 멈췄다. 토큰은 Secrets 한 곳에만 두고, 로컬에서는 아예 쓰지 않는다.
+    """
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        return
+    if os.environ.get("ALLOW_LOCAL_TOKEN") == "1":
+        log("경고: 로컬에서 갱신토큰을 씁니다 — 실패하면 Actions 토큰까지 무효화될 수 있습니다")
+        return
+    raise SystemExit(
+        "로컬 실행 차단: 갱신토큰은 GitHub Secrets에만 둡니다.\n"
+        "  로컬의 낡은 토큰으로 실행하면 재사용 감지로 Actions 토큰까지 무효화됩니다(2026-08-28 사고).\n"
+        "  → 발행은 Actions에서: gh workflow run tiktok_daily.yml [-f target_date=YYYY-MM-DD]\n"
+        "  → 재인증이 필요하면: python3 hf_auth.py (시크릿까지 자동 갱신)")
+
+
 def access_token():
     """갱신토큰은 1회용이다 — 쓸 때마다 새 토큰이 내려오고 옛것은 즉시 무효가 된다.
     새 토큰을 곧바로 보관처(로컬 파일 또는 GitHub Secret)에 되돌려놓지 않으면
     다음 실행이 인증부터 실패한다."""
+    _guard_local()
     body = urllib.parse.urlencode({
         "grant_type": "refresh_token",
         "refresh_token": os.environ["HF_REFRESH_TOKEN"],
