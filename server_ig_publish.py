@@ -105,6 +105,19 @@ def main():
         print(f"[{today}] 이미지 URL 없음 — 실패로 종료", file=sys.stderr)
         sys.exit(1)
 
+    # 인스타는 8MB 초과 이미지를 400으로 거부한다(2026-08-27 실패 원인). 올리기 전에 막고 사유를 남긴다.
+    for u in urls:
+        try:
+            req = requests.head(u, timeout=30, allow_redirects=True)
+            size = int(req.headers.get("Content-Length", 0))
+        except Exception as e:
+            print(f"[{today}] 이미지 용량 확인 실패(무시하고 진행): {e}")
+            continue
+        if size > 8 * 1024 * 1024:
+            print(f"[{today}] 이미지가 {size/1024/1024:.2f}MB로 인스타 한도(8MB) 초과 — 발행 중단\n"
+                  f"  {u}\n  → 1080px JPEG으로 줄여 다시 올리고 image_url을 교체하세요.", file=sys.stderr)
+            sys.exit(1)
+
     if os.environ.get("DRY_RUN") == "1":
         token = os.environ["IG_ACCESS_TOKEN"]
         me = requests.get(

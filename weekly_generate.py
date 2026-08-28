@@ -85,6 +85,31 @@ def caption_for(lib, product_key, idx, is_friday):
     return body, tags, tt[:90]
 
 
+def to_web_jpeg(url, width=1080, quality=92):
+    """생성 원본(PNG)을 발행용 JPEG으로. 인스타 8MB 한도와 틱톡 JPEG 요구를 한 번에 만족시킨다."""
+    import io
+    from PIL import Image
+    with urllib.request.urlopen(url, timeout=180) as r:
+        im = Image.open(io.BytesIO(r.read())).convert("RGB")
+    w, h = im.size
+    im = im.resize((width, round(h * width / w)), Image.LANCZOS)
+    buf = io.BytesIO()
+    im.save(buf, "JPEG", quality=quality, optimize=True)
+    return buf.getvalue()
+
+
+def upload_bytes(mcp, data, filename):
+    """힉스필드에 올려 영구 URL을 받는다. 생성 결과 URL 대신 이걸 발행에 쓴다."""
+    up = mcp.tool("media_upload", {"filename": filename, "content_type": "image/jpeg"})["uploads"][0]
+    req = urllib.request.Request(up["upload_url"], data=data,
+                                 headers={"Content-Type": "image/jpeg"}, method="PUT")
+    with urllib.request.urlopen(req, timeout=180) as r:
+        if r.status != 200:
+            raise RuntimeError(f"업로드 실패 {r.status}")
+    mcp.tool("media_confirm", {"type": "image", "media_id": up["media_id"]})
+    return up["url"]
+
+
 def main():
     lib = json.load(open(os.path.join(BASE, "weekly_prompts.json"), encoding="utf-8"))
     week_of = os.environ.get("WEEK_OF") or next_monday().strftime("%Y-%m-%d")
@@ -143,10 +168,13 @@ def main():
         if not url:
             missing.append(KR[day])
             continue
-        fname = f"{day[:3].lower()}_1_{pk}.png"
-        with urllib.request.urlopen(url, timeout=180) as resp, \
-             open(os.path.join(img_dir, fname), "wb") as f:
-            f.write(resp.read())
+        # 인스타는 이미지 8MB를 넘으면 400으로 거부한다(2026-08-27 금요일분 10.46MB로 실패).
+        # 생성 원본은 PNG 10MB대까지 나오므로, 발행에 쓸 URL은 1080px JPEG으로 만들어 올린다.
+        fname = f"{day[:3].lower()}_1_{pk}.jpg"
+        jpeg = to_web_jpeg(url)
+        with open(os.path.join(img_dir, fname), "wb") as f:
+            f.write(jpeg)
+        url = upload_bytes(mcp, jpeg, fname)
         cap, tags, tt = caption_for(lib, pk, i, day == "Friday")
         posts[day] = {
             "date": date, "product": lib["products"][pk]["label"],
