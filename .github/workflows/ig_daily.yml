@@ -7,6 +7,10 @@ on:
         description: '1이면 발행 없이 점검만'
         required: false
         default: ''
+      target_date:
+        description: '특정 날짜분을 올린다 (YYYY-MM-DD). 비우면 자동'
+        required: false
+        default: ''
   schedule:
     - cron: '30 9 * * 1-5'  # 백업: UTC 9:30 = KST 18:30 (+GitHub 지연). ig_posted 플래그로 중복 안전
 
