@@ -151,13 +151,47 @@ class Mcp:
         return res
 
 
+MAX_LATE_DAYS = int(os.environ.get("TT_MAX_LATE_DAYS", "3"))
+
+
+def target_today():
+    """기준 날짜. TARGET_DATE로 특정 날짜를 콕 집을 수 있다.
+
+    GitHub 예약 실행이 크게 밀리면(2026-08-27: 10시간) 실행 시각이 다음 날 새벽이 되어
+    엉뚱한 날짜분을 올린다. 정오 이전 실행은 전날 저녁 슬롯이 밀린 것으로 보고 전날을 기준으로 삼는다.
+    """
+    forced = os.environ.get("TARGET_DATE")
+    if forced:
+        return forced
+    now = datetime.now(KST)
+    if now.hour < 12:
+        now -= timedelta(days=1)
+    return now.strftime("%Y-%m-%d")
+
+
 def today_entry():
+    """예정일이 지났는데 아직 안 올라간 것 중 가장 최근 것을 고른다.
+
+    날짜가 정확히 일치할 때만 올리면, 실행이 하루를 넘겨 밀렸을 때 그 날짜분이 영영 누락된다
+    (2026-08-27 목요일분이 이렇게 통째로 빠졌다). 인스타 쪽과 동일하게 큐 방식으로 맞춘다.
+    """
     p = os.path.join(BASE, "pending_posts.json")
     d = json.load(open(p, encoding="utf-8"))
-    today = datetime.now(KST).strftime("%Y-%m-%d")
+    today = target_today()
+    due = []
     for day, e in d["posts"].items():
-        if e.get("date") == today:
+        dt = e.get("date")
+        if not dt or dt > today or e.get("tiktok_posted"):
+            continue
+        late = (datetime.strptime(today, "%Y-%m-%d") - datetime.strptime(dt, "%Y-%m-%d")).days
+        due.append((dt, day, e, late))
+    due.sort(key=lambda t: t[0], reverse=True)          # 최신 예정분 우선
+    for dt, day, e, late in due:
+        if late <= MAX_LATE_DAYS:
+            if late:
+                log(f"{dt} 예정분이 {late}일 밀렸습니다 — 지금 올립니다")
             return d, day, e
+        log(f"{day}({dt}) 건너뜀 — {late}일 밀려 한도({MAX_LATE_DAYS}일) 초과")
     return d, None, None
 
 

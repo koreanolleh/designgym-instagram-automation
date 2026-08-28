@@ -65,8 +65,23 @@ def pick(posts: dict, today: str):
     return (*chosen, passed)
 
 
+def target_today():
+    """기준 날짜. TARGET_DATE로 특정 날짜를 콕 집을 수 있다.
+
+    GitHub 예약 실행이 크게 밀리면(2026-08-27: 10시간) 실행 시각이 다음 날 새벽이 되어
+    엉뚱한 날짜분을 올린다. 정오 이전 실행은 전날 저녁 슬롯이 밀린 것으로 보고 전날을 기준으로 삼는다.
+    """
+    forced = os.environ.get("TARGET_DATE")
+    if forced:
+        return forced
+    now = datetime.now(KST)
+    if now.hour < 12:
+        now -= timedelta(days=1)
+    return now.strftime("%Y-%m-%d")
+
+
 def main():
-    today = datetime.now(KST).strftime("%Y-%m-%d")
+    today = target_today()
     with open(PENDING, encoding="utf-8") as f:
         data = json.load(f)
 

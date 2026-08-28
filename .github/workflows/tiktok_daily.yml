@@ -16,6 +16,10 @@ on:
         description: '1이면 인증·토큰회전·MCP 연결만 점검'
         required: false
         default: '0'
+      target_date:
+        description: '특정 날짜분을 올린다 (YYYY-MM-DD). 비우면 자동'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -43,6 +47,7 @@ jobs:
           TIKTOK_CONNECTOR_ID: ${{ secrets.TIKTOK_CONNECTOR_ID }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
           SELFTEST: ${{ github.event.inputs.selftest }}
+          TARGET_DATE: ${{ github.event.inputs.target_date }}
           # 갱신토큰은 1회용이라 매 실행 후 새 값을 시크릿에 되돌려 써야 한다
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: python3 tt_publish.py

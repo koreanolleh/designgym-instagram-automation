@@ -30,6 +30,7 @@ jobs:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_BUSINESS_ACCOUNT_ID: ${{ secrets.IG_BUSINESS_ACCOUNT_ID }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
+          TARGET_DATE: ${{ github.event.inputs.target_date }}
         run: python server_ig_publish.py
 
       - name: posted 상태 커밋
