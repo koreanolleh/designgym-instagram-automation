@@ -78,10 +78,13 @@ jobs:
             for i in 1 2 3; do git push && break || { git pull --rebase --autostash; sleep 3; }; done
           }
 
+      # 알림 실패가 생성 전체를 실패로 만들지 않도록 continue-on-error.
+      # 이미지·큐·옵시디언 노트는 이 앞 단계에서 이미 커밋됐다.
       - name: 컨펌 요청 이슈 생성
         if: github.event.inputs.dry_run != '1'
+        continue-on-error: true
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           WEEK=$(python3 -c "import json;print(json.load(open('pending_posts.json'))['week_of'])")
           CREDITS=$(python3 -c "
