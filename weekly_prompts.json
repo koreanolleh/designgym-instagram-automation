@@ -1,6 +1,5 @@
 {
-  "_note": "주간 이미지 자동 생성용 프롬프트 라이브러리. 2026-08-24에 실물 레퍼런스를 직접 열어 확인한 스펙이 들어 있다. 제품 형태를 바꿀 일이 있으면 반드시 실물 사진을 먼저 확인하고 여기를 고칠 것 — 프롬프트를 즉석에서 지어내면 매번 반려된다.",
-
+  "_note": "주간 이미지 자동 생성용 프롬프트 라이브러리. 제품 스펙은 쇼핑몰 상세페이지 실측값이다 (덤벨 16x4.5cm 1kg 2개입 + 엣지패턴 / 밴드 둘레 66·76·86cm 폭 8cm 3종 다른 길이). 형태를 바꿀 일이 있으면 반드시 상세페이지를 먼저 확인하고 여기를 고칠 것 — 즉석에서 지어내면 매번 반려된다.",
   "shared": {
     "quality": "Muted natural colour grading, premium lifestyle brand photography, shallow depth of field, realistic film-like grain. Do NOT add any yoga mat, rug or cork mat that is not described above.",
     "no_branding": "ABSOLUTELY NO BRANDING: NO text, NO lettering, NO words, NO logo, NO wordmark, NO icon, NO pictogram and NO blurred smudge anywhere in the frame.",
@@ -8,7 +7,6 @@
     "mat_body": "LONG full-size rectangular yoga mat, roughly 3:1 length-to-width (180x61cm), lying COMPLETELY UNROLLED AND FLAT - NOT rolled, NOT half-rolled, NOT folded, NOT curled at either end. A THICK CUSHIONED mat about 8MM thick - the near long edge shows clear visible thickness like a firm dense cushion with a slim dark edge band, NOT a thin 2-3mm travel mat, NOT a fluffy pile rug. Suede-like matte microfibre top with a fine soft fabric texture so the print looks absorbed into the fabric.",
     "mat_artwork_rule": "THE PRINTED SHAPES ARE LARGE AND FILL ALMOST THE ENTIRE WIDTH of the mat - each shape stretches from very close to one long edge to very close to the other, leaving only a THIN cream margin along the top and bottom edges. They are WIDE ovals, noticeably wider across the mat than they are tall, sitting in a row down the length and nearly touching each other. Do NOT draw small round circles floating in the middle with wide empty cream borders. All shapes have soft irregular watercolour edges with paper-like blooming and visible mottled texture."
   },
-
   "products": {
     "mat_active_steps": {
       "label": "요가매트 Active steps",
@@ -32,7 +30,7 @@
       "label": "힙업밴드 (3개입)",
       "media": "86ffefa1-7898-4dee-8c72-bd4e683bc3ea",
       "kind": "band",
-      "spec": "Thick woven jacquard elastic about 8cm wide with fine stitched edges. THE SET IS THREE DIFFERENT DESIGNS, never three copies of one pattern: (1) cream ground with brown palm fronds, a mustard-yellow oval and brown circles; (2) deep navy and slate-blue ground with cream palm leaves and a muted brown shape; (3) cream ground with large teal-blue organic shapes and beige patches. Each band carries a narrow BLACK fabric label wrapped around its middle, printed in small white with a minimal line-art dumbbell pictogram above the wordmark \"Design:Gym\". Soft floppy fabric - when laid down it collapses into a FLAT two-layer strip with softly rounded folded ends; it can never stand up or hold a round hoop shape."
+      "spec": "THE 3-PIECE SET IS THREE DIFFERENT DESIGNS AT THREE DIFFERENT LENGTHS - never three copies of one pattern and never three equal lengths. Real measured spec (circumference / flat length when laid down, all 8cm wide):\n  (1) SHORTEST, flat about 33cm long: cream and warm beige ground with large TEAL-BLUE organic shapes at both ends, the most minimal of the three\n  (2) MEDIUM, flat about 38cm long: deep NAVY and mid-blue ground with cream palm leaves and a muted brown shape\n  (3) LONGEST, flat about 43cm long: cream ground with a big MUSTARD-YELLOW shape, brown palm fronds and a maroon circle\nPROPORTION IS CRITICAL: each band is a SHORT CHUNKY STRIP, only about 4 to 5.5 times longer than it is wide (33-43cm long by 8cm wide). Do NOT draw them long and thin like ribbons or belts. Thick woven jacquard elastic with fine stitched edges; the inner face has fine silicone anti-slip lines. Each band carries a narrow BLACK fabric label wrapped around its MIDDLE, printed in small white with a minimal line-art dumbbell pictogram above the wordmark \"Design:Gym\". Soft floppy fabric - laid down it collapses into a FLAT two-layer strip with softly rounded folded ends; it can never stand up or hold a round hoop shape."
     },
     "kettlebell_grey": {
       "label": "문 케틀벨 4.5kg (라이트그레이)",
@@ -50,16 +48,15 @@
       "label": "소프트 실리콘 모던 덤벨 1kg (라이트블루)",
       "media": "bfcfd08b-b8c0-451e-8529-4c7523b3551e",
       "kind": "object",
-      "spec": "A PAIR of them. Each one is a SMOOTH ELONGATED CAPSULE - a long stadium / lozenge shape: a rounded rectangle with fully semicircular ends and perfectly straight parallel long sides, gently domed on top like a smooth river pebble, one seamless soft-silicone moulded piece with a soft glossy sheen. THE SILHOUETTE IS CRITICAL - NO narrow middle, NO waist, NO pinch, NO grip bar, NO bulbous end weights: it is NOT a classic bone-shaped dumbbell and NOT two balls joined by a stick, and NOT a flat paddle or spatula. NO metal, NO knurling, NO chrome. Colour is glossy cool white with an extremely subtle pale blue tint, almost pure white. BRANDING - WORDMARK ONLY: the wordmark reads exactly \"Design:Gym\" printed SMALL in a soft muted blue-grey, very thin sans-serif with wide letter-spacing, running along the capsule. That text is the ONLY marking: absolutely NO icon, NO pictogram, NO human figure, NO monogram, NO other words."
+      "spec": "A PAIR of them (sold as a 2-piece set, 1kg each). Real measured spec: each one is 16cm long and 4.5cm across - a SLIM ELONGATED BAR roughly 3.5 times longer than it is thick, sized to be gripped in one closed hand with the rounded ends just peeking out past the fist. Do NOT render it short and stubby like a bar of soap. The form is a smooth stadium / capsule: fully semicircular ends, straight parallel long sides, gently domed on top, one seamless soft-silicone moulded piece with a soft satin sheen. THE SILHOUETTE IS CRITICAL - NO narrow middle, NO waist, NO pinch, NO grip bar, NO bulbous end weights: it is NOT a classic bone-shaped dumbbell, NOT two balls joined by a stick, NOT a flat paddle. NO metal, NO knurling, NO chrome. NON-SLIP EDGE PATTERN: along each of the two long sides runs a band of fine parallel grooves cut into the silicone, a subtle ribbed texture for grip, clearly visible where the side catches the light. BRANDING - WORDMARK ONLY: \"Design:Gym\" printed SMALL in a soft muted grey, very thin sans-serif with wide letter-spacing, running ALONG the length near one end. That text is the ONLY marking: absolutely NO icon, NO pictogram, NO human figure, NO monogram, NO other words. Colour is glossy cool white with an extremely subtle pale blue tint, almost pure white."
     },
     "dumbbell_ivory": {
       "label": "소프트 실리콘 모던 덤벨 1kg (아이보리)",
       "media": "860d359b-be34-48a7-8a2a-b06df2f1d400",
       "kind": "object",
-      "spec": "A PAIR of them. Each is a SMOOTH ELONGATED CAPSULE - a stadium / lozenge shape with fully semicircular ends and straight parallel long sides, gently domed, one seamless soft-silicone piece with a soft glossy sheen. NO waist, NO grip bar, NO bulbous ends - NOT a bone-shaped dumbbell, NOT a flat paddle. NO metal or knurling. Colour is warm off-white IVORY, almost white, NOT beige, NOT tan, NOT cream-yellow. BRANDING - WORDMARK ONLY: \"Design:Gym\" printed small in a soft muted grey, thin sans-serif with wide letter-spacing. NO icon, NO pictogram, NO other words."
+      "spec": "A PAIR of them (sold as a 2-piece set, 1kg each). Real measured spec: each one is 16cm long and 4.5cm across - a SLIM ELONGATED BAR roughly 3.5 times longer than it is thick, sized to be gripped in one closed hand with the rounded ends just peeking out past the fist. Do NOT render it short and stubby like a bar of soap. The form is a smooth stadium / capsule: fully semicircular ends, straight parallel long sides, gently domed on top, one seamless soft-silicone moulded piece with a soft satin sheen. THE SILHOUETTE IS CRITICAL - NO narrow middle, NO waist, NO pinch, NO grip bar, NO bulbous end weights: it is NOT a classic bone-shaped dumbbell, NOT two balls joined by a stick, NOT a flat paddle. NO metal, NO knurling, NO chrome. NON-SLIP EDGE PATTERN: along each of the two long sides runs a band of fine parallel grooves cut into the silicone, a subtle ribbed texture for grip, clearly visible where the side catches the light. BRANDING - WORDMARK ONLY: \"Design:Gym\" printed SMALL in a soft muted grey, very thin sans-serif with wide letter-spacing, running ALONG the length near one end. That text is the ONLY marking: absolutely NO icon, NO pictogram, NO human figure, NO monogram, NO other words. Colour is warm off-white IVORY, almost white, NOT beige, NOT tan, NOT cream-yellow."
     }
   },
-
   "scenes": {
     "mat_styled_corner": {
       "hook": "제품 정물(사람 없음) - 창가 코너에 펼쳐둔 매트",
@@ -106,33 +103,150 @@
       "prompt": "Editorial product photograph, no people. A low pale oak bench under a bright window in a warm minimal Korean apartment, a white linen curtain moving slightly at the edge of frame, a small potted plant on the floor beside the bench. The product sits on the bench in soft daylight with a long gentle shadow."
     }
   },
-
   "week_plans": [
-    [["mat_active_steps", "mat_styled_corner"], ["dumbbell_blue", "object_shelf"], ["band", "band_glute_bridge"], ["kettlebell_grey", "object_floor_low"], ["mat_before_sunrise", "mat_balasana"]],
-    [["kettlebell_mint", "object_window_bench"], ["mat_before_sunrise", "mat_topdown"], ["dumbbell_ivory", "object_bedside"], ["band", "band_flatlay"], ["mat_warm_sunlight", "mat_seated_side"]],
-    [["mat_warm_sunlight", "mat_styled_corner"], ["band", "band_clamshell"], ["kettlebell_grey", "object_bedside"], ["dumbbell_blue", "object_window_bench"], ["mat_active_steps", "mat_balasana"]],
-    [["dumbbell_ivory", "object_shelf"], ["mat_active_steps", "mat_topdown"], ["kettlebell_mint", "object_floor_low"], ["band", "band_glute_bridge"], ["mat_warm_sunlight", "mat_balasana"]]
+    [
+      [
+        "mat_active_steps",
+        "mat_styled_corner"
+      ],
+      [
+        "dumbbell_blue",
+        "object_shelf"
+      ],
+      [
+        "band",
+        "band_glute_bridge"
+      ],
+      [
+        "kettlebell_grey",
+        "object_floor_low"
+      ],
+      [
+        "mat_before_sunrise",
+        "mat_balasana"
+      ]
+    ],
+    [
+      [
+        "kettlebell_mint",
+        "object_window_bench"
+      ],
+      [
+        "mat_before_sunrise",
+        "mat_topdown"
+      ],
+      [
+        "dumbbell_ivory",
+        "object_bedside"
+      ],
+      [
+        "band",
+        "band_flatlay"
+      ],
+      [
+        "mat_warm_sunlight",
+        "mat_seated_side"
+      ]
+    ],
+    [
+      [
+        "mat_warm_sunlight",
+        "mat_styled_corner"
+      ],
+      [
+        "band",
+        "band_clamshell"
+      ],
+      [
+        "kettlebell_grey",
+        "object_bedside"
+      ],
+      [
+        "dumbbell_blue",
+        "object_window_bench"
+      ],
+      [
+        "mat_active_steps",
+        "mat_balasana"
+      ]
+    ],
+    [
+      [
+        "dumbbell_ivory",
+        "object_shelf"
+      ],
+      [
+        "mat_active_steps",
+        "mat_topdown"
+      ],
+      [
+        "kettlebell_mint",
+        "object_floor_low"
+      ],
+      [
+        "band",
+        "band_glute_bridge"
+      ],
+      [
+        "mat_warm_sunlight",
+        "mat_balasana"
+      ]
+    ]
   ],
-
   "captions": {
     "mat": [
-      {"c": "펼쳐두면 결국 한 번은 올라가게 돼요.\n\n치우지 않아도 어색하지 않은 게\n이 매트의 진짜 장점입니다 🌿\n\n8mm라 무릎 닿아도 안 배깁니다.", "t": "펼쳐두면 결국 올라가게 되는 8mm 요가매트", "h": "#디자인짐 #요가매트 #홈요가 #홈트 #인테리어소품 #모닝루틴"},
-      {"c": "위에서 내려다보면 그림 같죠.\n\n스웨이드 재질이라 손바닥이 밀리지 않아서\n다운독 할 때 차이가 확실해요 🌅", "t": "손바닥이 안 밀리는 스웨이드 요가매트", "h": "#디자인짐 #요가매트 #홈요가 #플랫레이 #홈트 #다운독"},
-      {"c": "운동기구가 아니라 공간의 무드로 두는 매트.\n\n펴는 순간 나한테 집중하는 시간이 시작돼요 🤍", "t": "펴는 순간 시작되는 나만의 시간, 디자인 요가매트", "h": "#디자인짐 #요가매트 #홈트인테리어 #리빙스타그램 #홈요가"}
+      {
+        "c": "펼쳐두면 결국 한 번은 올라가게 돼요.\n\n치우지 않아도 어색하지 않은 게\n이 매트의 진짜 장점입니다 🌿\n\n8mm라 무릎 닿아도 안 배깁니다.",
+        "t": "펼쳐두면 결국 올라가게 되는 8mm 요가매트",
+        "h": "#디자인짐 #요가매트 #홈요가 #홈트 #인테리어소품 #모닝루틴"
+      },
+      {
+        "c": "위에서 내려다보면 그림 같죠.\n\n스웨이드 재질이라 손바닥이 밀리지 않아서\n다운독 할 때 차이가 확실해요 🌅",
+        "t": "손바닥이 안 밀리는 스웨이드 요가매트",
+        "h": "#디자인짐 #요가매트 #홈요가 #플랫레이 #홈트 #다운독"
+      },
+      {
+        "c": "운동기구가 아니라 공간의 무드로 두는 매트.\n\n펴는 순간 나한테 집중하는 시간이 시작돼요 🤍",
+        "t": "펴는 순간 시작되는 나만의 시간, 디자인 요가매트",
+        "h": "#디자인짐 #요가매트 #홈트인테리어 #리빙스타그램 #홈요가"
+      }
     ],
     "band": [
-      {"c": "밴드 운동하다 제일 짜증나는 게\n자꾸 말려 올라가는 거잖아요.\n\n안쪽 실리콘 라인 덕분에\n힘줄 때도 그 자리에 그대로 있어요 🔥", "t": "힘줘도 안 말려 올라가는 힙업밴드", "h": "#디자인짐 #힙업밴드 #힙업운동 #하체운동 #홈트 #운동밴드"},
-      {"c": "3개가 한 세트인 이유,\n디자인이 전부 다르거든요.\n\n오늘은 어떤 무늬로 할까 —\n고르는 재미로 시작하게 됩니다 🌿", "t": "오늘은 어떤 걸로 할까, 디자인 3종 힙업밴드", "h": "#디자인짐 #힙업밴드 #하체운동 #홈트 #운동밴드 #거실인테리어"}
+      {
+        "c": "밴드 운동하다 제일 짜증나는 게\n자꾸 말려 올라가는 거잖아요.\n\n안쪽 실리콘 라인 덕분에\n힘줄 때도 그 자리에 그대로 있어요 🔥",
+        "t": "힘줘도 안 말려 올라가는 힙업밴드",
+        "h": "#디자인짐 #힙업밴드 #힙업운동 #하체운동 #홈트 #운동밴드"
+      },
+      {
+        "c": "3개가 한 세트인 이유,\n디자인이 전부 다르거든요.\n\n오늘은 어떤 무늬로 할까 —\n고르는 재미로 시작하게 됩니다 🌿",
+        "t": "오늘은 어떤 걸로 할까, 디자인 3종 힙업밴드",
+        "h": "#디자인짐 #힙업밴드 #하체운동 #홈트 #운동밴드 #거실인테리어"
+      }
     ],
     "kettlebell": [
-      {"c": "운동 끝나고 구석에 밀어두지 않아요.\n\n거실 한가운데 그냥 둬도\n오브제처럼 보이니까요.\n\n치울 일이 없으니 다음 날 또 들게 됩니다 🤍", "t": "치울 필요가 없어서 매일 들게 되는 케틀벨", "h": "#디자인짐 #케틀벨 #문케틀벨 #홈짐 #홈트 #거실인테리어"},
-      {"c": "지나갈 때마다 눈에 들어와서\n한 번씩 들게 돼요.\n\n숨겨두지 않아도 되는 운동기구,\n그게 시작하기 쉬운 이유입니다 🌿", "t": "숨겨두지 않아도 되는 문 케틀벨", "h": "#디자인짐 #케틀벨 #홈짐 #홈트 #인테리어운동기구"}
+      {
+        "c": "운동 끝나고 구석에 밀어두지 않아요.\n\n거실 한가운데 그냥 둬도\n오브제처럼 보이니까요.\n\n치울 일이 없으니 다음 날 또 들게 됩니다 🤍",
+        "t": "치울 필요가 없어서 매일 들게 되는 케틀벨",
+        "h": "#디자인짐 #케틀벨 #문케틀벨 #홈짐 #홈트 #거실인테리어"
+      },
+      {
+        "c": "지나갈 때마다 눈에 들어와서\n한 번씩 들게 돼요.\n\n숨겨두지 않아도 되는 운동기구,\n그게 시작하기 쉬운 이유입니다 🌿",
+        "t": "숨겨두지 않아도 되는 문 케틀벨",
+        "h": "#디자인짐 #케틀벨 #홈짐 #홈트 #인테리어운동기구"
+      }
     ],
     "dumbbell": [
-      {"c": "선반에 그냥 올려둡니다.\n\n운동기구처럼 안 생겨서\n책이랑 화분 사이에 둬도 안 튀어요 ☁️\n\n1kg이라 지나가다 한 번씩 드는 게 전부인데,\n그게 매일 하게 되는 이유더라고요.", "t": "책 사이에 둬도 안 튀는 1kg 덤벨", "h": "#디자인짐 #덤벨 #모던덤벨 #홈트 #1kg덤벨 #인테리어운동기구"},
-      {"c": "일어나자마자 10번, 자기 전에 10번.\n\n1kg이라 부담이 없어서\n오히려 매일 하게 돼요 ☁️", "t": "아침저녁 10번씩, 부담 없는 1kg 덤벨", "h": "#디자인짐 #덤벨 #홈트 #미라클모닝 #가벼운운동 #침실인테리어"}
+      {
+        "c": "선반에 그냥 올려둡니다.\n\n운동기구처럼 안 생겨서\n책이랑 화분 사이에 둬도 안 튀어요 ☁️\n\n1kg이라 지나가다 한 번씩 드는 게 전부인데,\n그게 매일 하게 되는 이유더라고요.",
+        "t": "책 사이에 둬도 안 튀는 1kg 덤벨",
+        "h": "#디자인짐 #덤벨 #모던덤벨 #홈트 #1kg덤벨 #인테리어운동기구"
+      },
+      {
+        "c": "일어나자마자 10번, 자기 전에 10번.\n\n1kg이라 부담이 없어서\n오히려 매일 하게 돼요 ☁️",
+        "t": "아침저녁 10번씩, 부담 없는 1kg 덤벨",
+        "h": "#디자인짐 #덤벨 #홈트 #미라클모닝 #가벼운운동 #침실인테리어"
+      }
     ]
   },
-
   "friday_tail": "\n\n나를 디자인하다, Design:Gym"
 }

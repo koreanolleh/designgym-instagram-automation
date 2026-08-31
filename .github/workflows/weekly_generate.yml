@@ -52,9 +52,29 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add pending_posts.json images
+          git add pending_posts.json images last_run_credits.json
           git diff --staged --quiet || {
             git commit -m "🎨 $(TZ=Asia/Seoul date +%F) 주간 이미지 생성 (Actions)"
+            for i in 1 2 3; do git push && break || { git pull --rebase --autostash; sleep 3; }; done
+          }
+
+      - name: 옵시디언 볼트에 초안 반영
+        if: github.event.inputs.dry_run != '1'
+        env:
+          VAULT_PUSH_TOKEN: ${{ secrets.VAULT_PUSH_TOKEN }}
+        run: |
+          if [ -z "$VAULT_PUSH_TOKEN" ]; then
+            echo "⚠️ VAULT_PUSH_TOKEN 없음 — 옵시디언 반영 건너뜀"; exit 0
+          fi
+          git clone --depth 1 "https://x-access-token:$VAULT_PUSH_TOKEN@github.com/koreanolleh/obsidian-vault.git" /tmp/vault || {
+            echo "⚠️ 볼트 clone 실패 — 옵시디언 반영 건너뜀"; exit 0; }
+          python3 make_obsidian_note.py /tmp/vault
+          cd /tmp/vault
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A "03_프로젝트/디자인짐_콘텐츠_자동화/인스타_자동화/주간초안"
+          git diff --staged --quiet || {
+            git commit -m "📝 $(TZ=Asia/Seoul date +%F) 주간초안 반영 (크레딧 사용량 포함)"
             for i in 1 2 3; do git push && break || { git pull --rebase --autostash; sleep 3; }; done
           }
 
@@ -64,9 +84,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           WEEK=$(python3 -c "import json;print(json.load(open('pending_posts.json'))['week_of'])")
+          CREDITS=$(python3 -c "
+          import json,os
+          p='last_run_credits.json'
+          if os.path.exists(p):
+              c=json.load(open(p))
+              print(f\"크레딧 {c.get('credits_spent')} 사용 (이미지 {c.get('images')}장, 잔액 {c.get('balance_before')} → {c.get('balance_after')})\")
+          else:
+              print('크레딧 사용량 기록 없음')
+          ")
           TITLE="🎨 $WEEK 주간 이미지 컨펌 요청"
           if ! gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
             gh issue create --title "$TITLE" --body "이번 주 이미지 5장이 생성됐습니다.
+
+          💳 $CREDITS
 
           저장소 \`images/$WEEK/\` 에서 확인하시고, 고칠 부분이 있으면 로컬 Claude 세션에 말씀해주세요.
           컨펌 후 옵시디언 반영까지 진행합니다.

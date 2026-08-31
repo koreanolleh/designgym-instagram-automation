@@ -138,6 +138,18 @@ def main():
         return 0
 
     mcp = Mcp(access_token())
+    try:
+        bal_before = mcp.tool("balance", {}).get("credits")
+    except Exception as e:
+        bal_before = None
+        log(f"잔액 조회 실패(무시): {e}")
+    if bal_before is not None:
+        log(f"생성 전 잔액 {bal_before}")
+        if bal_before < len(plan) * 2:
+            raise SystemExit(
+                f"크레딧 부족: 잔액 {bal_before}, 필요 약 {len(plan)*2} "
+                "(장당 2크레딧). 충전 후 다시 실행하세요.")
+
     reqs = [{"index": i, "params": {
         "model": "marketing_studio_image", "aspect_ratio": "4:5", "resolution": "2k",
         "medias": medias_for(lib, pk, sk), "prompt": build_prompt(lib, pk, sk)}}
@@ -187,6 +199,20 @@ def main():
     if not posts:
         log("한 장도 못 만들었다 — pending_posts.json 건드리지 않고 실패 처리")
         return 1
+
+    try:
+        bal_after = mcp.tool("balance", {}).get("credits")
+    except Exception:
+        bal_after = None
+    spent = round(bal_before - bal_after, 2) if (bal_before is not None and bal_after is not None) else None
+    made = len(posts)
+    if spent is not None:
+        log(f"크레딧 사용 {spent} (생성 {made}장, 잔액 {bal_before} → {bal_after})")
+    json.dump({"week_of": week_of, "generated_at": datetime.now(KST).strftime("%Y-%m-%d %H:%M"),
+               "images": made, "credits_spent": spent,
+               "balance_before": bal_before, "balance_after": bal_after},
+              open(os.path.join(BASE, "last_run_credits.json"), "w", encoding="utf-8"),
+              ensure_ascii=False, indent=2)
 
     json.dump({"week_of": week_of, "plan_idx": plan_idx, "posts": posts},
               open(pending_path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
