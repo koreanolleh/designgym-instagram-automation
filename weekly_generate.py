@@ -71,13 +71,22 @@ def medias_for(lib, product_key, scene_key):
     return m
 
 
-def caption_for(lib, product_key, idx, is_friday):
+def pool_key_for(lib, product_key):
     kind = lib["products"][product_key]["kind"]
-    pool_key = {"mat": "mat", "band": "band"}.get(kind)
-    if pool_key is None:
-        pool_key = "kettlebell" if "kettlebell" in product_key else "dumbbell"
+    if kind in ("mat", "band"):
+        return kind
+    return "kettlebell" if "kettlebell" in product_key else "dumbbell"
+
+
+def caption_for(lib, product_key, seen, is_friday):
+    """seen: 이번 주에 그 제품군을 몇 번째로 쓰는지(0부터).
+
+    요일 인덱스로 고르면 같은 제품군이 두 번 나오는 주에 캡션이 겹친다
+    (2026-08-31: 매트 풀 3개에 화=1, 금=4 → 1%3==4%3 으로 화·금이 동일 문구).
+    제품군별 등장 순번으로 골라야 한 주 안에서 안 겹친다."""
+    pool_key = pool_key_for(lib, product_key)
     pool = lib["captions"][pool_key]
-    c = pool[idx % len(pool)]
+    c = pool[seen % len(pool)]
     body = c["c"] + (lib["friday_tail"] if is_friday else "")
     title = c["t"]
     tags = c["h"]
@@ -173,7 +182,7 @@ def main():
 
     img_dir = os.path.join(BASE, "images", week_of)
     os.makedirs(img_dir, exist_ok=True)
-    posts, missing = {}, []
+    posts, missing, used = {}, [], {}
     for i, (day, (pk, sk)) in enumerate(zip(DAYS, plan)):
         url = results.get(i)
         date = (monday + timedelta(days=i)).strftime("%Y-%m-%d")
@@ -187,7 +196,9 @@ def main():
         with open(os.path.join(img_dir, fname), "wb") as f:
             f.write(jpeg)
         url = upload_bytes(mcp, jpeg, fname)
-        cap, tags, tt = caption_for(lib, pk, i, day == "Friday")
+        seen = used.get(pool_key_for(lib, pk), 0)
+        used[pool_key_for(lib, pk)] = seen + 1
+        cap, tags, tt = caption_for(lib, pk, seen, day == "Friday")
         posts[day] = {
             "date": date, "product": lib["products"][pk]["label"],
             "hook": lib["scenes"][sk]["hook"],
