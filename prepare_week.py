@@ -11,10 +11,11 @@ REPO_DIR = os.path.dirname(__file__)
 PENDING_PATH = os.path.join(REPO_DIR, "pending_posts.json")
 IMAGES_DIR = os.path.join(REPO_DIR, "images")
 
-OBSIDIAN_BASE = os.path.expanduser(
-    "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/메이크앤&옵시디언"
-    "/03_프로젝트/디자인짐_콘텐츠_자동화/인스타_자동화/주간초안"
-)
+# Actions에서는 볼트를 clone해 쓰므로 OBSIDIAN_VAULT로 루트를 덮어쓸 수 있게 한다
+_VAULT = os.environ.get("OBSIDIAN_VAULT") or os.path.expanduser(
+    "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/메이크앤&옵시디언")
+OBSIDIAN_BASE = os.path.join(
+    _VAULT, "03_프로젝트/디자인짐_콘텐츠_자동화/인스타_자동화/주간초안")
 
 DAYS_KR = ["월요일", "화요일", "수요일", "목요일", "금요일"]
 DAYS_EN = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]

@@ -68,7 +68,7 @@ jobs:
           fi
           git clone --depth 1 "https://x-access-token:$VAULT_PUSH_TOKEN@github.com/koreanolleh/obsidian-vault.git" /tmp/vault || {
             echo "⚠️ 볼트 clone 실패 — 옵시디언 반영 건너뜀"; exit 0; }
-          python3 make_obsidian_note.py /tmp/vault
+          OBSIDIAN_VAULT=/tmp/vault python3 make_weekly_note.py
           cd /tmp/vault
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
