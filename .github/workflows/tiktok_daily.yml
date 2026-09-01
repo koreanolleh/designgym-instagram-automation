@@ -5,7 +5,11 @@ name: 틱톡 매일 발행
 
 on:
   schedule:
-    - cron: '30 10 * * 1-5'   # UTC 10:30 = KST 19:30
+    # 인스타와 같은 이유로 30분 간격 재시도. tiktok_posted 플래그로 중복 방지.
+    - cron: '30 10 * * 1-5'  # UTC 10:30 = KST 19:30 (본 슬롯)
+    - cron: '0 11 * * 1-5'   # KST 20:00
+    - cron: '30 11 * * 1-5'  # KST 20:30
+    - cron: '30 12 * * 1-5'  # KST 21:30
   workflow_dispatch:
     inputs:
       dry_run:
