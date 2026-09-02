@@ -48,6 +48,9 @@ jobs:
         env:
           HF_CLIENT_ID: ${{ secrets.HF_CLIENT_ID }}
           HF_REFRESH_TOKEN: ${{ secrets.HF_REFRESH_TOKEN }}
+          # 24시간짜리 액세스 토큰 캐시 — 갱신 호출을 하루 1번으로 줄인다
+          HF_ACCESS_TOKEN: ${{ secrets.HF_ACCESS_TOKEN }}
+          HF_ACCESS_EXPIRES: ${{ secrets.HF_ACCESS_EXPIRES }}
           TIKTOK_CONNECTOR_ID: ${{ secrets.TIKTOK_CONNECTOR_ID }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
           SELFTEST: ${{ github.event.inputs.selftest }}
@@ -55,6 +58,22 @@ jobs:
           # 갱신토큰은 1회용이라 매 실행 후 새 값을 시크릿에 되돌려 써야 한다
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: python3 tt_publish.py
+
+      # 인증이 깨지면 재시도 크론이 전부 같은 이유로 실패한다. 조용히 넘기지 말고 바로 알린다.
+      - name: 인증 실패 알림
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="🔑 힉스필드 재인증 필요 ($(TZ=Asia/Seoul date +%F))"
+          if ! gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
+            gh issue create --title "$TITLE" --body "틱톡 발행이 인증 문제로 실패했습니다.
+
+          갱신토큰은 1회용이라, 갱신 요청 응답이 유실되면 시크릿의 토큰이 죽습니다(2026-09-01 사고).
+
+          조치: 맥에서 로컬 Claude 세션에 '힉스필드 재인증'이라고 요청하세요.
+          python3 hf_auth.py 한 번이면 시크릿까지 자동 갱신됩니다."
+          fi
 
       - name: 발행 기록 커밋
         if: github.event.inputs.dry_run != '1'

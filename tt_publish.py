@@ -53,10 +53,26 @@ def _guard_local():
 
 
 def access_token():
-    """갱신토큰은 1회용이다 — 쓸 때마다 새 토큰이 내려오고 옛것은 즉시 무효가 된다.
-    새 토큰을 곧바로 보관처(로컬 파일 또는 GitHub Secret)에 되돌려놓지 않으면
-    다음 실행이 인증부터 실패한다."""
+    """액세스 토큰을 얻는다. 캐시가 살아 있으면 갱신 호출을 아예 하지 않는다.
+
+    갱신토큰은 1회용이라 쓰는 순간 서버에서 교체된다. 2026-09-01: 갱신 요청 응답이
+    타임아웃되면서 서버는 토큰을 교체했는데 우리는 새 토큰을 못 받아 저장하지 못했고,
+    시크릿에 죽은 토큰만 남아 그날 발행이 통째로 실패했다(재시도 3번도 같은 토큰으로 전부 거부).
+
+    액세스 토큰은 24시간짜리다. 시크릿에 캐시해두고 만료 10분 전까지 재사용하면
+    갱신 호출이 하루 1번으로 줄어 이 사고에 노출되는 횟수가 그만큼 줄어든다.
+    """
     _guard_local()
+    cached = os.environ.get("HF_ACCESS_TOKEN")
+    exp = os.environ.get("HF_ACCESS_EXPIRES")
+    if cached and exp:
+        try:
+            if float(exp) - 600 > datetime.now(timezone.utc).timestamp():
+                log("캐시된 액세스 토큰 사용 (갱신 생략)")
+                return cached
+        except ValueError:
+            pass
+
     body = urllib.parse.urlencode({
         "grant_type": "refresh_token",
         "refresh_token": os.environ["HF_REFRESH_TOKEN"],
@@ -67,16 +83,40 @@ def access_token():
         TOKEN_URL, data=body,
         headers={"Content-Type": "application/x-www-form-urlencoded"}, method="POST")
     try:
-        with urllib.request.urlopen(req, timeout=30) as r:
+        with urllib.request.urlopen(req, timeout=90) as r:
             tok = json.loads(r.read())
     except urllib.error.HTTPError as e:
         raise SystemExit(
             f"토큰 갱신 실패 {e.code}: {e.read().decode(errors='replace')[:300]}\n"
-            "→ 로컬에서 'python3 hf_auth.py' 로 재인증 후 시크릿을 갱신하세요.")
+            "→ 로컬에서 'python3 hf_auth.py' 로 재인증하세요(시크릿까지 자동 갱신).")
+    except Exception as e:
+        # 응답을 못 받았어도 서버는 이미 토큰을 교체했을 수 있다. 그 경우 새 토큰은 영영 못 받는다.
+        raise SystemExit(
+            f"토큰 갱신 중 통신 실패: {e}\n"
+            "→ 서버가 토큰을 이미 교체했다면 지금 시크릿의 토큰은 죽은 것이다.\n"
+            "   로컬에서 'python3 hf_auth.py' 로 재인증하세요(시크릿까지 자동 갱신).")
     new_rt = tok.get("refresh_token")
     if new_rt and new_rt != os.environ["HF_REFRESH_TOKEN"]:
         save_refresh(new_rt)
-    return tok["access_token"]
+    at = tok["access_token"]
+    ttl = int(tok.get("expires_in") or 0)
+    if ttl:
+        save_secret("HF_ACCESS_TOKEN", at)
+        save_secret("HF_ACCESS_EXPIRES",
+                    str(int(datetime.now(timezone.utc).timestamp()) + ttl))
+    return at
+
+
+def save_secret(name, value):
+    """Actions에서 리포지토리 시크릿을 갱신한다. 로컬에서는 아무것도 하지 않는다."""
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        return
+    import subprocess
+    r = subprocess.run(["gh", "secret", "set", name, "--body", value],
+                       capture_output=True, text=True, cwd=BASE)
+    if r.returncode != 0:
+        raise SystemExit(f"치명: 시크릿 {name} 갱신 실패 — {r.stderr[:300]}")
+    log(f"시크릿 {name} 갱신 완료")
 
 
 def save_refresh(token):

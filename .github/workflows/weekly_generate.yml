@@ -41,6 +41,9 @@ jobs:
         env:
           HF_CLIENT_ID: ${{ secrets.HF_CLIENT_ID }}
           HF_REFRESH_TOKEN: ${{ secrets.HF_REFRESH_TOKEN }}
+          # 24시간짜리 액세스 토큰 캐시 — 갱신 호출을 하루 1번으로 줄인다
+          HF_ACCESS_TOKEN: ${{ secrets.HF_ACCESS_TOKEN }}
+          HF_ACCESS_EXPIRES: ${{ secrets.HF_ACCESS_EXPIRES }}
           TIKTOK_CONNECTOR_ID: ${{ secrets.TIKTOK_CONNECTOR_ID }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
