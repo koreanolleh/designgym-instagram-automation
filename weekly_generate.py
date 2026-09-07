@@ -39,12 +39,27 @@ def next_monday():
     return today - timedelta(days=today.weekday())
 
 
+def model_for(lib, product_key):
+    """등록 제품(Element)을 쓰는 컷은 nano_banana_pro로 만든다.
+
+    Elements(<<<id>>>)는 marketing_studio_image가 지원하지 않는다. 매트는 무늬를 말로 설명하면
+    계속 다른 매트가 나와서(2026-09-07 반복 반려) 등록 제품을 직접 참조해야 한다.
+    """
+    return "nano_banana_pro" if lib["products"][product_key].get("element") else "marketing_studio_image"
+
+
 def build_prompt(lib, product_key, scene_key):
     p = lib["products"][product_key]
     s = lib["scenes"][scene_key]
     sh = lib["shared"]
     parts = [s["prompt"], ""]
-    if p["kind"] == "mat":
+    if p.get("element"):
+        # 등록된 제품을 그대로 쓴다 — 무늬·비율·두께를 말로 설명하지 않는다
+        parts += [f"THE PRODUCT IS <<<{p['element']}>>> - reproduce this exact registered product: its printed "
+                  "artwork, colours, proportions and thickness must match the reference product photograph "
+                  "precisely. Do not invent a different print or a different colourway.",
+                  "THE MAT: " + sh["mat_body"] if p["kind"] == "mat" else ""]
+    elif p["kind"] == "mat":
         parts += ["THE MAT: " + sh["mat_body"], sh["mat_artwork_rule"],
                   "ARTWORK - copy the reference exactly. " + p["spec"]]
     elif p["kind"] == "band":
@@ -54,9 +69,10 @@ def build_prompt(lib, product_key, scene_key):
     if "person" in s["prompt"] or scene_key.startswith(("band_glute", "band_clam", "mat_bal", "mat_seated")):
         parts += ["", sh["person"]]
     # 밴드 착용컷·매트 인물컷은 매트가 함께 나오므로 매트 규격도 넣는다
-    if scene_key in ("band_glute_bridge", "band_clamshell"):
-        parts += ["", "THE MAT UNDER HER: " + sh["mat_body"],
-                  "Mat artwork: soft apricot-pink oval forms, a warm yellow ring and a slate-navy block on a cream ground.",
+    if scene_key in ("band_glute_bridge", "band_clamshell", "band_squat"):
+        wm = lib["products"]["mat_warm_sunlight"]
+        parts += ["", f"THE MAT UNDER HER IS <<<{wm['element']}>>> - reproduce that exact registered product. "
+                  + sh["mat_body"],
                   "NO text, NO lettering, NO logo and NO blurred smudge anywhere on the mat."]
     if p["kind"] == "mat":
         parts += ["", sh["no_branding"]]
@@ -65,6 +81,8 @@ def build_prompt(lib, product_key, scene_key):
 
 
 def medias_for(lib, product_key, scene_key):
+    if lib["products"][product_key].get("element"):
+        return []          # 등록 제품은 프롬프트의 <<<element_id>>>가 이미지를 주입한다
     m = [{"value": lib["products"][product_key]["media"], "role": "image"}]
     if scene_key in ("band_glute_bridge", "band_clamshell"):
         m.append({"value": lib["products"]["mat_warm_sunlight"]["media"], "role": "image"})
@@ -159,10 +177,14 @@ def main():
                 f"크레딧 부족: 잔액 {bal_before}, 필요 약 {len(plan)*2} "
                 "(장당 2크레딧). 충전 후 다시 실행하세요.")
 
-    reqs = [{"index": i, "params": {
-        "model": "marketing_studio_image", "aspect_ratio": "4:5", "resolution": "2k",
-        "medias": medias_for(lib, pk, sk), "prompt": build_prompt(lib, pk, sk)}}
-        for i, (pk, sk) in enumerate(plan)]
+    reqs = []
+    for i, (pk, sk) in enumerate(plan):
+        params = {"model": model_for(lib, pk), "aspect_ratio": "4:5", "resolution": "2k",
+                  "prompt": build_prompt(lib, pk, sk)}
+        med = medias_for(lib, pk, sk)
+        if med:
+            params["medias"] = med
+        reqs.append({"index": i, "params": params})
     jobs = mcp.tool("generate_image_batch", {"requests": reqs})["jobs"]
     log(f"{len(jobs)}장 생성 요청 완료")
 

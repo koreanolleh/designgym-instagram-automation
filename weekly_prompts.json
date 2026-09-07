@@ -5,26 +5,29 @@
     "no_branding": "ABSOLUTELY NO BRANDING: NO text, NO lettering, NO words, NO logo, NO wordmark, NO icon, NO pictogram and NO blurred smudge anywhere in the frame.",
     "person": "Photorealistic documentary-style photograph shot on a full-frame camera with an 85mm lens. A real Korean woman in her late twenties. Photographic skin with visible natural texture, fine pores, subtle unevenness - NOT smooth plastic skin, NOT airbrushed, NOT waxy, NOT a CGI mannequin. Hair tied in a low bun with a few natural loose strands, never covering the face. Wardrobe: a fitted charcoal-grey sports top with a racerback and visible flatlock seams, matching high-waisted leggings with a visible waistband seam, realistic stretch wrinkles and natural creases where the body bends. Natural realistic human proportions, barefoot.",
     "mat_body": "LONG full-size rectangular yoga mat, roughly 3:1 length-to-width (180x61cm), lying COMPLETELY UNROLLED AND FLAT - NOT rolled, NOT half-rolled, NOT folded, NOT curled at either end. A THICK CUSHIONED mat about 8MM thick - the near long edge shows clear visible thickness like a firm dense cushion with a slim dark edge band, NOT a thin 2-3mm travel mat, NOT a fluffy pile rug. Suede-like matte microfibre top with a fine soft fabric texture so the print looks absorbed into the fabric.",
-    "mat_artwork_rule": "THE PRINTED SHAPES ARE LARGE AND FILL ALMOST THE ENTIRE WIDTH of the mat - each shape stretches from very close to one long edge to very close to the other, leaving only a THIN cream margin along the top and bottom edges. They are WIDE ovals, noticeably wider across the mat than they are tall, sitting in a row down the length and nearly touching each other. Do NOT draw small round circles floating in the middle with wide empty cream borders. All shapes have soft irregular watercolour edges with paper-like blooming and visible mottled texture."
+    "mat_artwork_rule": "MAT ARTWORK SCALE - the repeated failure is drawing the shapes TOO SMALL. Fix it exactly like this: there are only THREE shapes on the whole mat and each one is ENORMOUS - as tall as the mat is wide, so it TOUCHES OR NEARLY TOUCHES BOTH LONG EDGES, leaving only a thin cream margin of a couple of centimetres at the top and bottom. The three shapes sit side by side down the length with narrow cream gaps between them and together they cover the mat almost end to end. DO NOT draw small circles floating in the middle of the mat with wide empty cream borders along the sides. Each shape is a big soft rounded blob with irregular watercolour edges and visible mottled paper-like texture - hand-painted, not a clean vector circle."
   },
   "products": {
     "mat_active_steps": {
       "label": "요가매트 Active steps",
       "media": "ac1255f8-cd4f-4464-9618-944a4a36f140",
       "kind": "mat",
-      "spec": "On a warm cream / off-white ground, in order along the length: a very PALE DUSTY BLUE-GREY watercolour oval; a warm GOLDEN-YELLOW oval crossed OVER by a translucent band of deep TEAL-GREEN wash that runs ACROSS THE MAT'S WIDTH (perpendicular to the long direction), blending into deep olive where they overlap; and a large DUSTY GREY-PURPLE oval - muted greyed-off mauve, more grey than violet, not bright lavender."
+      "spec": "Three huge watercolour shapes on a warm cream ground, in order along the length: (1) a PALE BLUE-GREY rounded blob; (2) a warm GOLDEN-YELLOW rounded blob, crossed by a VERTICAL brush stroke of deep TEAL-GREEN paint that runs ACROSS THE MAT'S WIDTH from the top edge downward, overlapping the yellow so the overlap turns deep olive-green; (3) a large DUSTY GREY-PURPLE blob, muted greyed-off mauve, more grey than violet. Each blob is as tall as the mat is wide.",
+      "element": "ab658314-38f3-4e0c-b9b2-b36bf48f6bef"
     },
     "mat_before_sunrise": {
       "label": "요가매트 Before sunrise",
       "media": "40b1f8bd-b58b-41ce-8814-20414b3ad39f",
       "kind": "mat",
-      "spec": "On a cream ground: a deep NAVY-SLATE watercolour wash and soft APRICOT-PINK oval forms, with fine copper-orange line accents."
+      "spec": "On a cream ground: a deep NAVY-SLATE watercolour wash and soft APRICOT-PINK oval forms, with fine copper-orange line accents.",
+      "element": "311e4b5d-e275-454b-af37-91c37faa365f"
     },
     "mat_warm_sunlight": {
       "label": "요가매트 Warm sunlight",
       "media": "df98632b-00e9-4b4d-8e4f-59ddbe7be358",
       "kind": "mat",
-      "spec": "On a cream ground: soft APRICOT-PINK oval forms, a warm YELLOW ring outline and a SLATE-NAVY block."
+      "spec": "On a cream ground: soft APRICOT-PINK oval forms, a warm YELLOW ring outline and a SLATE-NAVY block.",
+      "element": "cb6e17c8-caa0-422c-b015-a2391f5ab143"
     },
     "band": {
       "label": "힙업밴드 (3개입)",
@@ -101,6 +104,14 @@
     "object_window_bench": {
       "hook": "제품 정물(사람 없음) - 창가 벤치 위",
       "prompt": "Editorial product photograph, no people. A low pale oak bench under a bright window in a warm minimal Korean apartment, a white linen curtain moving slightly at the edge of frame, a small potted plant on the floor beside the bench. The product sits on the bench in soft daylight with a long gentle shadow."
+    },
+    "mat_downdog": {
+      "hook": "얼굴 안 보이는 옆모습 - 매트 위 다운독",
+      "prompt": "Side view at floor level, camera level with the mat and square to it. The woman is in ADHO MUKHA SVANASANA (downward-facing dog) seen entirely FROM THE SIDE: hands planted shoulder-width on the mat, hips lifted high, legs straight, body forming a clean inverted V. Her head hangs down between her arms so her FACE IS COMPLETELY OUT OF SIGHT. Because the camera is directly to her side, the pose reads as a clean triangular silhouette - NOT shot from behind, NOT angled toward the hips. SHE IS ENTIRELY ON THE MAT: both hands and both feet rest on the printed surface, nothing on the bare floor, her body aligned along the mat's length with empty mat visible in front of her hands and behind her feet. Warm minimal Korean apartment, pale oak floor, soft morning light from the window behind her."
+    },
+    "band_side_step": {
+      "hook": "하체만 - 밴드 착용 사이드 스텝, 허벅지 위",
+      "prompt": "Fitness photograph, camera at knee height, square to the body. LOWER BODY ONLY - the frame is cut at the waist so the torso, head and face are COMPLETELY OUT OF FRAME. No twisting of the spine is visible at all. She stands in a shallow athletic half-squat with feet planted wider than hip width, knees tracking outward, pressing steadily against the band - a lateral band walk. TWO legs, TWO feet, natural realistic proportions, BAREFOOT. ONE band is worn flat around BOTH THIGHS together, sitting squarely just ABOVE THE KNEES, perpendicular to the thighs and pulled visibly TAUT by the outward pressure - wrapping both thighs evenly, NEVER diagonal, NEVER twisted, NEVER over one leg only, NEVER slipping toward the hip. Wardrobe: fitted charcoal-grey high-waisted leggings with a visible waistband seam and realistic stretch wrinkles. Photographic skin with visible natural texture. Warm minimal Korean apartment, pale oak floor, soft window light."
     }
   },
   "week_plans": [
@@ -155,7 +166,7 @@
       ],
       [
         "band",
-        "band_clamshell"
+        "band_side_step"
       ],
       [
         "kettlebell_grey",
@@ -167,7 +178,7 @@
       ],
       [
         "mat_active_steps",
-        "mat_balasana"
+        "mat_downdog"
       ]
     ],
     [
@@ -189,7 +200,7 @@
       ],
       [
         "mat_warm_sunlight",
-        "mat_balasana"
+        "mat_downdog"
       ]
     ]
   ],
@@ -253,5 +264,6 @@
       }
     ]
   },
-  "friday_tail": "\n\n나를 디자인하다, Design:Gym"
+  "friday_tail": "\n\n나를 디자인하다, Design:Gym",
+  "_element_note": "매트는 힉스필드 Elements에 제품으로 등록돼 있다(element 필드). 프롬프트에 <<<element_id>>>를 박으면 등록된 제품 사진이 그대로 반영된다 — 무늬를 말로 설명하는 것보다 훨씬 정확하다. 단 Elements는 marketing_studio_image가 지원하지 않으므로 그런 컷은 nano_banana_pro로 생성한다. 2026-09-07: 이걸 안 써서 매트 무늬가 반복해서 틀렸다."
 }
