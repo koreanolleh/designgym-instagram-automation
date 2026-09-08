@@ -24,7 +24,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          export TODAY=$(TZ=Asia/Seoul date +%F)
+          # 예약이 밀려 자정을 넘겨 돌면 '오늘'이 다음날이 돼 미발행을 놓친다(발행 스크립트와 동일 보정).
+          if [ "$(TZ=Asia/Seoul date +%H)" -lt 12 ]; then
+            export TODAY=$(TZ=Asia/Seoul date -v-1d +%F 2>/dev/null || TZ=Asia/Seoul date -d 'yesterday' +%F)
+          else
+            export TODAY=$(TZ=Asia/Seoul date +%F)
+          fi
 
           STATE=$(python3 - <<'PYEOF'
           import json, os
