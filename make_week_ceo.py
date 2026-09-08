@@ -45,24 +45,56 @@ PAGES_BASE = "https://koreanolleh.github.io/designgym-instagram-automation"
 DAY_KO = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 
-def pick_backgrounds(bg_dir, tag, count, seed):
-    """태그로 후보를 좁히고 seed 기반으로 결정적으로 고른다(매번 같은 결과)."""
-    cands = sorted(glob.glob(os.path.join(bg_dir, f"*{tag}*.jpg"))) if tag else []
-    if not cands:
-        cands = sorted(glob.glob(os.path.join(bg_dir, "*.jpg")))
-    if not cands:
+def pick_backgrounds(bg_dir, tag, count, seed, used=None):
+    """태그로 후보를 좁히고 seed 기반으로 결정적으로 고른다(매번 같은 결과).
+
+    used에 이미 쓴 파일명을 넘기면 그것들을 빼고 고른다. 같은 주 안에서 날짜별로
+    배경이 통째로 겹치는 사고를 막기 위한 것 — 날짜 해시가 우연히 같은 시작점으로
+    떨어지면 step이 고정이라 7장이 전부 같아진다(2026-09-08/10에서 실제로 발생).
+    """
+    used = used or set()
+    pool = sorted(glob.glob(os.path.join(bg_dir, f"*{tag}*.jpg"))) if tag else []
+    if not pool:
+        pool = sorted(glob.glob(os.path.join(bg_dir, "*.jpg")))
+    if not pool:
         raise SystemExit(f"배경 사진을 찾지 못했습니다: {bg_dir}")
+
+    cands = [c for c in pool if os.path.basename(c) not in used]
+    if len(cands) < count:
+        # 태그 안에서 모자라면 전체 배경으로 넓힌다. 그래도 모자라면 재사용을 허용한다.
+        wider = [c for c in sorted(glob.glob(os.path.join(bg_dir, "*.jpg")))
+                 if os.path.basename(c) not in used]
+        cands = wider if len(wider) >= count else pool
+        print(f"  ⚠️ '{tag}' 배경이 모자라 후보를 넓혔습니다 ({len(cands)}장)")
 
     h = int(hashlib.sha256(seed.encode()).hexdigest(), 16)
     start = h % len(cands)
     # 한 캐러셀 안에서 같은 사진이 반복되지 않게 간격을 두고 뽑는다
     step = max(1, len(cands) // max(count, 1))
-    return [os.path.basename(cands[(start + i * step) % len(cands)]) for i in range(count)]
+    picked, seen = [], set()
+    i = 0
+    while len(picked) < count and i < len(cands) * 2:
+        name = os.path.basename(cands[(start + i * step) % len(cands)])
+        if name not in seen:
+            picked.append(name)
+            seen.add(name)
+        i += 1
+    # step 배수가 한 바퀴를 못 돌면 남는 자리를 순서대로 채운다
+    for c in cands:
+        if len(picked) >= count:
+            break
+        name = os.path.basename(c)
+        if name not in seen:
+            picked.append(name)
+            seen.add(name)
+    return picked
 
 
-def build_spec(car, bg_dir):
+def build_spec(car, bg_dir, used=None):
     n_slides = 1 + len(car["slides"]) + 1
-    bgs = pick_backgrounds(bg_dir, car.get("bg_tag"), n_slides, car["date"])
+    bgs = pick_backgrounds(bg_dir, car.get("bg_tag"), n_slides, car["date"], used)
+    if used is not None:
+        used.update(bgs)
 
     slides = [{"type": "cover", "bg": bgs[0], "lines": car["cover"]}]
     for i, s in enumerate(car["slides"], start=1):
@@ -106,12 +138,16 @@ def main():
         except (json.JSONDecodeError, OSError) as e:
             print(f"⚠️ 기존 큐를 읽지 못했습니다 ({e}) — 새로 만듭니다")
 
+    used_bgs = set()   # 한 주 안에서 배경이 겹치지 않게 누적한다
+    picked_by_date = {}
+
     for car in week["carousels"]:
         date = car["date"]
         weekday = DAY_KO[datetime.strptime(date, "%Y-%m-%d").weekday()]
         outdir = os.path.join(IMAGES_ROOT, date)
 
-        spec = build_spec(car, bg_dir)
+        spec = build_spec(car, bg_dir, used_bgs)
+        picked_by_date[date] = [sl["bg"] for sl in spec["slides"]]
         if dry:
             print(f"[DRY] {date}({weekday}) 슬라이드 {len(spec['slides'])}장 / 표지: {' '.join(car['cover'])}")
             continue
@@ -146,6 +182,15 @@ def main():
 
     if dry:
         return
+
+    # 날짜끼리 배경이 겹치면 멈춘다. 2026-09-08/10에서 7장이 통째로 같았던 적이 있다.
+    dates = list(picked_by_date)
+    for i in range(len(dates)):
+        for j in range(i + 1, len(dates)):
+            dup = set(picked_by_date[dates[i]]) & set(picked_by_date[dates[j]])
+            if dup:
+                sys.exit(f"❌ {dates[i]}와 {dates[j]}의 배경이 {len(dup)}장 겹칩니다: {sorted(dup)}")
+    print("배경 중복 검사 통과 — 날짜 간 겹침 없음")
 
     with open(PENDING, "w", encoding="utf-8") as f:
         json.dump(plan, f, ensure_ascii=False, indent=2)
