@@ -57,6 +57,55 @@ function buildSequence(lines, plan) {
   return seq;
 }
 
+// 본문을 다 넣은 뒤, 소제목 줄을 찾아 '소제목' 문단 서식을 입힌다.
+// 타이핑 중간에 서식을 걸면 앞 줄이 사라지는 일이 있어서 후처리로 분리했다.
+// 소제목 서식 = 폰트 30 + 굵게 (2026-09-10 실측)
+async function applyHeadings(frame, page, headings) {
+  // 그 줄이 이미 소제목 컴포넌트인지 확인한다(적용 여부를 눈으로 세지 않고 DOM으로 검증)
+  const isHeading = async (h) =>
+    frame.evaluate((t) => {
+      const els = [...document.querySelectorAll('.se-sectionTitle')];
+      return els.some(e => (e.innerText || '').trim() === t);
+    }, h);
+
+  let done = 0;
+  for (const h of headings) {
+    const esc = h.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const rx = new RegExp(`^\\s*${esc}\\s*$`);
+
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const para = frame.locator('.se-text-paragraph').filter({ hasText: rx }).last();
+        if (!(await para.count())) { console.log(`  ⚠️ 소제목 못 찾음: ${h}`); break; }
+        await para.scrollIntoViewIfNeeded().catch(() => {});
+        const box = await para.boundingBox();
+        if (!box) break;
+
+        // 캐럿을 그 줄에 놓고 Home~Shift+End로 줄 전체를 선택한다.
+        // (세 번 클릭은 선택이 제대로 안 잡히는 경우가 있었다)
+        await page.mouse.click(box.x + Math.min(30, box.width / 2), box.y + box.height / 2);
+        await page.waitForTimeout(250);
+        await page.keyboard.press('Home');
+        await page.keyboard.press('Shift+End');
+        await page.waitForTimeout(250);
+
+        await clickAt(page, frame.locator('.se-text-format-toolbar-button').first(), '문단 서식');
+        await page.waitForTimeout(700);
+        const opt = frame.locator('.se-toolbar-option-text-button').filter({ hasText: '소제목' }).first();
+        await clickAt(page, opt, '소제목');
+        await page.waitForTimeout(600);
+
+        if (await isHeading(h)) { done++; break; }
+        if (attempt === 2) console.log(`  ⚠️ 소제목 적용 확인 실패: ${h}`);
+      } catch (e) {
+        console.log(`  ⚠️ 소제목 서식 오류(${h}): ${e.message.split('\n')[0].slice(0, 40)}`);
+        break;
+      }
+    }
+  }
+  console.log(`소제목 서식: ${done}/${headings.length}개 (DOM 검증 기준)`);
+}
+
 async function clickAt(page, locator, label = '') {
   await locator.scrollIntoViewIfNeeded().catch(() => {});
   const box = await locator.boundingBox();
@@ -95,6 +144,11 @@ async function prepareEditor(frame, page) {
 
   const title = car.blog_title;
   const lines = toPlain(car.blog);
+  // **소제목** 형태의 줄을 모아둔다(서식은 본문 입력이 끝난 뒤에 입힌다)
+  const headings = car.blog.split('\n')
+    .map(l => l.trim())
+    .filter(l => /^\*\*.+\*\*$/.test(l))
+    .map(l => l.replace(/\*\*/g, ''));
   // 캐러셀 이미지를 본문 소제목 자리에 나눠 넣는다(blog_image_plan).
   // 계획이 없으면 표지는 맨 위, 마무리는 맨 끝, 나머지는 소제목마다 하나씩.
   const imgDir = path.join(IMAGES_ROOT, date);
@@ -204,6 +258,9 @@ async function prepareEditor(frame, page) {
   }
   console.log(`\n이미지 삽입 완료: ${inserted}/${planned}장`);
   await page.waitForTimeout(1200);
+
+  if (headings.length) await applyHeadings(frame, page, headings);
+  await page.waitForTimeout(800);
 
   // 발행 패널 열기 → 카테고리 지정 (최종 발행 버튼은 절대 누르지 않는다)
   // 이미지 업로드 중 도움말 패널이 다시 뜨면 발행 버튼을 가리므로 매번 닫고 재시도한다.
