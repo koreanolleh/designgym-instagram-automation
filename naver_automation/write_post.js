@@ -1,4 +1,7 @@
 // 블로그 글을 에디터에 채워넣는다 — 제목·본문·이미지·카테고리까지.
+//
+// ⚠️ 헤더 버튼 클래스는 `save_btn__bzc5B`처럼 해시가 붙어 있고 네이버가 주기적으로 바꾼다.
+//    (2026-09-10 실제로 바뀌어 저장이 깨졌다) 그래서 [class*="save_btn"] 접두사 매칭을 쓴다.
 // ⚠️ 발행 버튼은 절대 누르지 않는다. 사장님이 직접 누르는 것으로 남긴다.
 //
 // 사용: node write_post.js <원고json> <날짜> [--category "운동 정보"] [--headed]
@@ -211,9 +214,9 @@ async function prepareEditor(frame, page) {
       if (await help.count() && await help.isVisible().catch(() => false)) {
         await clickAt(page, help, '도움말 닫기');
       }
-      await clickAt(page, frame.locator('button.publish_btn__m9KHH').first(), '발행 패널');
+      await clickAt(page, frame.locator('button[class*="publish_btn"]').first(), '발행 패널');
 
-      const selBox = frame.locator('button.selectbox_button__jb1Dt').first();
+      const selBox = frame.locator('button[class*="selectbox_button"]').first();
       await selBox.waitFor({ state: 'visible', timeout: 8000 });
 
       const current = (await selBox.innerText()).trim();
@@ -240,11 +243,26 @@ async function prepareEditor(frame, page) {
   }
   console.log('카테고리:', catResult);
 
+  // 카테고리를 만지려고 열어둔 발행 패널이 저장 버튼을 가린다. 닫고 나서 저장한다.
+  // (카테고리가 이미 지정된 경우 패널을 연 채로 빠져나오기 때문에 특히 자주 걸린다)
+  for (let i = 0; i < 3; i++) {
+    const save = frame.locator('button[class*="save_btn"]').first();
+    if (await save.isVisible().catch(() => false)) break;
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(1000);
+  }
+
   // 임시저장 (발행 아님)
-  await clickAt(page, frame.locator('button.save_btn__bzc5B').first(), '저장');
+  try {
+    await clickAt(page, frame.locator('button[class*="save_btn"]').first(), '저장');
+  } catch (e) {
+    await page.screenshot({ path: '/tmp/fail_save.png' });
+    console.log('❌ 저장 버튼을 찾지 못했습니다 — 화면을 /tmp/fail_save.png 에 남겼습니다');
+    throw e;
+  }
   await page.waitForTimeout(3000);
 
-  const finalCat = (await frame.locator('button.selectbox_button__jb1Dt').first().innerText().catch(() => '?')).trim();
+  const finalCat = (await frame.locator('button[class*="selectbox_button"]').first().innerText().catch(() => '?')).trim();
   const imgs = await frame.locator('.se-component.se-image').count();
   const bodyLen = (await frame.locator('.se-container').innerText()).trim().length;
   console.log(`\n최종 상태 — 카테고리 ${finalCat} / 이미지 ${imgs}장 / 총 ${bodyLen}자`);
