@@ -104,18 +104,41 @@ def pool_key_for(lib, product_key):
     return "kettlebell" if "kettlebell" in product_key else "dumbbell"
 
 
-def caption_for(lib, product_key, seen, is_friday, week_no=0):
+def caption_for(lib, product_key, seen, is_friday, week_no=0, scene_key=None, used=None):
     """seen: 이번 주에 그 제품군을 몇 번째로 쓰는지(0부터). week_no: ISO 주차.
+    scene_key: 그날 컷의 장면. used: 이번 주에 이미 쓴 문구 제목들(집합).
 
-    두 가지를 동시에 피해야 한다.
+    세 가지를 동시에 피해야 한다.
     (1) 한 주 안에서 겹침 — 같은 제품군이 두 번 나오는 주(매트 2일)에 같은 문구가 걸린다.
         2026-08-31에 화=1, 금=4 를 요일 인덱스로 골라 1%3==4%3 으로 동일 문구가 나갔다.
     (2) 주마다 겹침 — 순번이 매주 0부터 다시 시작하면 몇 주가 지나도 풀 앞쪽만 계속 쓴다.
         2026-09-14 '내용이 죄다 똑같다' 지적의 원인이 이것이다.
-    그래서 주차를 오프셋으로 더해 풀 전체를 한 바퀴씩 돌린다."""
+        그래서 주차를 오프셋으로 더해 풀 전체를 한 바퀴씩 돌린다.
+    (3) 자세와 문구의 불일치 — 풀이 제품군으로만 묶여 있어서 글루트 브릿지 컷에
+        스쿼트 문구가, 다운독 컷에 플랫레이 문구가 걸렸다(2026-09-14 반려).
+        자세를 지목하는 문구에는 scenes 허용목록이 달려 있으니 그 컷에만 쓴다."""
     pool_key = pool_key_for(lib, product_key)
     pool = lib["captions"][pool_key]
-    c = pool[(week_no + seen) % len(pool)]
+    used = set() if used is None else used
+
+    fits = [c for c in pool
+            if scene_key is None or "scenes" not in c or scene_key in c["scenes"]]
+    if not fits:                       # 허용목록을 너무 좁게 달면 고를 게 없어진다 — 그때는 풀 전체
+        fits = pool
+
+    # 주차만 오프셋으로 쓰면 배분안 주기(4주)와 맞물려 같은 장면에 같은 문구만 돈다:
+    # 배분안이 week_no % 4 로 정해지므로 특정 장면이 도는 주는 week_no 가 항상 같은 나머지를
+    # 갖고, week_no 의 어떤 1차식도 풀 길이 2·4 에 대해 상수가 된다(실측: band_flatlay 가
+    # 20주 내내 같은 문구). 배분안이 몇 바퀴째인지(cycle)를 함께 더해 이 맞물림을 깬다.
+    # 배분안이 몇 바퀴째인지(cycle)를 함께 더해 이 맞물림을 깬다. 배분안 주기가 4이므로
+    # week_no = 4k + r 이고 오프셋은 (4+m)k + r 이 된다 — 풀 길이 L 로 나눈 나머지가 k 에
+    # 따라 변하려면 (4+m) % L != 0 이어야 한다. m=3 이면 7 이라 L=2..6, 8, 9 에서 모두 안전하다.
+    cycle = week_no // max(1, len(lib.get("week_plans") or [1]))
+    start = (week_no + cycle * 3 + seen) % len(fits)
+    order = fits[start:] + fits[:start]
+    c = next((x for x in order if x["t"] not in used), order[0])
+    used.add(c["t"])
+
     body = c["c"] + (lib["friday_tail"] if is_friday else "")
     title = c["t"]
     tags = c["h"]
@@ -216,6 +239,7 @@ def main():
     img_dir = os.path.join(BASE, "images", week_of)
     os.makedirs(img_dir, exist_ok=True)
     posts, missing, used = {}, [], {}
+    used_titles = set()            # 한 주 안에서 같은 문구가 두 번 걸리지 않게 제목을 모아둔다
     for i, (day, (pk, sk)) in enumerate(zip(DAYS, plan)):
         url = results.get(i)
         date = (monday + timedelta(days=i)).strftime("%Y-%m-%d")
@@ -231,7 +255,8 @@ def main():
         url = upload_bytes(mcp, jpeg, fname)
         seen = used.get(pool_key_for(lib, pk), 0)
         used[pool_key_for(lib, pk)] = seen + 1
-        cap, tags, tt = caption_for(lib, pk, seen, day == "Friday", monday.isocalendar()[1])
+        cap, tags, tt = caption_for(lib, pk, seen, day == "Friday", monday.isocalendar()[1],
+                                    scene_key=sk, used=used_titles)
         posts[day] = {
             "date": date, "product": lib["products"][pk]["label"],
             "hook": lib["scenes"][sk]["hook"],
