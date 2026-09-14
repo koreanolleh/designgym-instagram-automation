@@ -5,14 +5,15 @@
     "no_branding": "ABSOLUTELY NO BRANDING: NO text, NO lettering, NO words, NO logo, NO wordmark, NO icon, NO pictogram and NO blurred smudge anywhere in the frame.",
     "person": "Photorealistic documentary-style photograph shot on a full-frame camera with an 85mm lens. A real Korean woman in her late twenties. Photographic skin with visible natural texture, fine pores, subtle unevenness - NOT smooth plastic skin, NOT airbrushed, NOT waxy, NOT a CGI mannequin. Hair tied in a low bun with a few natural loose strands, never covering the face. Wardrobe: a fitted charcoal-grey sports top with a racerback and visible flatlock seams, matching high-waisted leggings with a visible waistband seam, realistic stretch wrinkles and natural creases where the body bends. Natural realistic human proportions, barefoot.",
     "mat_body": "LONG full-size rectangular yoga mat, roughly 3:1 length-to-width (180x61cm), lying COMPLETELY UNROLLED AND FLAT - NOT rolled, NOT half-rolled, NOT folded, NOT curled at either end. A THICK CUSHIONED mat about 8MM thick - the near long edge shows clear visible thickness like a firm dense cushion with a slim dark edge band, NOT a thin 2-3mm travel mat, NOT a fluffy pile rug. Suede-like matte microfibre top with a fine soft fabric texture so the print looks absorbed into the fabric.",
-    "mat_artwork_rule": "MAT ARTWORK SCALE - the repeated failure is drawing the shapes TOO SMALL. Fix it exactly like this: there are only THREE shapes on the whole mat and each one is ENORMOUS - as tall as the mat is wide, so it TOUCHES OR NEARLY TOUCHES BOTH LONG EDGES, leaving only a thin cream margin of a couple of centimetres at the top and bottom. The three shapes sit side by side down the length with narrow cream gaps between them and together they cover the mat almost end to end. DO NOT draw small circles floating in the middle of the mat with wide empty cream borders along the sides. Each shape is a big soft rounded blob with irregular watercolour edges and visible mottled paper-like texture - hand-painted, not a clean vector circle."
+    "mat_artwork_rule": "MAT ARTWORK SCALE - the repeated failure is drawing the shapes TOO SMALL. Fix it exactly like this: there are only THREE shapes on the whole mat and each one is ENORMOUS - as tall as the mat is wide, so it TOUCHES OR NEARLY TOUCHES BOTH LONG EDGES, leaving only a thin cream margin of a couple of centimetres at the top and bottom. The three shapes sit side by side down the length with narrow cream gaps between them and together they cover the mat almost end to end. DO NOT draw small circles floating in the middle of the mat with wide empty cream borders along the sides. Each shape is a big soft rounded blob with irregular watercolour edges and visible mottled paper-like texture - hand-painted, not a clean vector circle.",
+    "mat_logo_offframe": "FRAMING - KEEP THE BRANDED END OUT OF SHOT: the real mat carries a small printed wordmark near one short end. Compose so that end is cropped away by the frame edge, or is hidden behind the subject. Under no circumstances draw a wordmark, a logo, a monogram, a pictogram or any lettering onto the mat yourself - an invented mark is worse than no mark. The mat surface inside the frame carries printed artwork only."
   },
   "products": {
     "mat_active_steps": {
       "label": "요가매트 Active steps",
       "media": "ac1255f8-cd4f-4464-9618-944a4a36f140",
       "kind": "mat",
-      "spec": "Three huge watercolour shapes on a warm cream ground, in order along the length: (1) a PALE BLUE-GREY rounded blob; (2) a warm GOLDEN-YELLOW rounded blob, crossed by a VERTICAL brush stroke of deep TEAL-GREEN paint that runs ACROSS THE MAT'S WIDTH from the top edge downward, overlapping the yellow so the overlap turns deep olive-green; (3) a large DUSTY GREY-PURPLE blob, muted greyed-off mauve, more grey than violet. Each blob is as tall as the mat is wide.",
+      "spec": "Three huge watercolour shapes on a warm cream ground, in order along the length: (1) a PALE BLUE-GREY rounded blob; (2) a warm GOLDEN-YELLOW rounded blob, crossed by a VERTICAL brush stroke of deep TEAL-GREEN paint that runs ACROSS THE MAT'S WIDTH from the top edge downward, overlapping the yellow so the overlap turns deep olive-green; (3) a large DUSTY GREY-PURPLE blob, muted greyed-off mauve, more grey than violet - warm-toned, with more red in it than green; it is emphatically NOT blue, NOT sky-blue, NOT aqua, NOT teal and NOT grey-green. Each blob is as tall as the mat is wide.",
       "element": "ab658314-38f3-4e0c-b9b2-b36bf48f6bef"
     },
     "mat_before_sunrise": {
@@ -207,36 +208,61 @@
   "captions": {
     "mat": [
       {
-        "c": "펼쳐두면 결국 한 번은 올라가게 돼요.\n\n치우지 않아도 어색하지 않은 게\n이 매트의 진짜 장점입니다 🌿\n\n8mm라 무릎 닿아도 안 배깁니다.",
-        "t": "펼쳐두면 결국 올라가게 되는 8mm 요가매트",
-        "h": "#디자인짐 #요가매트 #홈요가 #홈트 #인테리어소품 #모닝루틴"
+        "c": "바닥에 그냥 앉으면 꼬리뼈부터 배겨요.\n\n8mm는 생각보다 두꺼워서\n무릎 꿇는 동작이 편해집니다.\n\n얇은 매트 쓰다 오시면 차이가 바로 느껴져요 🌿",
+        "t": "무릎 배기는 게 싫어서 8mm로 만들었어요",
+        "h": "#디자인짐 #요가매트 #8mm매트 #홈요가 #홈트 #무릎보호"
       },
       {
-        "c": "위에서 내려다보면 그림 같죠.\n\n스웨이드 재질이라 손바닥이 밀리지 않아서\n다운독 할 때 차이가 확실해요 🌅",
-        "t": "손바닥이 안 밀리는 스웨이드 요가매트",
-        "h": "#디자인짐 #요가매트 #홈요가 #플랫레이 #홈트 #다운독"
+        "c": "손에 땀이 나면 매트에서 손이 주욱 밀리죠.\n\n스웨이드 표면이라 젖을수록 오히려 잡혀요.\n플랭크 버틸 때 이게 제일 크더라고요 💧",
+        "t": "땀 날수록 더 잡히는 스웨이드 표면",
+        "h": "#디자인짐 #요가매트 #홈요가 #플랭크 #스웨이드매트 #홈트"
       },
       {
-        "c": "운동기구가 아니라 공간의 무드로 두는 매트.\n\n펴는 순간 나한테 집중하는 시간이 시작돼요 🤍",
-        "t": "펴는 순간 시작되는 나만의 시간, 디자인 요가매트",
-        "h": "#디자인짐 #요가매트 #홈트인테리어 #리빙스타그램 #홈요가"
+        "c": "운동기구는 왜 다 까맣고 투박할까.\n\n그 생각 하나로 시작했어요.\n거실에 펴놔도 눈에 거슬리지 않는 매트 🎨",
+        "t": "거실에 펴놔도 안 거슬리는 요가매트",
+        "h": "#디자인짐 #요가매트 #인테리어소품 #리빙스타그램 #홈트인테리어"
       },
       {
-        "c": "금요일 저녁엔 딱 10분만.\n\n한 주 내내 굳어 있던 몸을\n길게 늘여주고 나면\n주말이 한결 가볍게 시작돼요 ✨",
-        "t": "금요일 저녁 10분, 주말 예열 스트레칭",
+        "c": "운동 안 하는 날에도 그냥 둬요.\n\n말아서 치우는 게 은근 귀찮잖아요.\n펴져 있으면 지나가다 한 번은 올라가게 되고요 🤍",
+        "t": "치우기 귀찮아서 그냥 펴두는 매트",
+        "h": "#디자인짐 #요가매트 #홈트 #홈요가 #운동루틴"
+      },
+      {
+        "c": "아침에 제일 먼저 하는 게 매트 펴기예요.\n\n그거 하나 해두면\n오늘은 뭐라도 했다는 기분이 들거든요 🌅",
+        "t": "아침에 매트 펴는 것부터가 루틴",
+        "h": "#디자인짐 #요가매트 #모닝루틴 #홈요가 #미라클모닝"
+      },
+      {
+        "c": "금요일 저녁엔 딱 10분만.\n\n한 주 내내 앞으로만 굽어 있던 등을\n반대로 길게 늘여주고 나면\n주말이 다르게 시작돼요 ✨",
+        "t": "금요일 저녁 10분, 굽은 등 펴기",
         "h": "#디자인짐 #요가매트 #스트레칭 #주말루틴 #홈요가 #금요일"
+      },
+      {
+        "c": "한 주 잘 버텼으니까\n오늘은 땀 흘리는 운동 말고\n숨 쉬는 운동으로 🌙\n\n주말은 여기서부터 시작합니다.",
+        "t": "주말 전날은 땀 대신 호흡으로",
+        "h": "#디자인짐 #요가매트 #홈요가 #주말루틴 #스트레칭 #금요일"
       }
     ],
     "band": [
       {
-        "c": "밴드 운동하다 제일 짜증나는 게\n자꾸 말려 올라가는 거잖아요.\n\n안쪽 실리콘 라인 덕분에\n힘줄 때도 그 자리에 그대로 있어요 🔥",
+        "c": "밴드가 자꾸 말려 올라가서\n운동하다 말고 계속 내리게 되죠.\n\n안쪽 실리콘 라인이 그걸 잡아줍니다.\n힘줘도 그 자리에 그대로 있어요 🔥",
         "t": "힘줘도 안 말려 올라가는 힙업밴드",
         "h": "#디자인짐 #힙업밴드 #힙업운동 #하체운동 #홈트 #운동밴드"
       },
       {
-        "c": "3개가 한 세트인 이유,\n디자인이 전부 다르거든요.\n\n오늘은 어떤 무늬로 할까 —\n고르는 재미로 시작하게 됩니다 🌿",
-        "t": "오늘은 어떤 걸로 할까, 디자인 3종 힙업밴드",
-        "h": "#디자인짐 #힙업밴드 #하체운동 #홈트 #운동밴드 #거실인테리어"
+        "c": "3개가 한 세트인 이유,\n장력이 다 다르거든요.\n\n처음엔 제일 헐렁한 것부터,\n익숙해지면 한 단계씩 올리면 됩니다 🌿",
+        "t": "3단계 장력, 한 단계씩 올리면 돼요",
+        "h": "#디자인짐 #힙업밴드 #하체운동 #홈트 #운동밴드 #초보운동"
+      },
+      {
+        "c": "스쿼트 할 때 무릎이 안쪽으로 모이면\n허벅지 앞만 아프고 엉덩이는 안 써져요.\n\n밴드 하나 끼우면\n무릎이 알아서 바깥으로 벌어집니다 💪",
+        "t": "무릎 모이는 스쿼트, 밴드 하나로 교정",
+        "h": "#디자인짐 #힙업밴드 #스쿼트 #하체운동 #홈트 #운동자세"
+      },
+      {
+        "c": "매트 옆에 그냥 던져둬요.\n\n무늬가 예뻐서 굴러다녀도 지저분해 보이지 않고,\n눈에 보이면 한 세트라도 더 하게 되거든요 🧺",
+        "t": "굴러다녀도 예뻐서 그냥 두는 밴드",
+        "h": "#디자인짐 #힙업밴드 #홈트용품 #하체운동 #거실인테리어"
       }
     ],
     "kettlebell": [
@@ -246,24 +272,45 @@
         "h": "#디자인짐 #케틀벨 #문케틀벨 #홈짐 #홈트 #거실인테리어"
       },
       {
-        "c": "지나갈 때마다 눈에 들어와서\n한 번씩 들게 돼요.\n\n숨겨두지 않아도 되는 운동기구,\n그게 시작하기 쉬운 이유입니다 🌿",
-        "t": "숨겨두지 않아도 되는 문 케틀벨",
-        "h": "#디자인짐 #케틀벨 #홈짐 #홈트 #인테리어운동기구"
+        "c": "쇠 케틀벨은 바닥에 놓을 때마다 쿵 소리가 나죠.\n\n아파트에서는 그게 제일 신경 쓰이잖아요.\n이건 내려놔도 조용합니다 🌙",
+        "t": "내려놔도 조용한 아파트용 케틀벨",
+        "h": "#디자인짐 #케틀벨 #홈짐 #층간소음 #아파트홈트 #홈트"
+      },
+      {
+        "c": "가운데 구멍이 손잡이예요.\n\n손 넣는 방향을 바꾸면\n스윙도, 고블릿 스쿼트도 다 됩니다 🌀",
+        "t": "잡는 방향만 바꾸면 운동이 달라져요",
+        "h": "#디자인짐 #케틀벨 #문케틀벨 #홈트 #케틀벨운동 #하체운동"
+      },
+      {
+        "c": "4.5kg은 애매한 무게 같지만\n15개 넘어가면 생각이 달라집니다.\n\n매일 할 수 있는 무게가 제일 좋은 무게예요 💫",
+        "t": "매일 할 수 있는 무게가 제일 좋은 무게",
+        "h": "#디자인짐 #케틀벨 #홈트 #가벼운운동 #운동루틴"
       }
     ],
     "dumbbell": [
       {
-        "c": "선반에 그냥 올려둡니다.\n\n운동기구처럼 안 생겨서\n책이랑 화분 사이에 둬도 안 튀어요 ☁️\n\n1kg이라 지나가다 한 번씩 드는 게 전부인데,\n그게 매일 하게 되는 이유더라고요.",
+        "c": "선반에 그냥 올려둡니다.\n\n운동기구처럼 안 생겨서\n책이랑 화분 사이에 둬도 안 튀어요 ☁️\n\n지나가다 한 번씩 드는 게 전부인데,\n그게 매일 하게 되는 이유더라고요.",
         "t": "책 사이에 둬도 안 튀는 1kg 덤벨",
         "h": "#디자인짐 #덤벨 #모던덤벨 #홈트 #1kg덤벨 #인테리어운동기구"
       },
       {
-        "c": "일어나자마자 10번, 자기 전에 10번.\n\n1kg이라 부담이 없어서\n오히려 매일 하게 돼요 ☁️",
-        "t": "아침저녁 10번씩, 부담 없는 1kg 덤벨",
+        "c": "실리콘이라 손에 쥐었을 때 차갑지 않아요.\n\n쇠 덤벨은 겨울에 잡기 싫어지잖아요.\n이건 그냥 집게 됩니다 🤍",
+        "t": "겨울에도 잡기 싫지 않은 실리콘 덤벨",
+        "h": "#디자인짐 #덤벨 #모던덤벨 #홈트 #실리콘덤벨 #가벼운운동"
+      },
+      {
+        "c": "1kg으로 뭐가 되냐고들 하시는데\n팔 옆으로 들어서 20번만 해보세요.\n\n무게보다 횟수가 태우는 겁니다 🔥",
+        "t": "1kg으로 20번, 무게보다 횟수",
+        "h": "#디자인짐 #덤벨 #1kg덤벨 #홈트 #팔운동 #어깨운동"
+      },
+      {
+        "c": "일어나자마자 10번, 자기 전에 10번.\n\n부담이 없으니까\n빼먹을 핑계도 안 생겨요 🌙",
+        "t": "아침저녁 10번씩, 빼먹을 핑계가 없는 무게",
         "h": "#디자인짐 #덤벨 #홈트 #미라클모닝 #가벼운운동 #침실인테리어"
       }
     ]
   },
   "friday_tail": "\n\n나를 디자인하다, Design:Gym",
-  "_element_note": "매트는 힉스필드 Elements에 제품으로 등록돼 있다(element 필드). 프롬프트에 <<<element_id>>>를 박으면 등록된 제품 사진이 그대로 반영된다 — 무늬를 말로 설명하는 것보다 훨씬 정확하다. 단 Elements는 marketing_studio_image가 지원하지 않으므로 그런 컷은 nano_banana_pro로 생성한다. 2026-09-07: 이걸 안 써서 매트 무늬가 반복해서 틀렸다."
+  "_element_note": "매트는 힉스필드 Elements에 제품으로 등록돼 있다(element 필드). 프롬프트에 <<<element_id>>>를 박으면 등록된 제품 사진이 그대로 반영된다 — 무늬를 말로 설명하는 것보다 훨씬 정확하다. 단 Elements는 marketing_studio_image가 지원하지 않으므로 그런 컷은 nano_banana_pro로 생성한다. 2026-09-07: 이걸 안 써서 매트 무늬가 반복해서 틀렸다.",
+  "_caption_note": "캡션은 제품군별 등장 순번으로 고른다(weekly_generate.caption_for). 풀이 작으면 몇 주 만에 같은 문구가 돌아와 '내용이 다 똑같다'는 지적을 받는다(2026-09-14). 제품당 최소 4개 이상 유지하고, 같은 제품이라도 각도를 달리할 것 — 두께·그립감·소음·인테리어·무게/횟수·루틴처럼 서로 다른 이유를 말한다."
 }

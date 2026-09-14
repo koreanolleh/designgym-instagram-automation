@@ -59,6 +59,11 @@ def build_prompt(lib, product_key, scene_key):
                   "artwork, colours, proportions and thickness must match the reference product photograph "
                   "precisely. Do not invent a different print or a different colourway.",
                   "THE MAT: " + sh["mat_body"] if p["kind"] == "mat" else ""]
+        # 등록 제품이라도 색이 이웃 색조로 밀려 나오는 일이 있다(2026-09-14: 잿빛 보라 블롭이
+        # 하늘색으로 나왔다). 무늬는 Element에 맡기고, 색만 한 줄로 다시 못박는다.
+        if p["kind"] == "mat" and p.get("spec"):
+            parts += ["COLOUR CHECK - the printed artwork must read exactly as follows, with no shape or "
+                      "colour substituted: " + p["spec"]]
     elif p["kind"] == "mat":
         parts += ["THE MAT: " + sh["mat_body"], sh["mat_artwork_rule"],
                   "ARTWORK - copy the reference exactly. " + p["spec"]]
@@ -73,9 +78,12 @@ def build_prompt(lib, product_key, scene_key):
         wm = lib["products"]["mat_warm_sunlight"]
         parts += ["", f"THE MAT UNDER HER IS <<<{wm['element']}>>> - reproduce that exact registered product. "
                   + sh["mat_body"],
-                  "NO text, NO lettering, NO logo and NO blurred smudge anywhere on the mat."]
+                  sh["no_branding"]]
     if p["kind"] == "mat":
-        parts += ["", sh["no_branding"]]
+        # 실물 매트에는 워드마크가 인쇄돼 있지만, 생성 모델에 그리게 하면 우리 로고가 아닌
+        # 엉뚱한 마크를 만들어 낸다(2026-09-14 실측). 로고는 아예 프레임 밖으로 빼고,
+        # 화면 안에는 글자를 한 자도 두지 않는다.
+        parts += ["", sh["no_branding"], sh["mat_logo_offframe"]]
     parts += ["", sh["quality"]]
     return "\n".join(x for x in parts if x is not None)
 
@@ -96,15 +104,18 @@ def pool_key_for(lib, product_key):
     return "kettlebell" if "kettlebell" in product_key else "dumbbell"
 
 
-def caption_for(lib, product_key, seen, is_friday):
-    """seen: 이번 주에 그 제품군을 몇 번째로 쓰는지(0부터).
+def caption_for(lib, product_key, seen, is_friday, week_no=0):
+    """seen: 이번 주에 그 제품군을 몇 번째로 쓰는지(0부터). week_no: ISO 주차.
 
-    요일 인덱스로 고르면 같은 제품군이 두 번 나오는 주에 캡션이 겹친다
-    (2026-08-31: 매트 풀 3개에 화=1, 금=4 → 1%3==4%3 으로 화·금이 동일 문구).
-    제품군별 등장 순번으로 골라야 한 주 안에서 안 겹친다."""
+    두 가지를 동시에 피해야 한다.
+    (1) 한 주 안에서 겹침 — 같은 제품군이 두 번 나오는 주(매트 2일)에 같은 문구가 걸린다.
+        2026-08-31에 화=1, 금=4 를 요일 인덱스로 골라 1%3==4%3 으로 동일 문구가 나갔다.
+    (2) 주마다 겹침 — 순번이 매주 0부터 다시 시작하면 몇 주가 지나도 풀 앞쪽만 계속 쓴다.
+        2026-09-14 '내용이 죄다 똑같다' 지적의 원인이 이것이다.
+    그래서 주차를 오프셋으로 더해 풀 전체를 한 바퀴씩 돌린다."""
     pool_key = pool_key_for(lib, product_key)
     pool = lib["captions"][pool_key]
-    c = pool[seen % len(pool)]
+    c = pool[(week_no + seen) % len(pool)]
     body = c["c"] + (lib["friday_tail"] if is_friday else "")
     title = c["t"]
     tags = c["h"]
@@ -220,7 +231,7 @@ def main():
         url = upload_bytes(mcp, jpeg, fname)
         seen = used.get(pool_key_for(lib, pk), 0)
         used[pool_key_for(lib, pk)] = seen + 1
-        cap, tags, tt = caption_for(lib, pk, seen, day == "Friday")
+        cap, tags, tt = caption_for(lib, pk, seen, day == "Friday", monday.isocalendar()[1])
         posts[day] = {
             "date": date, "product": lib["products"][pk]["label"],
             "hook": lib["scenes"][sk]["hook"],
