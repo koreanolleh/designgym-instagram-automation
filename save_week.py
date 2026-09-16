@@ -30,7 +30,7 @@ from datetime import datetime, timezone, timedelta
 KST = timezone(timedelta(hours=9))
 BASE = os.path.dirname(os.path.abspath(__file__))
 PENDING = os.path.join(BASE, "pending_posts.json")
-DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+from publish_days import DAYS_EN as DAYS, OFFSET
 
 
 def run(cmd, check=False):
@@ -88,7 +88,8 @@ def stage_images(payload: dict) -> bool:
         data = {"week_of": week_of, "posts": {}}
 
     written = []
-    for i, day in enumerate(DAYS):
+    # 발행일이 연속이 아니다(화·목·일) — 날짜는 월요일 기준 오프셋으로 잡는다
+    for day in DAYS:
         src = payload.get("posts", {}).get(day)
         if not src:
             continue
@@ -98,7 +99,7 @@ def stage_images(payload: dict) -> bool:
             continue
         prev = data["posts"].get(day, {})
         data["posts"][day] = {
-            "date": (monday + timedelta(days=i)).isoformat(),
+            "date": (monday + timedelta(days=OFFSET[day])).isoformat(),
             "product": src.get("product", prev.get("product", "")),
             "hook": src.get("hook", prev.get("hook", "")),
             "images": [{"path": "", "image_url": u} for u in urls],

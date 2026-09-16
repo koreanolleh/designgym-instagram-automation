@@ -10,8 +10,7 @@ from prepare_week import OBSIDIAN_BASE, week_label
 PENDING_PATH = os.path.join(os.path.dirname(__file__), "pending_posts.json")
 EDIT_HISTORY_PATH = os.path.join(os.path.dirname(__file__), "edit_history.json")
 
-DAYS_KR = ["월요일", "화요일", "수요일", "목요일", "금요일"]
-DAYS_EN = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+from publish_days import DAYS_KR, DAYS_EN
 
 
 def find_obsidian_note():
@@ -24,7 +23,7 @@ def find_obsidian_note():
 
 def parse_obsidian(content: str) -> dict:
     result = {}
-    pattern = r"## (월요일|화요일|수요일|목요일|금요일)[^\n]*\n([\s\S]*?)(?=\n## |\Z)"
+    pattern = r"## (" + "|".join(DAYS_KR) + r")[^\n]*\n([\s\S]*?)(?=\n## |\Z)"
     for match in re.finditer(pattern, content):
         day_kr = match.group(1)
         body = match.group(2)

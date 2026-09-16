@@ -23,10 +23,9 @@ from datetime import datetime, timedelta, timezone
 
 from tt_publish import Mcp, access_token, KST, BASE
 
+from publish_days import DAYS_EN as DAYS, KR, OFFSET, IMAGE_COUNT, CLOSER
+
 DRY = os.environ.get("DRY_RUN") == "1"
-DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-KR = {"Monday": "월요일", "Tuesday": "화요일", "Wednesday": "수요일",
-      "Thursday": "목요일", "Friday": "금요일"}
 
 
 def log(m):
@@ -48,7 +47,48 @@ def model_for(lib, product_key):
     return "nano_banana_pro" if lib["products"][product_key].get("element") else "marketing_studio_image"
 
 
+def build_snap_prompt(lib, product_key, setup_key, angle_key):
+    """아이폰으로 방금 찍은 것처럼 보이는 한 컷. 하루치는 세트 하나 + 앵글 여러 개다.
+
+    구성은 [스타일][카메라][장소·빛][제품 규격][금지사항] 순서다. 제품 규격은 종전과 같은
+    실측 스펙을 쓰되, 매트는 무늬가 틀어지기 쉬워 프레이밍 조건을 함께 건다.
+    """
+    p = lib["products"][product_key]
+    sh = lib["shared"]
+    setup = lib["setups"][setup_key]
+    angle = lib["angles"][angle_key]
+
+    parts = [sh["iphone"], "", angle["prompt"], "", setup["prompt"], ""]
+
+    if p.get("element"):
+        parts += [f"THE PRODUCT IS <<<{p['element']}>>> - reproduce this exact registered product: its printed "
+                  "artwork, colours, proportions and thickness must match the reference product photograph "
+                  "precisely. Do not invent a different print or a different colourway."]
+        if p["kind"] == "mat":
+            parts += ["THE MAT: " + sh["mat_body"],
+                      sh["mat_artwork_guard"],
+                      "COLOUR CHECK - the printed artwork must read exactly as follows, with no shape or "
+                      "colour substituted: " + p["spec"]]
+    elif p["kind"] == "band":
+        parts += ["THE BAND: " + p["spec"]]
+    else:
+        parts += ["THE PRODUCT - copy the reference exactly: " + p["spec"]]
+
+    # 사람은 사진 찍는 본인의 발이나 손까지만. 모델컷은 이 체계에서 만들지 않는다.
+    if angle_key in ("ang_topdown_feet", "ang_in_hand"):
+        parts += ["", "The only body part anywhere in frame belongs to the person holding the phone, exactly "
+                      "as the camera note says. No face, no second person, no model."]
+    else:
+        parts += ["", "No people at all."]
+
+    if p["kind"] == "mat":
+        parts += [sh["mat_logo_offframe"]]
+    parts += ["", sh["iphone_negative"]]
+    return "\n".join(x for x in parts if x)
+
+
 def build_prompt(lib, product_key, scene_key):
+    """구(舊) 월~금 체계용. 2026-09-16 화·목·일 개편 전에 만든 주차를 재현할 때만 쓴다."""
     p = lib["products"][product_key]
     s = lib["scenes"][scene_key]
     sh = lib["shared"]
@@ -88,7 +128,7 @@ def build_prompt(lib, product_key, scene_key):
     return "\n".join(x for x in parts if x is not None)
 
 
-def medias_for(lib, product_key, scene_key):
+def medias_for(lib, product_key, scene_key=None):
     if lib["products"][product_key].get("element"):
         return []          # 등록 제품은 프롬프트의 <<<element_id>>>가 이미지를 주입한다
     m = [{"value": lib["products"][product_key]["media"], "role": "image"}]
@@ -104,9 +144,10 @@ def pool_key_for(lib, product_key):
     return "kettlebell" if "kettlebell" in product_key else "dumbbell"
 
 
-def caption_for(lib, product_key, seen, is_friday, week_no=0, scene_key=None, used=None):
+def caption_for(lib, product_key, seen, is_closer, week_no=0, angle_keys=None, used=None):
     """seen: 이번 주에 그 제품군을 몇 번째로 쓰는지(0부터). week_no: ISO 주차.
-    scene_key: 그날 컷의 장면. used: 이번 주에 이미 쓴 문구 제목들(집합).
+    angle_keys: 그날 찍은 앵글들. used: 이번 주에 이미 쓴 문구 제목들(집합).
+    is_closer: 한 주를 닫는 날이면 본문에 브랜드 서명을 붙인다.
 
     세 가지를 동시에 피해야 한다.
     (1) 한 주 안에서 겹침 — 같은 제품군이 두 번 나오는 주(매트 2일)에 같은 문구가 걸린다.
@@ -116,13 +157,15 @@ def caption_for(lib, product_key, seen, is_friday, week_no=0, scene_key=None, us
         그래서 주차를 오프셋으로 더해 풀 전체를 한 바퀴씩 돌린다.
     (3) 자세와 문구의 불일치 — 풀이 제품군으로만 묶여 있어서 글루트 브릿지 컷에
         스쿼트 문구가, 다운독 컷에 플랫레이 문구가 걸렸다(2026-09-14 반려).
-        자세를 지목하는 문구에는 scenes 허용목록이 달려 있으니 그 컷에만 쓴다."""
+        구도를 지목하는 문구에는 angles 허용목록이 달려 있으니, 그날 찍은 앵글 중
+        하나라도 목록에 들어야 쓴다."""
     pool_key = pool_key_for(lib, product_key)
     pool = lib["captions"][pool_key]
     used = set() if used is None else used
+    angles = set(angle_keys or [])
 
     fits = [c for c in pool
-            if scene_key is None or "scenes" not in c or scene_key in c["scenes"]]
+            if not angles or "angles" not in c or angles & set(c["angles"])]
     if not fits:                       # 허용목록을 너무 좁게 달면 고를 게 없어진다 — 그때는 풀 전체
         fits = pool
 
@@ -139,7 +182,10 @@ def caption_for(lib, product_key, seen, is_friday, week_no=0, scene_key=None, us
     c = next((x for x in order if x["t"] not in used), order[0])
     used.add(c["t"])
 
-    body = c["c"] + (lib["friday_tail"] if is_friday else "")
+    # 브랜드 서명은 한 주를 닫는 날에만, 본문이 이미 브랜드로 끝나지 않을 때만 붙인다.
+    body = c["c"]
+    if is_closer and "디자인짐" not in body:
+        body += lib["brand_tail"]
     title = c["t"]
     tags = c["h"]
     tt = f"{title} {' '.join(tags.split()[:3])}"
@@ -182,6 +228,19 @@ def main():
         log(f"{week_of} 주차는 이미 만들어져 있음 — 종료 (덮어쓰지 않는다)")
         return 0
 
+    # 일요일이 발행일이 되면서 '전 주 일요일 발행'과 '이번 주 생성'이 같은 밤에 붙었다.
+    # 생성이 먼저 돌면 아직 안 나간 게시물이 파일째 사라진다. 아직 때가 안 지난 미발행분이
+    # 남아 있으면 덮어쓰지 않고 다음 크론에 넘긴다(크론은 하루에 여러 번 돈다).
+    today = datetime.now(KST).date().isoformat()
+    stuck = [f"{e.get('date')}({d})" for d, e in existing.get("posts", {}).items()
+             if e.get("date") and e["date"] <= today
+             and not (e.get("ig_posted") and e.get("tiktok_posted"))]
+    if stuck and not DRY:
+        log(f"지난 주차에 아직 안 나간 게시물이 있음 — 덮어쓰지 않고 종료: {', '.join(sorted(stuck))}")
+        return 0
+    if stuck:
+        log(f"[DRY_RUN] 실제 실행이면 여기서 멈춘다(미발행분: {', '.join(sorted(stuck))})")
+
     # 지난주와 같은 배분안을 반복하지 않는다(주간 규칙: 같은 제품에 같은 구도 금지).
     # 훅 문구는 손으로 고쳐질 수 있어 비교 기준으로 못 쓴다 — 쓴 배분안 번호를 데이터에 남겨 비교한다.
     plans = lib["week_plans"]
@@ -192,8 +251,9 @@ def main():
         log(f"배분안 #{prev_idx}는 지난주와 동일 — #{plan_idx}로 변경")
     plan = plans[plan_idx]
     log(f"대상 주 {week_of} / 배분안 #{plan_idx}")
-    for day, (pk, sk) in zip(DAYS, plan):
-        log(f"  {KR[day]}: {lib['products'][pk]['label']} / {lib['scenes'][sk]['hook']}")
+    for day, (pk, setup, angles) in zip(DAYS, plan):
+        log(f"  {KR[day]} ({IMAGE_COUNT[day]}장): {lib['products'][pk]['label']} / "
+            f"{lib['setups'][setup]['hook']} / " + ", ".join(lib['angles'][a]['hook'] for a in angles))
     if DRY:
         log("[DRY_RUN] 생성 없이 계획만 출력하고 종료")
         return 0
@@ -204,18 +264,24 @@ def main():
     except Exception as e:
         bal_before = None
         log(f"잔액 조회 실패(무시): {e}")
+    # 컷 단위로 펼친다 — (요일, 그 요일 안의 순번, 제품, 세트, 앵글)
+    shots = []
+    for day, (pk, setup, angles) in zip(DAYS, plan):
+        for n, angle in enumerate(angles):
+            shots.append((day, n, pk, setup, angle))
+
     if bal_before is not None:
         log(f"생성 전 잔액 {bal_before}")
-        if bal_before < len(plan) * 2:
+        if bal_before < len(shots) * 2:
             raise SystemExit(
-                f"크레딧 부족: 잔액 {bal_before}, 필요 약 {len(plan)*2} "
+                f"크레딧 부족: 잔액 {bal_before}, 필요 약 {len(shots)*2} "
                 "(장당 2크레딧). 충전 후 다시 실행하세요.")
 
     reqs = []
-    for i, (pk, sk) in enumerate(plan):
+    for i, (day, n, pk, setup, angle) in enumerate(shots):
         params = {"model": model_for(lib, pk), "aspect_ratio": "4:5", "resolution": "2k",
-                  "prompt": build_prompt(lib, pk, sk)}
-        med = medias_for(lib, pk, sk)
+                  "prompt": build_snap_prompt(lib, pk, setup, angle)}
+        med = medias_for(lib, pk)
         if med:
             params["medias"] = med
         reqs.append({"index": i, "params": params})
@@ -234,33 +300,44 @@ def main():
             elif j["status"] in ("failed", "canceled"):
                 results[j["index"]] = None
         pending = [p for p in pending if p["index"] not in results]
-    log(f"생성 완료 {sum(1 for v in results.values() if v)}/{len(plan)}장")
+    log(f"생성 완료 {sum(1 for v in results.values() if v)}/{len(shots)}장")
 
+    # 컷을 요일별로 다시 묶는다. 한 장이라도 실패하면 그날은 남은 장수로 올린다 —
+    # 캐러셀은 장수가 줄어도 게시가 되므로, 하루를 통째로 버리지 않는다.
     img_dir = os.path.join(BASE, "images", week_of)
     os.makedirs(img_dir, exist_ok=True)
-    posts, missing, used = {}, [], {}
-    used_titles = set()            # 한 주 안에서 같은 문구가 두 번 걸리지 않게 제목을 모아둔다
-    for i, (day, (pk, sk)) in enumerate(zip(DAYS, plan)):
+    by_day = {}
+    for i, (day, n, pk, setup, angle) in enumerate(shots):
         url = results.get(i)
-        date = (monday + timedelta(days=i)).strftime("%Y-%m-%d")
         if not url:
-            missing.append(KR[day])
+            log(f"  {KR[day]} {n+1}번째 컷 실패 — 건너뜀")
             continue
         # 인스타는 이미지 8MB를 넘으면 400으로 거부한다(2026-08-27 금요일분 10.46MB로 실패).
         # 생성 원본은 PNG 10MB대까지 나오므로, 발행에 쓸 URL은 1080px JPEG으로 만들어 올린다.
-        fname = f"{day[:3].lower()}_1_{pk}.jpg"
+        fname = f"{day[:3].lower()}_{n+1}_{pk}.jpg"
         jpeg = to_web_jpeg(url)
         with open(os.path.join(img_dir, fname), "wb") as f:
             f.write(jpeg)
-        url = upload_bytes(mcp, jpeg, fname)
+        by_day.setdefault(day, []).append(
+            {"path": f"images/{week_of}/{fname}", "image_url": upload_bytes(mcp, jpeg, fname)})
+
+    posts, missing, used = {}, [], {}
+    used_titles = set()            # 한 주 안에서 같은 문구가 두 번 걸리지 않게 제목을 모아둔다
+    for day, (pk, setup, angles) in zip(DAYS, plan):
+        images = by_day.get(day)
+        date = (monday + timedelta(days=OFFSET[day])).strftime("%Y-%m-%d")
+        if not images:
+            missing.append(KR[day])
+            continue
         seen = used.get(pool_key_for(lib, pk), 0)
         used[pool_key_for(lib, pk)] = seen + 1
-        cap, tags, tt = caption_for(lib, pk, seen, day == "Friday", monday.isocalendar()[1],
-                                    scene_key=sk, used=used_titles)
+        cap, tags, tt = caption_for(lib, pk, seen, day == CLOSER, monday.isocalendar()[1],
+                                    angle_keys=angles, used=used_titles)
+        hook = (f"{lib['setups'][setup]['hook']} / "
+                + ", ".join(lib['angles'][a]['hook'] for a in angles))
         posts[day] = {
-            "date": date, "product": lib["products"][pk]["label"],
-            "hook": lib["scenes"][sk]["hook"],
-            "images": [{"path": f"images/{week_of}/{fname}", "image_url": url}],
+            "date": date, "product": lib["products"][pk]["label"], "hook": hook,
+            "images": images,
             "caption": cap, "hashtags": tags, "tiktok_title": tt + "\n\n---",
             "posted": False, "ig_posted": None, "tiktok_posted": None,
         }
@@ -274,9 +351,9 @@ def main():
     except Exception:
         bal_after = None
     spent = round(bal_before - bal_after, 2) if (bal_before is not None and bal_after is not None) else None
-    made = len(posts)
+    made = sum(len(p["images"]) for p in posts.values())    # 요일 수가 아니라 실제 장수
     if spent is not None:
-        log(f"크레딧 사용 {spent} (생성 {made}장, 잔액 {bal_before} → {bal_after})")
+        log(f"크레딧 사용 {spent} (생성 {made}장 / {len(posts)}일, 잔액 {bal_before} → {bal_after})")
     json.dump({"week_of": week_of, "generated_at": datetime.now(KST).strftime("%Y-%m-%d %H:%M"),
                "images": made, "credits_spent": spent,
                "balance_before": bal_before, "balance_after": bal_after},

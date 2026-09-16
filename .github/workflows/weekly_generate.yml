@@ -109,13 +109,13 @@ jobs:
           ")
           TITLE="🎨 $WEEK 주간 이미지 컨펌 요청"
           if ! gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
-            gh issue create --title "$TITLE" --body "이번 주 이미지 5장이 생성됐습니다.
+            gh issue create --title "$TITLE" --body "이번 주 이미지가 생성됐습니다 (화 3장 / 목 2장 / 일 3장 캐러셀).
 
           💳 $CREDITS
 
           저장소 \`images/$WEEK/\` 에서 확인하시고, 고칠 부분이 있으면 로컬 Claude 세션에 말씀해주세요.
           컨펌 후 옵시디언 반영까지 진행합니다.
 
-          발행은 컨펌과 무관하게 인스타 18:30 / 틱톡 19:30 에 자동으로 나갑니다 —
+          발행은 컨펌과 무관하게 화·목·일 인스타 18:30 / 틱톡 19:30 에 자동으로 나갑니다 —
           바꿀 게 있으면 그 전에 알려주세요."
           fi

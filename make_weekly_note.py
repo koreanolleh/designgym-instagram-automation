@@ -15,10 +15,9 @@ from prepare_week import OBSIDIAN_BASE, week_label
 
 PENDING_PATH = os.path.join(os.path.dirname(__file__), "pending_posts.json")
 
-DAYS = [
-    ("Monday", "월요일"), ("Tuesday", "화요일"), ("Wednesday", "수요일"),
-    ("Thursday", "목요일"), ("Friday", "금요일"),
-]
+from publish_days import SCHEDULE
+
+DAYS = [(en, kr) for en, kr, _off, _n in SCHEDULE]
 CREDITS_PATH = os.path.join(os.path.dirname(__file__), "last_run_credits.json")
 
 
@@ -70,7 +69,7 @@ def main():
     lines += [
         "> 이미지를 보고 캡션/해시태그/틱톡제목을 직접 수정하세요. 수정하면 자동 반영됩니다(맥 켜져 있을 때).",
         "> 틱톡제목은 틱톡 화면에 보이는 유일한 글입니다 — 해시태그 포함 90자 이내로 유지하세요.",
-        "> 이미지 자체를 바꾸고 싶으면 채팅으로 요청하세요. 매일 저녁 7시반 인스타+틱톡 자동 게시.",
+        "> 이미지 자체를 바꾸고 싶으면 채팅으로 요청하세요. 화·목·일 저녁 인스타+틱톡 자동 게시.",
         "",
     ]
     for day_en, day_kr in DAYS:

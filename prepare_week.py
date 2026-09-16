@@ -17,8 +17,7 @@ _VAULT = os.environ.get("OBSIDIAN_VAULT") or os.path.expanduser(
 OBSIDIAN_BASE = os.path.join(
     _VAULT, "03_프로젝트/디자인짐_콘텐츠_자동화/인스타_자동화/주간초안")
 
-DAYS_KR = ["월요일", "화요일", "수요일", "목요일", "금요일"]
-DAYS_EN = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+from publish_days import DAYS_KR, DAYS_EN, OFFSET
 
 
 def week_label(monday: date) -> str:
@@ -49,8 +48,9 @@ def save_week(day_plans: dict, monday: date = None):
     lines.append("> 이미지를 보고 캡션/해시태그를 직접 수정하세요. 이미지 자체를 바꾸고 싶으면 채팅으로 요청하세요.")
     lines.append("> 이미지가 여러 장인 날은 캐러셀(슬라이드)로 게시됩니다. 각 날짜 저녁 7시반~8시 사이에 자동 게시됩니다.\n")
 
-    for i, (day_en, day_kr) in enumerate(zip(DAYS_EN, DAYS_KR)):
-        post_date = monday + timedelta(days=i)
+    for day_en, day_kr in zip(DAYS_EN, DAYS_KR):
+        # 발행일이 연속이 아니다(화·목·일) — 순번이 아니라 월요일 기준 오프셋으로 날짜를 잡는다
+        post_date = monday + timedelta(days=OFFSET[day_en])
         info = day_plans.get(day_en)
         if not info:
             continue

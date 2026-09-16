@@ -6,7 +6,9 @@ name: 틱톡 발행 감시
 
 on:
   schedule:
-    - cron: '30 13 * * 1-5'  # UTC 13:30 = KST 22:30
+    # 2026-09-16: 발행일을 화·목·일로 바꿨다(UTC 요일 2,4,0 — 이 시간대는 UTC일 == KST일).
+    # 요일 목록의 정본은 publish_days.py 이고, cron 은 여기서 같이 맞춘다.
+    - cron: '30 13 * * 2,4,0'  # UTC 13:30 = KST 22:30
   workflow_dispatch:
 
 permissions:

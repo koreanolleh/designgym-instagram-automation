@@ -317,15 +317,24 @@ def main():
     log(f"{day} 발행 시작")
     mcp = Mcp(access_token())
 
-    img = to_jpeg(entry["images"][0]["image_url"])
-    up = mcp.tool("media_upload", {"filename": f"{day.lower()}.jpg", "content_type": "image/jpeg"})["uploads"][0]
-    req = urllib.request.Request(up["upload_url"], data=img,
-                                 headers={"Content-Type": "image/jpeg"}, method="PUT")
-    with urllib.request.urlopen(req, timeout=180) as r:
-        if r.status != 200:
-            raise RuntimeError(f"업로드 실패 {r.status}")
-    mcp.tool("media_confirm", {"type": "image", "media_id": up["media_id"]})
-    log("이미지 업로드 완료")
+    # 2026-09-16부터 하루에 여러 장(캐러셀)을 올린다. 틱톡 PHOTO 게시물도 여러 장을 받는다 —
+    # photo_images 에 순서대로 넣고 첫 장을 커버로 쓴다.
+    srcs = [im["image_url"] for im in entry.get("images", []) if im.get("image_url")]
+    if not srcs:
+        raise RuntimeError(f"{day} 이미지 URL이 없다")
+    photo_urls = []
+    for n, src in enumerate(srcs, 1):
+        img = to_jpeg(src)
+        up = mcp.tool("media_upload", {"filename": f"{day.lower()}_{n}.jpg",
+                                       "content_type": "image/jpeg"})["uploads"][0]
+        req = urllib.request.Request(up["upload_url"], data=img,
+                                     headers={"Content-Type": "image/jpeg"}, method="PUT")
+        with urllib.request.urlopen(req, timeout=180) as r:
+            if r.status != 200:
+                raise RuntimeError(f"업로드 실패 {r.status} ({n}번째)")
+        mcp.tool("media_confirm", {"type": "image", "media_id": up["media_id"]})
+        photo_urls.append(up["url"])
+    log(f"이미지 업로드 완료 ({len(photo_urls)}장)")
 
     song_id, song_name = pick_song(mcp, connector)
     title = entry.get("tiktok_title", "").split("\n")[0].strip() or entry["caption"].split("\n")[0]
@@ -333,7 +342,7 @@ def main():
 
     prep = mcp.tool("tiktok_prepare_publish", {
         "connector_id": connector, "mode": "DIRECT_POST", "media_type": "PHOTO",
-        "photo_images": [up["url"]], "photo_cover_index": 0,
+        "photo_images": photo_urls, "photo_cover_index": 0,
         "title": title[:150], "description": desc[:4000],
     })
     log(f"준비 완료 (음악: {song_name or '없음'})")

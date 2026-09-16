@@ -6,7 +6,10 @@
     "person": "Photorealistic documentary-style photograph shot on a full-frame camera with an 85mm lens. A real Korean woman in her late twenties. Photographic skin with visible natural texture, fine pores, subtle unevenness - NOT smooth plastic skin, NOT airbrushed, NOT waxy, NOT a CGI mannequin. Hair tied in a low bun with a few natural loose strands, never covering the face. Wardrobe: a fitted charcoal-grey sports top with a racerback and visible flatlock seams, matching high-waisted leggings with a visible waistband seam, realistic stretch wrinkles and natural creases where the body bends. Natural realistic human proportions, barefoot.",
     "mat_body": "LONG full-size rectangular yoga mat, roughly 3:1 length-to-width (180x61cm), lying COMPLETELY UNROLLED AND FLAT - NOT rolled, NOT half-rolled, NOT folded, NOT curled at either end. A THICK CUSHIONED mat about 8MM thick - the near long edge shows clear visible thickness like a firm dense cushion with a slim dark edge band, NOT a thin 2-3mm travel mat, NOT a fluffy pile rug. Suede-like matte microfibre top with a fine soft fabric texture so the print looks absorbed into the fabric.",
     "mat_artwork_rule": "MAT ARTWORK SCALE - the repeated failure is drawing the shapes TOO SMALL. Fix it exactly like this: there are only THREE shapes on the whole mat and each one is ENORMOUS - as tall as the mat is wide, so it TOUCHES OR NEARLY TOUCHES BOTH LONG EDGES, leaving only a thin cream margin of a couple of centimetres at the top and bottom. The three shapes sit side by side down the length with narrow cream gaps between them and together they cover the mat almost end to end. DO NOT draw small circles floating in the middle of the mat with wide empty cream borders along the sides. Each shape is a big soft rounded blob with irregular watercolour edges and visible mottled paper-like texture - hand-painted, not a clean vector circle.",
-    "mat_logo_offframe": "FRAMING - KEEP THE BRANDED END OUT OF SHOT: the real mat carries a small printed wordmark near one short end. Compose so that end is cropped away by the frame edge, or is hidden behind the subject. Under no circumstances draw a wordmark, a logo, a monogram, a pictogram or any lettering onto the mat yourself - an invented mark is worse than no mark. The mat surface inside the frame carries printed artwork only."
+    "mat_logo_offframe": "FRAMING - KEEP THE BRANDED END OUT OF SHOT: the real mat carries a small printed wordmark near one short end. Compose so that end is cropped away by the frame edge, or is hidden behind the subject. Under no circumstances draw a wordmark, a logo, a monogram, a pictogram or any lettering onto the mat yourself - an invented mark is worse than no mark. The mat surface inside the frame carries printed artwork only.",
+    "iphone": "photo shot on iPhone, casual handheld snapshot, slightly tilted framing. True-to-life colours, realistic phone camera dynamic range - highlights near the window blow out a little and shadows crush a little, slight sensor noise, a touch of handheld imperfection. It should look like something the owner grabbed on the way past, not a shoot.",
+    "iphone_negative": "NOT staged, NOT a studio photo, NO professional lighting, NO softbox, NO seamless backdrop, NO product-catalogue look, NO perfectly centred composition, NO glossy retouching. NO text, NO lettering, NO wordmark, NO logo and NO blurred smudge of fake lettering anywhere in frame - an invented mark is worse than no mark, so keep any branded part of the product out of shot.",
+    "mat_artwork_guard": "MAT FRAMING RULE - the whole WIDTH of the mat and at least TWO THIRDS of its LENGTH must be inside the frame, so all of its printed shapes are recognisable together. Never fill the frame with a detail of the print alone: a crop that shows only part of the artwork makes the pattern unreliable."
   },
   "products": {
     "mat_active_steps": {
@@ -119,274 +122,341 @@
     [
       [
         "mat_active_steps",
-        "mat_styled_corner"
-      ],
-      [
-        "dumbbell_blue",
-        "object_shelf"
-      ],
-      [
-        "band",
-        "band_glute_bridge"
-      ],
-      [
-        "kettlebell_grey",
-        "object_floor_low"
-      ],
-      [
-        "mat_before_sunrise",
-        "mat_balasana"
-      ]
-    ],
-    [
-      [
-        "kettlebell_mint",
-        "object_window_bench"
-      ],
-      [
-        "mat_before_sunrise",
-        "mat_topdown"
+        "set_terrazzo_window",
+        [
+          "ang_low_floor",
+          "ang_topdown_feet",
+          "ang_near_edge"
+        ]
       ],
       [
         "dumbbell_ivory",
-        "object_bedside"
-      ],
-      [
-        "band",
-        "band_flatlay"
+        "set_oak_linen",
+        [
+          "ang_close_object",
+          "ang_three_quarter"
+        ]
       ],
       [
         "mat_warm_sunlight",
-        "mat_seated_side"
+        "set_warm_evening",
+        [
+          "ang_three_quarter",
+          "ang_shadow_edge",
+          "ang_through_frame"
+        ]
       ]
     ],
     [
       [
-        "mat_warm_sunlight",
-        "mat_styled_corner"
+        "mat_before_sunrise",
+        "set_oak_linen",
+        [
+          "ang_topdown_feet",
+          "ang_three_quarter",
+          "ang_shadow_edge"
+        ]
       ],
       [
         "band",
-        "band_side_step"
-      ],
-      [
-        "kettlebell_grey",
-        "object_bedside"
-      ],
-      [
-        "dumbbell_blue",
-        "object_window_bench"
-      ],
-      [
-        "mat_active_steps",
-        "mat_downdog"
-      ]
-    ],
-    [
-      [
-        "dumbbell_ivory",
-        "object_shelf"
-      ],
-      [
-        "mat_active_steps",
-        "mat_topdown"
+        "set_concrete_loft",
+        [
+          "ang_close_object",
+          "ang_in_hand"
+        ]
       ],
       [
         "kettlebell_mint",
-        "object_floor_low"
+        "set_terrazzo_window",
+        [
+          "ang_low_floor",
+          "ang_close_object",
+          "ang_through_frame"
+        ]
+      ]
+    ],
+    [
+      [
+        "kettlebell_grey",
+        "set_concrete_loft",
+        [
+          "ang_low_floor",
+          "ang_shadow_edge",
+          "ang_in_hand"
+        ]
+      ],
+      [
+        "mat_active_steps",
+        "set_warm_evening",
+        [
+          "ang_near_edge",
+          "ang_topdown_feet"
+        ]
       ],
       [
         "band",
-        "band_glute_bridge"
-      ],
+        "set_oak_linen",
+        [
+          "ang_close_object",
+          "ang_topdown_feet",
+          "ang_three_quarter"
+        ]
+      ]
+    ],
+    [
       [
         "mat_warm_sunlight",
-        "mat_downdog"
+        "set_terrazzo_window",
+        [
+          "ang_shadow_edge",
+          "ang_low_floor",
+          "ang_topdown_feet"
+        ]
+      ],
+      [
+        "kettlebell_mint",
+        "set_warm_evening",
+        [
+          "ang_three_quarter",
+          "ang_low_floor"
+        ]
+      ],
+      [
+        "dumbbell_blue",
+        "set_concrete_loft",
+        [
+          "ang_close_object",
+          "ang_in_hand",
+          "ang_shadow_edge"
+        ]
       ]
     ]
   ],
   "captions": {
+    "_caption_note": "톤: 시크하고 담백하게. '~잖아요/~거든요/~더라고요' 같은 수다체 금지, 이모지 금지. 짧은 단정문 2~4줄, 제품 설명보다 취향·공간·태도를 먼저 말한다. 본보기: '움직임에도 취향이 있으니까. 내 공간에 어울리는 나만의 홈트레이닝. 디자인짐.' brand_tail 은 한 주를 닫는 날(일요일)에만, 본문에 '디자인짐'이 없을 때 붙는다. 제품군별 최소 4개. 자세·구도를 지목하는 문구에는 angles 허용목록을 달아 그 앵글에만 걸리게 한다.",
     "mat": [
       {
-        "c": "바닥에 그냥 앉으면 꼬리뼈부터 배겨요.\n\n8mm는 생각보다 두꺼워서\n무릎 꿇는 동작이 편해집니다.\n\n얇은 매트 쓰다 오시면 차이가 바로 느껴져요 🌿",
-        "t": "무릎 배기는 게 싫어서 8mm로 만들었어요",
-        "h": "#디자인짐 #요가매트 #8mm매트 #홈요가 #홈트 #무릎보호",
-        "scenes": [
-          "mat_balasana",
-          "mat_seated_side"
+        "t": "움직임에도 취향이 있으니까",
+        "c": "움직임에도 취향이 있습니다.\n\n펼쳐두는 것만으로 공간이 정돈되는 8mm.\n숨기지 않아도 되는 운동.",
+        "h": "#디자인짐 #요가매트 #홈트 #홈요가 #공간의취향"
+      },
+      {
+        "t": "매일 밟고 지나갈 그림",
+        "c": "매일 밟고 지나갈 그림이라\n무늬를 가장 오래 골랐습니다.\n\n취향이 먼저인 요가매트.",
+        "h": "#디자인짐 #요가매트 #디자인소품 #인테리어소품 #홈요가"
+      },
+      {
+        "t": "하루의 첫 동작",
+        "c": "하루의 첫 동작은 매트를 펴는 일.\n\n그 한 번으로 오늘의 리듬이 정해집니다.",
+        "h": "#디자인짐 #요가매트 #모닝루틴 #홈요가 #홈트"
+      },
+      {
+        "t": "빛이 가장 좋은 자리에",
+        "c": "빛이 가장 좋은 자리를 매트에 내줍니다.\n\n운동은 그다음 이야기.",
+        "h": "#디자인짐 #요가매트 #홈요가 #리빙스타그램 #홈트"
+      },
+      {
+        "t": "치워야 할 이유가 없어서",
+        "c": "운동이 끝나도 접지 않습니다.\n\n거실에 그대로 두어도 어색하지 않으니까.\n치울 이유가 없으면 다시 서게 됩니다.",
+        "h": "#디자인짐 #요가매트 #홈트인테리어 #거실인테리어 #홈요가"
+      },
+      {
+        "t": "61cm의 여유",
+        "c": "폭 61cm.\n\n좁은 방에도 들어가고,\n팔을 벌려도 손이 바닥에 닿지 않습니다.",
+        "h": "#디자인짐 #요가매트 #자취방 #원룸인테리어 #홈트",
+        "angles": [
+          "ang_topdown_feet",
+          "ang_low_floor",
+          "ang_three_quarter"
         ]
       },
       {
-        "c": "손에 땀이 나면 매트에서 손이 주욱 밀리죠.\n\n스웨이드 표면이라 젖을수록 오히려 잡혀요.\n다운독으로 버틸 때 이 차이가 제일 큽니다 💧",
-        "t": "땀 날수록 더 잡히는 스웨이드 표면",
-        "h": "#디자인짐 #요가매트 #홈요가 #다운독 #스웨이드매트 #홈트",
-        "scenes": [
-          "mat_downdog"
-        ]
-      },
-      {
-        "c": "운동기구는 왜 다 까맣고 투박할까.\n\n그 생각 하나로 시작했어요.\n거실에 펴놔도 눈에 거슬리지 않는 매트 🎨",
-        "t": "거실에 펴놔도 안 거슬리는 요가매트",
-        "h": "#디자인짐 #요가매트 #인테리어소품 #리빙스타그램 #홈트인테리어"
-      },
-      {
-        "c": "운동 안 하는 날에도 그냥 둬요.\n\n말아서 치우는 게 은근 귀찮잖아요.\n펴져 있으면 지나가다 한 번은 올라가게 되고요 🤍",
-        "t": "치우기 귀찮아서 그냥 펴두는 매트",
-        "h": "#디자인짐 #요가매트 #홈트 #홈요가 #운동루틴"
-      },
-      {
-        "c": "아침에 제일 먼저 하는 게 매트 펴기예요.\n\n그거 하나 해두면\n오늘은 뭐라도 했다는 기분이 들거든요 🌅",
-        "t": "아침에 매트 펴는 것부터가 루틴",
-        "h": "#디자인짐 #요가매트 #모닝루틴 #홈요가 #미라클모닝"
-      },
-      {
-        "c": "금요일 저녁엔 딱 10분만.\n\n한 주 내내 앞으로만 굽어 있던 등을\n반대로 길게 늘여주고 나면\n주말이 다르게 시작돼요 ✨",
-        "t": "금요일 저녁 10분, 굽은 등 펴기",
-        "h": "#디자인짐 #요가매트 #스트레칭 #주말루틴 #홈요가 #금요일",
-        "scenes": [
-          "mat_balasana",
-          "mat_seated_side",
-          "mat_downdog"
-        ]
-      },
-      {
-        "c": "한 주 잘 버텼으니까\n오늘은 땀 흘리는 운동 말고\n숨 쉬는 운동으로 🌙\n\n주말은 여기서부터 시작합니다.",
-        "t": "주말 전날은 땀 대신 호흡으로",
-        "h": "#디자인짐 #요가매트 #홈요가 #주말루틴 #스트레칭 #금요일",
-        "scenes": [
-          "mat_balasana",
-          "mat_seated_side",
-          "mat_downdog"
-        ]
-      },
-      {
-        "c": "폭이 61cm예요.\n\n좁은 방에서도 침대 옆에 딱 들어가고,\n팔 벌려도 손이 바닥에 안 닿습니다 📐",
-        "t": "61cm 폭, 좁은 방에도 들어갑니다",
-        "h": "#디자인짐 #요가매트 #홈트 #자취방 #원룸인테리어 #홈짐",
-        "scenes": [
-          "mat_styled_corner",
-          "mat_topdown"
-        ]
-      },
-      {
-        "c": "무늬를 고를 때 제일 오래 고민했어요.\n\n하루 이틀 보고 말 게 아니라\n매일 밟고 지나갈 그림이니까요 🎨",
-        "t": "매일 밟고 지나갈 그림이라서",
-        "h": "#디자인짐 #요가매트 #홈요가 #인테리어소품 #디자인소품 #홈트",
-        "scenes": [
-          "mat_styled_corner",
-          "mat_topdown"
+        "t": "두께가 말해주는 것",
+        "c": "8mm.\n\n무릎이 닿는 동작에서\n이 숫자의 의미가 드러납니다.",
+        "h": "#디자인짐 #요가매트 #8mm매트 #홈요가 #홈트",
+        "angles": [
+          "ang_near_edge",
+          "ang_low_floor"
         ]
       }
     ],
     "band": [
       {
-        "c": "밴드가 자꾸 말려 올라가서\n운동하다 말고 계속 내리게 되죠.\n\n안쪽 실리콘 라인이 그걸 잡아줍니다.\n힘줘도 그 자리에 그대로 있어요 🔥",
-        "t": "힘줘도 안 말려 올라가는 힙업밴드",
-        "h": "#디자인짐 #힙업밴드 #힙업운동 #하체운동 #홈트 #운동밴드",
-        "scenes": [
-          "band_glute_bridge",
-          "band_clamshell",
-          "band_side_step"
-        ]
+        "t": "저항에도 단계가 있습니다",
+        "c": "세 개가 한 세트인 이유.\n\n강도가 다릅니다.\n오늘의 컨디션에 맞춰 고르면 됩니다.",
+        "h": "#디자인짐 #힙업밴드 #운동밴드 #홈트 #하체운동"
       },
       {
-        "c": "3개가 한 세트인 이유,\n장력이 다 다르거든요.\n\n처음엔 제일 헐렁한 것부터,\n익숙해지면 한 단계씩 올리면 됩니다 🌿",
-        "t": "3단계 장력, 한 단계씩 올리면 돼요",
-        "h": "#디자인짐 #힙업밴드 #하체운동 #홈트 #운동밴드 #초보운동",
-        "scenes": [
-          "band_flatlay"
-        ]
+        "t": "맨살에 닿아도 괜찮은",
+        "c": "라텍스가 아니라 직물입니다.\n\n맨살에 바로 걸쳐도 집히지 않고,\n힘을 줘도 밀려 올라가지 않습니다.",
+        "h": "#디자인짐 #힙업밴드 #천밴드 #운동밴드 #하체운동"
       },
       {
-        "c": "스쿼트 할 때 무릎이 안쪽으로 모이면\n허벅지 앞만 아프고 엉덩이는 안 써져요.\n\n밴드 하나 끼우면\n무릎이 알아서 바깥으로 벌어집니다 💪",
-        "t": "무릎 모이는 스쿼트, 밴드 하나로 교정",
-        "h": "#디자인짐 #힙업밴드 #스쿼트 #하체운동 #홈트 #운동자세",
-        "scenes": [
-          "band_side_step"
-        ]
+        "t": "굴러다녀도 괜찮은 것들",
+        "c": "눈에 보이는 자리에 둡니다.\n\n보이면 한 세트 더 하게 되고,\n보여도 지저분하지 않으니까.",
+        "h": "#디자인짐 #힙업밴드 #홈트 #운동루틴 #리빙스타그램"
       },
       {
-        "c": "매트 옆에 그냥 던져둬요.\n\n무늬가 예뻐서 굴러다녀도 지저분해 보이지 않고,\n눈에 보이면 한 세트라도 더 하게 되거든요 🧺",
-        "t": "굴러다녀도 예뻐서 그냥 두는 밴드",
-        "h": "#디자인짐 #힙업밴드 #홈트용품 #하체운동 #거실인테리어",
-        "scenes": [
-          "band_flatlay"
-        ]
+        "t": "작은 저항이 만드는 차이",
+        "c": "무게를 늘리는 대신\n저항의 방향을 바꿉니다.\n\n같은 동작이 다르게 남습니다.",
+        "h": "#디자인짐 #힙업밴드 #힙업운동 #하체운동 #홈트"
       },
       {
-        "c": "브릿지 올릴 때 무릎이 안쪽으로 붙으면\n엉덩이가 아니라 허리가 먼저 아파요.\n\n밴드가 무릎을 바깥으로 밀어주니까\n올리는 내내 엉덩이에 계속 걸려 있습니다 🔥",
-        "t": "브릿지는 무릎을 벌려야 엉덩이에 걸려요",
-        "h": "#디자인짐 #힙업밴드 #글루트브릿지 #힙업운동 #홈트 #엉덩이운동",
-        "scenes": [
-          "band_glute_bridge"
-        ]
-      },
-      {
-        "c": "누워서 무릎만 여는 동작이라\n쉬워 보이는데요,\n\n밴드 하나 끼우면 열 개째부터\n옆구리 아래가 확 뜨거워집니다 💪",
-        "t": "누워서 무릎만 여는데 왜 이렇게 힘들죠",
-        "h": "#디자인짐 #힙업밴드 #클램쉘 #중둔근 #홈트 #하체운동",
-        "scenes": [
-          "band_clamshell"
-        ]
-      },
-      {
-        "c": "라텍스 밴드는 당길 때마다\n살이 집히고 따갑잖아요.\n\n이건 천이라 맨살에 바로 껴도\n집히지 않고 미끄러지지도 않아요 🌿",
-        "t": "맨살에 껴도 안 집히는 천 밴드",
-        "h": "#디자인짐 #힙업밴드 #천밴드 #운동밴드 #홈트 #하체운동",
-        "scenes": [
-          "band_glute_bridge",
-          "band_clamshell",
-          "band_side_step"
+        "t": "손에 쥐어보면 압니다",
+        "c": "얇은데 두껍고,\n부드러운데 팽팽합니다.\n\n직물 밴드의 촉감.",
+        "h": "#디자인짐 #힙업밴드 #천밴드 #홈트 #운동용품",
+        "angles": [
+          "ang_in_hand",
+          "ang_close_object"
         ]
       }
     ],
     "kettlebell": [
       {
-        "c": "운동 끝나고 구석에 밀어두지 않아요.\n\n거실 한가운데 그냥 둬도\n오브제처럼 보이니까요.\n\n치울 일이 없으니 다음 날 또 들게 됩니다 🤍",
-        "t": "치울 필요가 없어서 매일 들게 되는 케틀벨",
-        "h": "#디자인짐 #케틀벨 #문케틀벨 #홈짐 #홈트 #거실인테리어"
+        "t": "내려놓아도 조용한 무게",
+        "c": "쇠는 내려놓을 때마다 소리가 남습니다.\n\n아파트에서는 그게 가장 신경 쓰이는 일.\n이건 조용합니다.",
+        "h": "#디자인짐 #케틀벨 #문케틀벨 #층간소음 #아파트홈트"
       },
       {
-        "c": "쇠 케틀벨은 바닥에 놓을 때마다 쿵 소리가 나죠.\n\n아파트에서는 그게 제일 신경 쓰이잖아요.\n이건 내려놔도 조용합니다 🌙",
-        "t": "내려놔도 조용한 아파트용 케틀벨",
-        "h": "#디자인짐 #케틀벨 #홈짐 #층간소음 #아파트홈트 #홈트"
+        "t": "구석에 밀어두지 않는",
+        "c": "운동이 끝나도 거실 한가운데.\n\n오브제로 보이는 도구는\n치울 이유가 없습니다.",
+        "h": "#디자인짐 #케틀벨 #문케틀벨 #홈짐 #거실인테리어"
       },
       {
-        "c": "가운데 구멍이 손잡이예요.\n\n손 넣는 방향을 바꾸면\n스윙도, 고블릿 스쿼트도 다 됩니다 🌀",
-        "t": "잡는 방향만 바꾸면 운동이 달라져요",
-        "h": "#디자인짐 #케틀벨 #문케틀벨 #홈트 #케틀벨운동 #하체운동"
+        "t": "매일 들 수 있는 무게",
+        "c": "4.5kg.\n\n무겁지 않아서 매일 듭니다.\n매일 드는 무게가 결국 가장 무겁습니다.",
+        "h": "#디자인짐 #케틀벨 #문케틀벨 #홈트 #케틀벨운동"
       },
       {
-        "c": "4.5kg은 애매한 무게 같지만\n15개 넘어가면 생각이 달라집니다.\n\n매일 할 수 있는 무게가 제일 좋은 무게예요 💫",
-        "t": "매일 할 수 있는 무게가 제일 좋은 무게",
-        "h": "#디자인짐 #케틀벨 #홈트 #가벼운운동 #운동루틴"
+        "t": "잡는 방향이 운동을 바꿉니다",
+        "c": "가운데 구멍이 손잡이입니다.\n\n손을 넣는 방향만 바꾸면\n스윙도 고블릿 스쿼트도 같은 도구로.",
+        "h": "#디자인짐 #케틀벨 #문케틀벨 #케틀벨운동 #하체운동",
+        "angles": [
+          "ang_in_hand",
+          "ang_close_object"
+        ]
+      },
+      {
+        "t": "도구와 오브제 사이",
+        "c": "운동기구처럼 보이지 않는 것.\n\n그게 매일 꺼내게 되는 이유입니다.",
+        "h": "#디자인짐 #케틀벨 #홈짐 #인테리어소품 #홈트"
       }
     ],
     "dumbbell": [
       {
-        "c": "선반에 그냥 올려둡니다.\n\n운동기구처럼 안 생겨서\n책이랑 화분 사이에 둬도 안 튀어요 ☁️\n\n지나가다 한 번씩 드는 게 전부인데,\n그게 매일 하게 되는 이유더라고요.",
-        "t": "책 사이에 둬도 안 튀는 1kg 덤벨",
-        "h": "#디자인짐 #덤벨 #모던덤벨 #홈트 #1kg덤벨 #인테리어운동기구"
+        "t": "선반 위에 두는 운동기구",
+        "c": "책과 화분 사이에 둡니다.\n\n운동기구처럼 보이지 않아서\n숨길 이유가 없습니다.",
+        "h": "#디자인짐 #덤벨 #모던덤벨 #인테리어운동기구 #홈트"
       },
       {
-        "c": "실리콘이라 손에 쥐었을 때 차갑지 않아요.\n\n쇠 덤벨은 겨울에 잡기 싫어지잖아요.\n이건 그냥 집게 됩니다 🤍",
-        "t": "겨울에도 잡기 싫지 않은 실리콘 덤벨",
-        "h": "#디자인짐 #덤벨 #모던덤벨 #홈트 #실리콘덤벨 #가벼운운동"
+        "t": "차갑지 않은 손맛",
+        "c": "실리콘이라 쥐었을 때 차갑지 않습니다.\n\n겨울에도 그냥 집게 되는 무게.",
+        "h": "#디자인짐 #덤벨 #실리콘덤벨 #모던덤벨 #홈트"
       },
       {
-        "c": "1kg으로 뭐가 되냐고들 하시는데\n팔 옆으로 들어서 20번만 해보세요.\n\n무게보다 횟수가 태우는 겁니다 🔥",
-        "t": "1kg으로 20번, 무게보다 횟수",
-        "h": "#디자인짐 #덤벨 #1kg덤벨 #홈트 #팔운동 #어깨운동"
+        "t": "1kg의 태도",
+        "c": "1kg으로 뭐가 되냐고 묻습니다.\n\n스무 번을 채워보면 답이 나옵니다.\n무게보다 횟수.",
+        "h": "#디자인짐 #덤벨 #1kg덤벨 #팔운동 #어깨운동"
       },
       {
-        "c": "일어나자마자 10번, 자기 전에 10번.\n\n부담이 없으니까\n빼먹을 핑계도 안 생겨요 🌙",
-        "t": "아침저녁 10번씩, 빼먹을 핑계가 없는 무게",
-        "h": "#디자인짐 #덤벨 #홈트 #미라클모닝 #가벼운운동 #침실인테리어"
+        "t": "가벼움이 만드는 지속",
+        "c": "일어나서 열 번, 자기 전에 열 번.\n\n부담이 없으면\n빼먹을 핑계도 생기지 않습니다.",
+        "h": "#디자인짐 #덤벨 #1kg덤벨 #홈트 #운동루틴"
+      },
+      {
+        "t": "손에 들어오는 크기",
+        "c": "길이 16cm, 굵기 4.5cm.\n\n한 손에 감기고\n끝만 주먹 밖으로 나옵니다.",
+        "h": "#디자인짐 #덤벨 #모던덤벨 #홈트 #운동용품",
+        "angles": [
+          "ang_in_hand",
+          "ang_close_object"
+        ]
       }
-    ],
-    "_caption_note": "풀은 제품군별 최소 4개. 같은 주에 같은 제품군이 두 번 나오면 서로 다른 문구가 걸려야 하고, 주차가 바뀌면 풀 전체를 한 바퀴 돌도록 week_no를 오프셋으로 더한다. 자세나 구도를 지목하는 문구에는 scenes 허용목록을 달아 그 컷에만 걸리게 한다 (2026-09-14: 글루트 브릿지 컷에 스쿼트 문구가 붙어 반려됨). scenes가 없으면 어느 컷에나 쓸 수 있다."
+    ]
   },
   "friday_tail": "\n\n나를 디자인하다, Design:Gym",
   "_element_note": "매트는 힉스필드 Elements에 제품으로 등록돼 있다(element 필드). 프롬프트에 <<<element_id>>>를 박으면 등록된 제품 사진이 그대로 반영된다 — 무늬를 말로 설명하는 것보다 훨씬 정확하다. 단 Elements는 marketing_studio_image가 지원하지 않으므로 그런 컷은 nano_banana_pro로 생성한다. 2026-09-07: 이걸 안 써서 매트 무늬가 반복해서 틀렸다.",
-  "_caption_note": "캡션은 제품군별 등장 순번으로 고른다(weekly_generate.caption_for). 풀이 작으면 몇 주 만에 같은 문구가 돌아와 '내용이 다 똑같다'는 지적을 받는다(2026-09-14). 제품당 최소 4개 이상 유지하고, 같은 제품이라도 각도를 달리할 것 — 두께·그립감·소음·인테리어·무게/횟수·루틴처럼 서로 다른 이유를 말한다."
+  "_caption_note": "캡션은 제품군별 등장 순번으로 고른다(weekly_generate.caption_for). 풀이 작으면 몇 주 만에 같은 문구가 돌아와 '내용이 다 똑같다'는 지적을 받는다(2026-09-14). 제품당 최소 4개 이상 유지하고, 같은 제품이라도 각도를 달리할 것 — 두께·그립감·소음·인테리어·무게/횟수·루틴처럼 서로 다른 이유를 말한다.",
+  "setups": {
+    "set_terrazzo_window": {
+      "hook": "테라조 바닥 + 창가 하드 그림자",
+      "prompt": "Location: a bright corner of a hip Korean apartment. Pale terrazzo floor flecked with grey and rust. A chrome stool leg intrudes at one edge of frame, a glossy red ceramic cup sits on the floor, white wired earbuds lie coiled nearby, monstera leaf shadows fall across the ground. Light: strong direct daylight through a window out of frame, throwing HARD crisp-edged window shadows over everything."
+    },
+    "set_oak_linen": {
+      "hook": "오크 마루 + 리넨 커튼, 오후 빛",
+      "prompt": "Location: a calm room in a hip Korean apartment. Light oak floorboards, a sheer linen curtain half drawn at one side, a slim aluminium side table, a tinted brown glass tumbler with water, a paperback left face-down on the floor. Light: afternoon daylight diffused through the linen on one side and falling hard and direct on the other, so the frame has both soft and crisp shadows at once."
+    },
+    "set_concrete_loft": {
+      "hook": "미장 콘크리트 + 검정 창틀, 대각선 빛",
+      "prompt": "Location: a stripped-back loft-style Korean apartment. Grey micro-cement floor, a black steel window frame, a brushed stainless water bottle standing on the floor, a grey marl sweatshirt tossed down in a heap. Light: late morning sun cutting through the steel frame, laying hard diagonal bars of light and shadow across the floor."
+    },
+    "set_warm_evening": {
+      "hook": "따뜻한 늦은 오후, 긴 그림자",
+      "prompt": "Location: a warm minimal Korean apartment late in the afternoon. Light oak floor, a matte ceramic mug half full, a folded waffle towel, a small trailing plant on the floor. Light: low golden sun coming in almost sideways, drawing long soft-edged shadows and catching dust in the air."
+    }
+  },
+  "angles": {
+    "ang_low_floor": {
+      "hook": "로우앵글 - 바닥에 폰을 붙이고",
+      "kinds": [
+        "mat",
+        "object"
+      ],
+      "prompt": "Camera: phone held down near the floor, lens almost at ground level looking along the floor, so the product runs away from the viewer and the room falls off out of focus behind it."
+    },
+    "ang_topdown_feet": {
+      "hook": "탑다운 - 서서 내려다보며 내 발이 살짝",
+      "kinds": [
+        "mat",
+        "object"
+      ],
+      "prompt": "Camera: phone held at chest height pointing straight down at the floor. The photographer's own bare feet clip the bottom corner of the frame - no other person, no face, nothing above the ankles."
+    },
+    "ang_three_quarter": {
+      "hook": "허리 높이 사선 - 방이 함께 보이게",
+      "kinds": [
+        "mat",
+        "object"
+      ],
+      "prompt": "Camera: phone at waist height, angled down at about forty-five degrees from one side, so the product sits off-centre and a slice of the room reads behind it."
+    },
+    "ang_near_edge": {
+      "hook": "가까이서 가장자리와 두께가 보이게",
+      "kinds": [
+        "mat"
+      ],
+      "prompt": "Camera: phone low and close to ONE LONG EDGE of the mat, so that edge runs across the foreground and its thickness and dark edge band are clearly readable, while the rest of the mat recedes into the frame behind it."
+    },
+    "ang_through_frame": {
+      "hook": "문틀 너머 - 옆방에서 흘깃",
+      "kinds": [
+        "mat",
+        "object"
+      ],
+      "prompt": "Camera: shot from the next room, a doorway edge or a piece of furniture blocking part of the frame in the near foreground, the product small and off to one side - the look of noticing it on the way past."
+    },
+    "ang_close_object": {
+      "hook": "가까이 - 제품이 화면 절반",
+      "kinds": [
+        "object"
+      ],
+      "prompt": "Camera: phone about thirty centimetres from the product, tilted down at it, the product filling roughly half the frame with the floor and props falling soft behind."
+    },
+    "ang_in_hand": {
+      "hook": "내 손에 들고 - 얼굴 없이",
+      "kinds": [
+        "object"
+      ],
+      "prompt": "Camera: the photographer holds the product in their own hand at arm's length and shoots it with the other hand. Only a hand and forearm are visible - no face, no body, no second person."
+    },
+    "ang_shadow_edge": {
+      "hook": "그림자 경계가 제품을 가로지르게",
+      "kinds": [
+        "mat",
+        "object"
+      ],
+      "prompt": "Camera: framed so the hard edge of a window shadow cuts diagonally across the product, half of it in bright sun and half in shade, shot slightly off square."
+    }
+  },
+  "brand_tail": "\n\n내 공간에 어울리는 나만의 홈트레이닝.\n디자인짐."
 }
