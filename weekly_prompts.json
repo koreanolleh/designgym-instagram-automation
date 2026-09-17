@@ -17,21 +17,24 @@
       "media": "ac1255f8-cd4f-4464-9618-944a4a36f140",
       "kind": "mat",
       "spec": "Three huge watercolour shapes on a warm cream ground, in order along the length: (1) a PALE BLUE-GREY rounded blob; (2) a warm GOLDEN-YELLOW rounded blob, crossed by a VERTICAL brush stroke of deep TEAL-GREEN paint that runs ACROSS THE MAT'S WIDTH from the top edge downward, overlapping the yellow so the overlap turns deep olive-green; (3) a large DUSTY GREY-PURPLE blob, muted greyed-off mauve, more grey than violet - warm-toned, with more red in it than green; it is emphatically NOT blue, NOT sky-blue, NOT aqua, NOT teal and NOT grey-green. Each blob is as tall as the mat is wide.",
-      "element": "ab658314-38f3-4e0c-b9b2-b36bf48f6bef"
+      "element": "55c9c965-3f15-4c25-8b31-d412823d38fd",
+      "element_with_logo": "ab658314-38f3-4e0c-b9b2-b36bf48f6bef"
     },
     "mat_before_sunrise": {
       "label": "요가매트 Before sunrise",
       "media": "40b1f8bd-b58b-41ce-8814-20414b3ad39f",
       "kind": "mat",
       "spec": "On a cream ground: a deep NAVY-SLATE watercolour wash and soft APRICOT-PINK oval forms, with fine copper-orange line accents.",
-      "element": "311e4b5d-e275-454b-af37-91c37faa365f"
+      "element": "2acf646b-b635-4f45-9a6f-5c1d7e3187b2",
+      "element_with_logo": "311e4b5d-e275-454b-af37-91c37faa365f"
     },
     "mat_warm_sunlight": {
       "label": "요가매트 Warm sunlight",
       "media": "df98632b-00e9-4b4d-8e4f-59ddbe7be358",
       "kind": "mat",
       "spec": "On a cream ground: soft APRICOT-PINK oval forms, a warm YELLOW ring outline and a SLATE-NAVY block.",
-      "element": "cb6e17c8-caa0-422c-b015-a2391f5ab143"
+      "element": "6bb50e59-f69c-4b93-9c2c-06f95b5f2014",
+      "element_with_logo": "cb6e17c8-caa0-422c-b015-a2391f5ab143"
     },
     "band": {
       "label": "힙업밴드 (3개입)",
