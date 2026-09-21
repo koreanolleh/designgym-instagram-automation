@@ -1,0 +1,120 @@
+name: 사장계정 주간 원고 생성 (월요일)
+
+# Claude 앱 예약 작업이 앱 로그인 토큰 만료로 두 주 연속 멈춰서(401 OAuth expired)
+# 앱과 무관한 Actions로 옮겼다. 원고 생성 → 렌더 → 커밋까지 여기서 끝낸다.
+on:
+  schedule:
+    - cron: '0 0 * * 1'      # UTC 00:00 = KST 09:00 월요일
+  workflow_dispatch:
+    inputs:
+      week:
+        description: '주차 월요일 날짜 (비우면 이번 주)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ceo-weekly-generate
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 의존성 설치
+        run: pip install --quiet anthropic pillow
+
+      - name: 원고 생성
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 generate_week_ceo.py ${{ github.event.inputs.week }}
+
+      - name: 주차 확인
+        id: wk
+        run: |
+          WEEK="${{ github.event.inputs.week }}"
+          if [ -z "$WEEK" ]; then
+            WEEK=$(python3 -c "
+          from datetime import date, timedelta
+          t = date.today()
+          print(t - timedelta(days=t.weekday()))
+          ")
+          fi
+          echo "week=$WEEK" >> $GITHUB_OUTPUT
+          echo "주차: $WEEK"
+
+      - name: 캐러셀 렌더 + 발행 큐 갱신
+        run: python3 make_week_ceo.py weeks/${{ steps.wk.outputs.week }}.json
+
+      - name: 결과 검증
+        run: |
+          python3 - <<'PY'
+          import json, os, sys
+          plan = json.load(open('pending_posts_ceo.json', encoding='utf-8'))
+          bad = []
+          for day, p in plan['posts'].items():
+              if len(p['images']) != 7:
+                  bad.append(f"{day}: 이미지 {len(p['images'])}장")
+              for im in p['images']:
+                  if not os.path.exists(im['path']):
+                      bad.append(f"{day}: 파일 없음 {im['path']}")
+              if not p['caption'].strip():
+                  bad.append(f"{day}: 캡션 비어 있음")
+          if bad:
+              print("검증 실패:", *bad, sep="\n  ")
+              sys.exit(1)
+          print(f"검증 통과 — {len(plan['posts'])}건, 각 7장")
+          PY
+
+      - name: 옵시디언 볼트에 노트 작성
+        env:
+          VAULT_PUSH_TOKEN: ${{ secrets.VAULT_PUSH_TOKEN }}
+        run: |
+          if [ -z "$VAULT_PUSH_TOKEN" ]; then
+            echo "⚠️ VAULT_PUSH_TOKEN 없음 — 옵시디언 노트 건너뜀"
+            exit 0
+          fi
+          git clone --quiet --depth 1 \
+            "https://x-access-token:${VAULT_PUSH_TOKEN}@github.com/koreanolleh/obsidian-vault.git" /tmp/vault
+          BASE=$(find /tmp/vault -type d -name "사장계정_주간초안" | head -1)
+          if [ -z "$BASE" ]; then
+            echo "볼트에 사장계정_주간초안 폴더 없음 — 건너뜀"; exit 0
+          fi
+          CEO_NOTE_BASE="$BASE" python3 make_obsidian_note_ceo.py weeks/${{ steps.wk.outputs.week }}.json
+          cd /tmp/vault
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A "$BASE"
+          git diff --staged --quiet || {
+            git commit -q -m "📝 사장계정 ${{ steps.wk.outputs.week }} 주간 초안"
+            git push --quiet
+          }
+
+      - name: 커밋
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add weeks/${{ steps.wk.outputs.week }}.json images/ceo pending_posts_ceo.json
+          git diff --staged --quiet && exit 0
+          git commit -m "📝 사장계정 ${{ steps.wk.outputs.week }} 주간 원고 3건 (Actions)"
+          for i in 1 2 3; do
+            git push && break
+            git pull --rebase --autostash || git rebase --abort
+            sleep 5
+          done
+
+      - name: 실패 시 알림용 요약
+        if: failure()
+        run: |
+          echo "### ❌ 사장계정 주간 원고 생성 실패" >> $GITHUB_STEP_SUMMARY
+          echo "주차: ${{ steps.wk.outputs.week }}" >> $GITHUB_STEP_SUMMARY
+          echo "원고가 없으면 화요일 발행과 블로그 초안이 모두 빕니다. 로그를 확인하세요." >> $GITHUB_STEP_SUMMARY
