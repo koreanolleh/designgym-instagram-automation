@@ -30,8 +30,9 @@ import requests
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
-# 스레드 자동화와 같은 목록. 앞에서부터 시도하고 실패하면 다음으로 넘어간다.
-MODELS = ["gemini-2.5-pro", "gemini-2.5-flash", "gemini-flash-latest"]
+# 2026-09-21 실측: 이 키로 쓸 수 있고 구조화 출력·검색 그라운딩이 되는 것들.
+# gemini-2.5-pro는 404(신규 사용자 불가)라 뺐다. 3.1-pro가 그라운딩 근거를 제대로 붙인다.
+MODELS = ["gemini-3.1-pro-preview", "gemini-3.8-flash", "gemini-2.5-flash"]
 ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent"
 
 IMAGE_SET = ["01_cover.jpg"] + [f"0{i}_content.jpg" for i in range(2, 7)] + ["07_closing.jpg"]
@@ -293,10 +294,16 @@ def validate(week, dates):
         blog = re.sub(r"출처:.*", "", re.sub(r'"[^"]*"', "", c.get("blog", "")))
         cap = re.sub(r'"[^"]*"', "", c.get("caption", ""))
         slide_txt = " ".join(s.get("body", "") + s.get("main", "") for s in slides)
+        # 어느 문장이 걸렸는지 그대로 집어준다. "문어체 있음"만으로는 고쳐쓰기가 안 먹혔다.
         for name, t in [("블로그", blog), ("캡션", cap), ("슬라이드", slide_txt)]:
-            hit = [x for x in stiff if x in t]
-            if hit:
-                problems.append(f"{d}: {name}에 문어체 {hit}")
+            bad_sents = [
+                x.strip() for x in re.split(r"(?<=[.!?])\s+|\n+", t)
+                if any(w in x for w in stiff) and x.strip()
+            ]
+            for sent in bad_sents[:6]:
+                problems.append(f'{d}: {name} 문어체 → "{sent[:70]}"')
+            if len(bad_sents) > 6:
+                problems.append(f"{d}: {name}에 문어체 문장이 {len(bad_sents)}개 더 있음")
 
         lines = c.get("blog", "").split("\n")
         plan = c.get("blog_image_plan", [])
@@ -316,6 +323,45 @@ def validate(week, dates):
 
     if len(tags) < 3:
         problems.append(f"bg_tag가 겹침: {tags}")
+
+    # 배경 사진은 bg_tag로 고르므로, 글 주제와 태그가 어긋나면 러닝 글에 필라테스 사진이 붙는다.
+    TOPIC_WORDS = {
+        # 헐거운 조각("뛰","달리")은 "뛰어나다"·"달리 말하면"에 걸려 오탐이 난다.
+        # 2026-09-07 승인본까지 반려로 잡혀서 단어를 좁혔다.
+        "러닝": ["러닝", "달리기", "달릴 때", "달리는", "케이던스", "보폭", "조깅", "마라톤"],
+        "요가": ["요가", "다운독", "아사나", "나무자세"],
+        "스트레칭": ["스트레칭", "유연성", "가동범위"],
+        "필라테스": ["필라테스", "리포머"],
+        "홈트": ["홈트", "플랭크", "스쿼트", "런지", "덤벨", "근력운동", "폼롤러"],
+    }
+    def topic_of(c):
+        """종목이 확실할 때만 이름을 돌려준다. 스침 언급(1~2회)으로는 분류하지 않는다.
+        max()만 쓰면 점수 0짜리도 1등이 돼서, 종목이 뚜렷하지 않은 주가
+        전부 한 종목으로 몰린 것처럼 잡힌다(2026-09-14 오탐)."""
+        text = c.get("blog", "") + c.get("caption", "")
+        score = {t: sum(text.count(w) for w in ws) for t, ws in TOPIC_WORDS.items()}
+        ranked = sorted(score.items(), key=lambda kv: -kv[1])
+        top, second = ranked[0], ranked[1]
+        if top[1] >= 5 and top[1] >= max(second[1], 1) * 2:
+            return top[0], score
+        return None, score
+
+    for c in cars:
+        best, score = topic_of(c)
+        tag = c.get("bg_tag")
+        if best and best != tag:
+            problems.append(
+                f"{c.get('date')}: bg_tag가 '{tag}'인데 글은 '{best}' 얘기 "
+                f"({best} {score[best]}회 vs {tag} {score.get(tag, 0)}회)"
+            )
+
+    # 한 주에 같은 종목이 둘 이상이면 주제가 치우친다 (확실히 분류된 것만 셈)
+    mains = [t for t in (topic_of(c)[0] for c in cars) if t]
+    dup = {t for t in mains if mains.count(t) > 1}
+    if dup:
+        problems.append(
+            f"주제가 치우침 — 3건 중 둘 이상이 {', '.join(sorted(dup))} 얘기. 종목을 흩어서 다시 고를 것")
+
     return problems
 
 
