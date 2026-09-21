@@ -2,6 +2,7 @@ name: 사장계정 주간 원고 생성 (월요일)
 
 # Claude 앱 예약 작업이 앱 로그인 토큰 만료로 두 주 연속 멈춰서(401 OAuth expired)
 # 앱과 무관한 Actions로 옮겼다. 원고 생성 → 렌더 → 커밋까지 여기서 끝낸다.
+# 모델은 스레드 자동화와 같은 제미나이. 키도 같은 GEMINI_API_KEY를 쓴다.
 on:
   schedule:
     - cron: '0 0 * * 1'      # UTC 00:00 = KST 09:00 월요일
@@ -31,11 +32,11 @@ jobs:
           python-version: '3.11'
 
       - name: 의존성 설치
-        run: pip install --quiet anthropic pillow
+        run: pip install --quiet requests pillow
 
       - name: 원고 생성
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python3 generate_week_ceo.py ${{ github.event.inputs.week }}
 
       - name: 주차 확인
