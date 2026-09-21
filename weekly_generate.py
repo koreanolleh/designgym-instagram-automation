@@ -144,6 +144,51 @@ def pool_key_for(lib, product_key):
     return "kettlebell" if "kettlebell" in product_key else "dumbbell"
 
 
+HISTORY_WEEKS = 8          # 최근 몇 주치 조합을 기억해 되풀이를 피할지
+
+
+def recent_combos(existing):
+    """지난 주차들에서 쓴 (제품, 방) 짝과 앵글 묶음. pending_posts.json 의 history 에 쌓인다."""
+    pairs, anglesets = set(), set()
+    for wk in (existing.get("history") or [])[-HISTORY_WEEKS:]:
+        for day in wk.get("days", []):
+            pairs.add((day.get("product"), day.get("setup")))
+            anglesets.add(frozenset(day.get("angles") or []))
+    return pairs, anglesets
+
+
+def pick_setup_and_angles(lib, product_key, day_idx, n, week_no, used_pairs, used_anglesets):
+    """그 날 컷의 방과 앵글을 고른다.
+
+    예전에는 배분안 하나에 제품·방·앵글이 통째로 묶여 있어서, 배분안이 4주마다 돌아오면
+    똑같은 사진이 글자 그대로 되풀이됐다(2026-09-21: 화요일분이 직전 게시물과 같아 반려).
+    이제 배분안은 제품만 정하고, 방과 앵글은 여기서 따로 돌린다. 최근 HISTORY_WEEKS 주에
+    쓴 (제품, 방) 짝과 앵글 묶음은 건너뛴다.
+    """
+    kind = "mat" if lib["products"][product_key]["kind"] == "mat" else "object"
+    setups = [s for s in lib["setups"]]
+    angles = [a for a, v in lib["angles"].items() if kind in v["kinds"]]
+    cycle = week_no // max(1, len(lib.get("week_plans") or [1]))
+
+    setup = None
+    for bump in range(len(setups)):
+        cand = setups[(week_no + cycle * 3 + day_idx * 2 + bump) % len(setups)]
+        if (product_key, cand) not in used_pairs:
+            setup = cand
+            break
+    setup = setup or setups[(week_no + day_idx) % len(setups)]
+
+    chosen = None
+    for bump in range(len(angles)):
+        start = (week_no * 2 + cycle + day_idx * 3 + bump) % len(angles)
+        cand = [angles[(start + k) % len(angles)] for k in range(n)]
+        if frozenset(cand) not in used_anglesets:
+            chosen = cand
+            break
+    chosen = chosen or [angles[(week_no + day_idx + k) % len(angles)] for k in range(n)]
+    return setup, chosen
+
+
 def caption_for(lib, product_key, seen, is_closer, week_no=0, angle_keys=None, used=None):
     """seen: 이번 주에 그 제품군을 몇 번째로 쓰는지(0부터). week_no: ISO 주차.
     angle_keys: 그날 찍은 앵글들. used: 이번 주에 이미 쓴 문구 제목들(집합).
@@ -250,8 +295,20 @@ def main():
         plan_idx = (plan_idx + 1) % len(plans)
         log(f"배분안 #{prev_idx}는 지난주와 동일 — #{plan_idx}로 변경")
     plan = plans[plan_idx]
+    week_no = monday.isocalendar()[1]
+
+    # 배분안은 제품만 정한다. 방과 앵글은 최근 기록을 보고 여기서 고른다.
+    used_pairs, used_anglesets = recent_combos(existing)
+    day_plan = []
+    for i, (day, pk) in enumerate(zip(DAYS, plan)):
+        setup, angles = pick_setup_and_angles(
+            lib, pk, i, IMAGE_COUNT[day], week_no, used_pairs, used_anglesets)
+        used_pairs.add((pk, setup))
+        used_anglesets.add(frozenset(angles))
+        day_plan.append((day, pk, setup, angles))
+
     log(f"대상 주 {week_of} / 배분안 #{plan_idx}")
-    for day, (pk, setup, angles) in zip(DAYS, plan):
+    for day, pk, setup, angles in day_plan:
         log(f"  {KR[day]} ({IMAGE_COUNT[day]}장): {lib['products'][pk]['label']} / "
             f"{lib['setups'][setup]['hook']} / " + ", ".join(lib['angles'][a]['hook'] for a in angles))
     if DRY:
@@ -266,7 +323,7 @@ def main():
         log(f"잔액 조회 실패(무시): {e}")
     # 컷 단위로 펼친다 — (요일, 그 요일 안의 순번, 제품, 세트, 앵글)
     shots = []
-    for day, (pk, setup, angles) in zip(DAYS, plan):
+    for day, pk, setup, angles in day_plan:
         for n, angle in enumerate(angles):
             shots.append((day, n, pk, setup, angle))
 
@@ -323,7 +380,7 @@ def main():
 
     posts, missing, used = {}, [], {}
     used_titles = set()            # 한 주 안에서 같은 문구가 두 번 걸리지 않게 제목을 모아둔다
-    for day, (pk, setup, angles) in zip(DAYS, plan):
+    for day, pk, setup, angles in day_plan:
         images = by_day.get(day)
         date = (monday + timedelta(days=OFFSET[day])).strftime("%Y-%m-%d")
         if not images:
@@ -360,7 +417,15 @@ def main():
               open(os.path.join(BASE, "last_run_credits.json"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=2)
 
-    json.dump({"week_of": week_of, "plan_idx": plan_idx, "posts": posts},
+    # 이번 주에 쓴 (제품, 방, 앵글) 조합을 남긴다 — 다음 주가 이걸 보고 같은 사진을 피한다.
+    history = (existing.get("history") or [])
+    history = [h for h in history if h.get("week_of") != week_of]
+    history.append({"week_of": week_of,
+                    "days": [{"product": pk, "setup": setup, "angles": angles}
+                             for day, pk, setup, angles in day_plan if day in posts]})
+    history = history[-HISTORY_WEEKS:]
+
+    json.dump({"week_of": week_of, "plan_idx": plan_idx, "history": history, "posts": posts},
               open(pending_path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     log(f"pending_posts.json 갱신 ({len(posts)}일)")
     if missing:
