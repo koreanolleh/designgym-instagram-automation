@@ -147,7 +147,8 @@ def call_gemini(prompt, *, schema=None, search=False, max_tokens=32000, label=""
     sys.exit(f"❌ 제미나이 호출 실패 — {last}")
 
 
-def research(dates, rules, topics):
+def research(dates, rules, topics, recent=()):
+    banned = "\n".join(f"  - {t}" for t in recent) or "  (없음)"
     prompt = f"""디자인짐 사장 계정(@designgym.ceo)의 이번 주 콘텐츠 주제 3개를 고르고, 근거를 확인해줘.
 
 발행일: {dates[0]}(화), {dates[1]}(목), {dates[2]}(토)
@@ -158,6 +159,8 @@ def research(dates, rules, topics):
   나쁜 예: 근육통이 젖산 때문인가 / 유연성은 왜 늘어나나 (알아도 내일 뭘 다르게 할지 없다)
 - 아래 주제 대장의 "조사 완료, 미사용"이 1순위. 출처와 한계가 확인돼 있다.
 - "완료" 목록 주제는 3개월 안에 재사용 금지. "다루지 말 것"은 피한다.
+- ★ 최근에 이미 쓴 제목과 소재가 겹치면 안 된다. 부위·동작이 두 개 이상 같으면 중복으로 본다:
+{banned}
 - 3건의 성격을 다르게 잡는다(러닝만 셋 금지).
 
 # 근거
@@ -253,7 +256,42 @@ def repair(week, problems, rules):
     return {**week, "carousels": data.get("carousels", week["carousels"])}
 
 
-def validate(week, dates):
+# 같은 걸 다르게 부르면 겹침을 못 잡는다("러닝"과 "달리기"를 따로 세서
+# 러닝-무릎 글이 두 주 연속 나왔다). 한 줄이 한 소재다.
+KEY_TERMS = [
+    ["무릎"], ["허리", "척추"], ["어깨"], ["발목"], ["손목"], ["골반"], ["종아리"],
+    ["햄스트링"], ["코어", "복근"], ["연골", "관절염", "관절"], ["발바닥", "맨발"],
+    ["엉덩이", "둔근"], ["보폭", "케이던스"], ["착지", "앞꿈치", "뒤꿈치"],
+    ["플랭크"], ["스쿼트"], ["런지"], ["덤벨"], ["폼롤러"], ["스트레칭", "유연"],
+    ["계단"], ["걷기", "걸을", "걸으", "만보", "걸음"], ["러닝", "달리", "달릴", "달려", "달린", "달렸", "조깅", "마라톤"],
+    ["요가"], ["필라테스"], ["근육통", "알배"], ["수면", "잠"], ["주말", "몰아서"],
+    ["세트"], ["호흡"], ["단백질"],
+]
+
+
+def key_set(text):
+    """제목에 들어 있는 소재들. 같은 줄의 말은 하나로 센다."""
+    return {group[0] for group in KEY_TERMS if any(w in text for w in group)}
+
+
+def recent_titles(week_of, n=3):
+    """최근 n주에 쓴 블로그 제목. 참고용 원고를 통째로 주면 주제까지 따라 써서
+    지난주와 거의 같은 글이 나온 적이 있다(9/24 보폭-무릎 → 9/29 보폭-무릎)."""
+    import glob
+    out = []
+    for f in sorted(glob.glob(os.path.join(BASE_DIR, "weeks", "20*.json")))[-n:]:
+        if os.path.basename(f).startswith(week_of):
+            continue
+        try:
+            for c in json.load(open(f, encoding="utf-8")).get("carousels", []):
+                if c.get("blog_title"):
+                    out.append(c["blog_title"])
+        except (json.JSONDecodeError, OSError):
+            continue
+    return out
+
+
+def validate(week, dates, recent=()):
     """규칙 위반을 잡는다. 여기서 걸리면 렌더까지 가지 않는다."""
     problems = []
     stiff = ["습니다", "입니다", "한 경우", "로 봅니다"]
@@ -373,6 +411,18 @@ def validate(week, dates):
         problems.append(
             f"주제가 치우침 — 3건 중 둘 이상이 {', '.join(sorted(dup))} 얘기. 종목을 흩어서 다시 고를 것")
 
+    # 지난 주와 소재가 겹치면 같은 글을 두 번 올리는 셈이 된다.
+    for c in cars:
+        t = c.get("blog_title", "")
+        mine = key_set(t)
+        for old in recent:
+            ov = mine & key_set(old)
+            if len(ov) >= 2:
+                problems.append(
+                    f"{c.get('date')}: 최근 글과 소재 중복({', '.join(sorted(ov))}) — "
+                    f"이미 쓴 '{old}'과 겹침. 다른 주제로 바꿀 것")
+                break
+
     return problems
 
 
@@ -406,17 +456,20 @@ def main():
     if not GEMINI_KEY:
         sys.exit("❌ GEMINI_API_KEY가 없습니다 (저장소 시크릿에 등록하세요)")
 
-    brief = research(dates, rules, topics)
+    recent = recent_titles(week_of)
+    if recent:
+        print(f"최근 쓴 제목 {len(recent)}건 — 소재 중복 금지 목록에 넣음")
+    brief = research(dates, rules, topics, recent)
     week = write_spec(week_of, dates, rules, brief, sample)
 
     # 고쳐쓰기 한 번으로는 한두 건 남아서 통째로 버려지는 일이 잦다.
     # 원고가 없으면 화요일 발행과 블로그 초안이 같이 비므로 세 번까지 준다.
-    problems = validate(week, dates)
+    problems = validate(week, dates, recent)
     for _ in range(3):
         if not problems:
             break
         week = repair(week, problems, rules)
-        problems = validate(week, dates)
+        problems = validate(week, dates, recent)
     if problems:
         print("\n❌ 규칙 위반으로 저장하지 않습니다:")
         for p in problems:
