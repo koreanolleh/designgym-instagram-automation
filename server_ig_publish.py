@@ -44,6 +44,18 @@ def due_posts(posts: dict, today: str):
     return sorted(out, key=lambda t: t[1]["date"])
 
 
+def already_posted_today(posts: dict, today: str) -> str:
+    """오늘 이미 올린 게 있으면 그 날짜를 돌려준다.
+
+    하루에 여러 번 쏘는 구조(예약 지연 대비)에서, 첫 실행이 오늘 것을 올린 뒤
+    두 번째 실행이 밀려 있던 지난 건까지 올려 하루 2건이 나가는 일을 막는다.
+    """
+    for p in posts.values():
+        if p.get("ig_posted") and p.get("posted_on") == today:
+            return p.get("date", "?")
+    return ""
+
+
 def pick(posts: dict, today: str):
     """올릴 것 하나를 고른다.
 
@@ -86,6 +98,12 @@ def main():
         data = json.load(f)
 
     posts = data.get("posts", {})
+
+    done = already_posted_today(posts, today)
+    if done:
+        print(f"[{today}][{ACCOUNT_LABEL}] 오늘 이미 {done} 건을 올렸습니다 — 하루 1건 제한, 종료")
+        return
+
     day_key, entry, late, passed = pick(posts, today)
 
     for k, d, n in passed:
@@ -133,6 +151,7 @@ def main():
 
     entry["posted"] = True
     entry["ig_posted"] = True
+    entry["posted_on"] = today      # 하루 1건 제한에 쓴다
     with open(PENDING, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 

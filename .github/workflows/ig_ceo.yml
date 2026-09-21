@@ -8,11 +8,23 @@ on:
         required: false
         default: ''
   schedule:
-    # UTC 10:30 = KST 19:30 / 화(2)·목(4)·토(6). ig_posted 플래그로 중복 안전
-    - cron: '30 10 * * 2,4,6'
+    # 목표: 화(2)·목(4)·토(6) KST 19:30.
+    # GitHub 예약은 이 저장소에서 4~5시간씩 밀린다(2026-09-17 목요일분이 10시간 밀려 날아감).
+    # 그래서 목표보다 일찍 여러 번 쏘고, ig_posted 플래그로 중복을 막는다.
+    # ig_daily·tiktok_daily가 같은 방식으로 KST 18:55~21:30에 안착하고 있다.
+    - cron: '30 6 * * 2,4,6'    # UTC 06:30 = KST 15:30 → 목표 19:30
+    - cron: '0 7 * * 2,4,6'     # KST 16:00 → 목표 20:00
+    - cron: '30 7 * * 2,4,6'    # KST 16:30 → 목표 20:30
+    - cron: '30 8 * * 2,4,6'    # KST 17:30 → 목표 21:30
 
 permissions:
   contents: write
+
+# 하루 4번 쏘므로 겹치면 같은 글이 두 번 올라갈 수 있다.
+# 앞 실행이 ig_posted를 커밋할 때까지 다음 실행을 잡아둔다.
+concurrency:
+  group: ig-ceo
+  cancel-in-progress: false
 
 jobs:
   publish:
