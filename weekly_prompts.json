@@ -312,6 +312,22 @@
     "set_rug_evening_lamp": {
       "hook": "러그 옆 저녁, 램프 하나 켜둔 방",
       "prompt": "Location: a lived-in Korean apartment in the evening. Warm oak floor with the corner of a nubby oatmeal rug at one edge of frame, a paper lantern floor lamp switched on out of frame, a ceramic cup and a phone face-down on the floor, a cardigan slung over a low chair. Light: one warm lamp low and to the side, so the product is lit from one direction and the far side of the frame falls into soft shadow."
+    },
+    "set_balcony_morning": {
+      "hook": "베란다 창가, 아침 역광",
+      "prompt": "Location: a narrow balcony-side strip of a Korean apartment. Pale grey vinyl flooring, a low white windowsill lined with two small pots, a folded drying rack leaning at one edge, a stainless tumbler on the floor. Light: bright morning sun straight through the window so the frame is backlit, with a long bright wash across the floor and the near side falling into cool shade."
+    },
+    "set_bookshelf_wall": {
+      "hook": "책장 벽 앞, 오후 반사광",
+      "prompt": "Location: in front of a full-height pale wood bookshelf in a Korean apartment. Warm oak floor, stacked art books and a small brass bowl on a lower shelf, a pair of reading glasses left on the floor, a woven basket half in frame. Light: indirect afternoon light bounced off a white wall, soft and even with only faint shadows."
+    },
+    "set_kitchen_edge": {
+      "hook": "주방 끝 타일 경계, 한낮",
+      "prompt": "Location: the edge of an open kitchen in a Korean apartment, where square matte tiles meet oak flooring and the joint line runs through the frame. A stainless kettle base and a chopping board stand at the counter edge, a glass of water and a linen cloth on the floor. Light: hard midday light from a side window, bright and slightly contrasty."
+    },
+    "set_hallway_doorlight": {
+      "hook": "복도 바닥, 문틈으로 들어온 빛",
+      "prompt": "Location: a narrow hallway in a Korean apartment. Warm oak boards running lengthwise, a slim console with keys and a folded scarf, a pair of trainers pushed against the skirting. Light: a single bright wedge spilling through a half-open door across the floor, the rest of the hallway dim and warm."
     }
   },
   "angles": {

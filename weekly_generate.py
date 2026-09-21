@@ -145,37 +145,57 @@ def pool_key_for(lib, product_key):
 
 
 HISTORY_WEEKS = 8          # 최근 몇 주치 조합을 기억해 되풀이를 피할지
+SETUP_COOLDOWN_WEEKS = 2   # 같은 방은 이 기간 안에 다시 쓰지 않는다
 
 
 def recent_combos(existing):
-    """지난 주차들에서 쓴 (제품, 방) 짝과 앵글 묶음. pending_posts.json 의 history 에 쌓인다."""
+    """최근 기록에서 (제품, 방) 짝 · 앵글 묶음 · 최근에 쓴 방 목록을 뽑는다.
+
+    방은 제품과 무관하게 따로 본다. 보는 사람 눈에 제일 먼저 들어오는 건 바닥과 소품이라,
+    제품만 바뀌고 같은 방이 다시 나오면 그냥 같은 사진으로 읽힌다(2026-09-21 지적).
+    """
+    hist = (existing.get("history") or [])
     pairs, anglesets = set(), set()
-    for wk in (existing.get("history") or [])[-HISTORY_WEEKS:]:
+    for wk in hist[-HISTORY_WEEKS:]:
         for day in wk.get("days", []):
             pairs.add((day.get("product"), day.get("setup")))
             anglesets.add(frozenset(day.get("angles") or []))
-    return pairs, anglesets
+    hot_setups = {day.get("setup")
+                  for wk in hist[-SETUP_COOLDOWN_WEEKS:]
+                  for day in wk.get("days", [])}
+    return pairs, anglesets, hot_setups
 
 
-def pick_setup_and_angles(lib, product_key, day_idx, n, week_no, used_pairs, used_anglesets):
+def pick_setup_and_angles(lib, product_key, day_idx, n, week_no,
+                          used_pairs, used_anglesets, hot_setups):
     """그 날 컷의 방과 앵글을 고른다.
 
     예전에는 배분안 하나에 제품·방·앵글이 통째로 묶여 있어서, 배분안이 4주마다 돌아오면
     똑같은 사진이 글자 그대로 되풀이됐다(2026-09-21: 화요일분이 직전 게시물과 같아 반려).
-    이제 배분안은 제품만 정하고, 방과 앵글은 여기서 따로 돌린다. 최근 HISTORY_WEEKS 주에
-    쓴 (제품, 방) 짝과 앵글 묶음은 건너뛴다.
+    이제 배분안은 제품만 정하고, 방과 앵글은 여기서 따로 돌린다.
+    방은 (1) 최근 SETUP_COOLDOWN_WEEKS 주에 쓴 방을 먼저 제외하고,
+    (2) 그래도 남는 게 없으면 (제품, 방) 짝이 겹치지 않는 선에서 고른다.
     """
     kind = "mat" if lib["products"][product_key]["kind"] == "mat" else "object"
     setups = [s for s in lib["setups"]]
     angles = [a for a, v in lib["angles"].items() if kind in v["kinds"]]
     cycle = week_no // max(1, len(lib.get("week_plans") or [1]))
 
+    def rotate(bump):
+        return setups[(week_no + cycle * 3 + day_idx * 2 + bump) % len(setups)]
+
     setup = None
-    for bump in range(len(setups)):
-        cand = setups[(week_no + cycle * 3 + day_idx * 2 + bump) % len(setups)]
-        if (product_key, cand) not in used_pairs:
+    for bump in range(len(setups)):                       # 1순위: 최근에 안 쓴 방
+        cand = rotate(bump)
+        if cand not in hot_setups:
             setup = cand
             break
+    if setup is None:                                     # 2순위: 적어도 같은 제품+방은 피한다
+        for bump in range(len(setups)):
+            cand = rotate(bump)
+            if (product_key, cand) not in used_pairs:
+                setup = cand
+                break
     setup = setup or setups[(week_no + day_idx) % len(setups)]
 
     chosen = None
@@ -298,13 +318,14 @@ def main():
     week_no = monday.isocalendar()[1]
 
     # 배분안은 제품만 정한다. 방과 앵글은 최근 기록을 보고 여기서 고른다.
-    used_pairs, used_anglesets = recent_combos(existing)
+    used_pairs, used_anglesets, hot_setups = recent_combos(existing)
     day_plan = []
     for i, (day, pk) in enumerate(zip(DAYS, plan)):
         setup, angles = pick_setup_and_angles(
-            lib, pk, i, IMAGE_COUNT[day], week_no, used_pairs, used_anglesets)
+            lib, pk, i, IMAGE_COUNT[day], week_no, used_pairs, used_anglesets, hot_setups)
         used_pairs.add((pk, setup))
         used_anglesets.add(frozenset(angles))
+        hot_setups.add(setup)          # 같은 주 안에서도 방이 겹치지 않게
         day_plan.append((day, pk, setup, angles))
 
     log(f"대상 주 {week_of} / 배분안 #{plan_idx}")
