@@ -1,0 +1,40 @@
+name: 제미나이 키 확인
+
+# 시크릿이 "등록돼 있다"와 "실제로 먹는다"는 다르다.
+# 주간 생성이 월요일에 빈손이 되기 전에 여기서 먼저 확인한다.
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 키 존재 확인
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "❌ GEMINI_API_KEY 시크릿이 비어 있습니다"; exit 1
+          fi
+          echo "키 길이: ${#GEMINI_API_KEY}자"
+
+      - name: 실제 호출
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          M=gemini-3.1-pro-preview
+          CODE=$(curl -s -o /tmp/r.json -w '%{http_code}' \
+            "https://generativelanguage.googleapis.com/v1beta/models/$M:generateContent?key=$GEMINI_API_KEY" \
+            -H 'Content-Type: application/json' \
+            -d '{"contents":[{"parts":[{"text":"한 단어로만 답해: 통과"}]}]}')
+          echo "HTTP $CODE (모델 $M)"
+          if [ "$CODE" != "200" ]; then
+            # 키 값이 새지 않도록 에러 메시지만 보여준다
+            python3 -c "import json;d=json.load(open('/tmp/r.json'));print('에러:',d.get('error',{}).get('message','?')[:200])"
+            exit 1
+          fi
+          python3 -c "
+          import json
+          t=json.load(open('/tmp/r.json'))['candidates'][0]['content']['parts'][0]['text']
+          print('✅ 응답:', t.strip()[:50])"
