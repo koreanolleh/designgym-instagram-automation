@@ -1,23 +1,56 @@
 {
   "week_of": "2026-09-21",
   "plan_idx": 0,
+  "history": [
+    {
+      "week_of": "2026-09-21",
+      "days": [
+        {
+          "product": "mat_before_sunrise",
+          "setup": "set_balcony_morning",
+          "angles": [
+            "ang_three_quarter",
+            "ang_through_frame",
+            "ang_shadow_edge"
+          ]
+        },
+        {
+          "product": "dumbbell_ivory",
+          "setup": "set_oak_linen",
+          "angles": [
+            "ang_close_object",
+            "ang_three_quarter"
+          ]
+        },
+        {
+          "product": "mat_warm_sunlight",
+          "setup": "set_warm_evening",
+          "angles": [
+            "ang_three_quarter",
+            "ang_shadow_edge",
+            "ang_through_frame"
+          ]
+        }
+      ]
+    }
+  ],
   "posts": {
     "Tuesday": {
       "date": "2026-09-22",
-      "product": "요가매트 Active steps",
-      "hook": "테라조 바닥 + 창가 하드 그림자 / 로우앵글 - 바닥에 폰을 붙이고, 탑다운 - 서서 내려다보며 내 발이 살짝, 가까이서 가장자리와 두께가 보이게",
+      "product": "요가매트 Before sunrise",
+      "hook": "베란다 창가, 아침 역광 / 허리 높이 사선 - 방이 함께 보이게, 문틀 너머 - 옆방에서 흘깃, 그림자 경계가 제품을 가로지르게",
       "images": [
         {
-          "path": "images/2026-09-21/tue_1_mat_active_steps.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/85cfd211-7e5a-4145-859d-5b174ddf13e6.jpg"
+          "path": "images/2026-09-21/tue_1_mat_before_sunrise.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/26fcdc25-7119-4331-a152-c53a160d2111.jpg"
         },
         {
-          "path": "images/2026-09-21/tue_2_mat_active_steps.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/9615026e-74f2-4f34-81ee-dab050d1a5f3.jpg"
+          "path": "images/2026-09-21/tue_2_mat_before_sunrise.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/1142d97f-434f-4fee-893c-3bdb8a69c97b.jpg"
         },
         {
-          "path": "images/2026-09-21/tue_3_mat_active_steps.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/55e2ae88-5e13-49b7-b557-dcbdd43cf07c.jpg"
+          "path": "images/2026-09-21/tue_3_mat_before_sunrise.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/eb3afa2c-f209-4782-958a-93eae8b9e0d4.jpg"
         }
       ],
       "caption": "빛이 가장 좋은 자리를 매트에 펼쳐두면\n\n틈틈히 빛이 들어오는 자리에 앉아서\n스트레칭만 해줘도 좋더라구요.",
