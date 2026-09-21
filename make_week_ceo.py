@@ -176,8 +176,12 @@ def main():
             "posted": bool(keep),
             "ig_posted": bool(keep),
         }
-        if keep and prev.get("post_id"):
-            plan["posts"][weekday]["post_id"] = prev["post_id"]
+        if keep:
+            # posted_on이 빠지면 서버의 "하루 한 건" 잠금이 풀려서
+            # 크론이 여러 번 뜨는 날 같은 날 두 건이 올라갈 수 있다.
+            for f in ("post_id", "posted_on"):
+                if prev.get(f):
+                    plan["posts"][weekday][f] = prev[f]
         print(f"  → {date}({weekday}) {len(rel)}장 준비 완료")
 
     if dry:

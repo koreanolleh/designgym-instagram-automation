@@ -355,6 +355,17 @@ def validate(week, dates):
                 f"({best} {score[best]}회 vs {tag} {score.get(tag, 0)}회)"
             )
 
+    # 종목이 달라도 다루는 부위가 겹치면 한 주가 똑같아 보인다.
+    # (러닝-무릎 / 스트레칭-무릎 연골처럼 태그만 다르고 소재가 같은 경우)
+    BODY_PARTS = ["무릎", "허리", "어깨", "발목", "손목", "골반", "종아리",
+                  "햄스트링", "코어", "연골", "관절", "척추", "발바닥", "엉덩이"]
+    for part in BODY_PARTS:
+        hit = [c.get("date") for c in cars
+               if part in c.get("blog_title", "") or part in c.get("blog", "")[:400]]
+        if len(hit) > 1:
+            problems.append(
+                f"부위가 겹침 — '{part}' 얘기가 {', '.join(hit)} 두 건. 소재를 다르게 고를 것")
+
     # 한 주에 같은 종목이 둘 이상이면 주제가 치우친다 (확실히 분류된 것만 셈)
     mains = [t for t in (topic_of(c)[0] for c in cars) if t]
     dup = {t for t in mains if mains.count(t) > 1}
@@ -398,8 +409,12 @@ def main():
     brief = research(dates, rules, topics)
     week = write_spec(week_of, dates, rules, brief, sample)
 
+    # 고쳐쓰기 한 번으로는 한두 건 남아서 통째로 버려지는 일이 잦다.
+    # 원고가 없으면 화요일 발행과 블로그 초안이 같이 비므로 세 번까지 준다.
     problems = validate(week, dates)
-    if problems:
+    for _ in range(3):
+        if not problems:
+            break
         week = repair(week, problems, rules)
         problems = validate(week, dates)
     if problems:
