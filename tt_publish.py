@@ -296,7 +296,15 @@ def main():
     if os.environ.get("SELFTEST") == "1":
         # 인증·토큰회전·MCP 연결만 확인한다. 발행일이 아닌 날에도 파이프라인 건강검진용.
         mcp = Mcp(access_token())
-        tools = [t["name"] for t in mcp._call("tools/list", {}).get("tools", [])]
+        listed = mcp._call("tools/list", {}).get("tools", [])
+        tools = [t["name"] for t in listed]
+        # 2026-09-22: 서버가 tiktok_publish 에 publish_token 을 요구하기 시작했는지, 스키마로 직접 확인한다.
+        for t in listed:
+            if t["name"] == "tiktok_publish":
+                sch = t.get("inputSchema", {})
+                log(f"tiktok_publish 필수 인자: {sch.get('required')}")
+                log(f"tiktok_publish publish_token 정의: {json.dumps(sch.get('properties', {}).get('publish_token'), ensure_ascii=False)}")
+                log(f"tiktok_publish 설명: {t.get('description', '')[:600]}")
         need = {"tiktok_prepare_publish", "tiktok_publish", "media_upload"}
         missing = need - set(tools)
         if missing:
