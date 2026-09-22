@@ -197,6 +197,7 @@ class Mcp:
 
     def tool(self, name, args):
         res = self._call("tools/call", {"name": name, "arguments": args})
+        self.last_raw = res            # _meta 등 structuredContent 밖의 정보를 볼 수 있게 남긴다
         if res.get("isError"):
             raise RuntimeError(f"{name} 실패: {res}")
         # 구조화 결과가 정본이다. content의 text는 사람이 읽는 요약이라 JSON이 아닐 수 있다.
@@ -355,12 +356,31 @@ def main():
     })
     log(f"준비 완료 (음악: {song_name or '없음'})")
 
+    # 2026-09-22: 서버 스키마가 publish_token 을 "prepare 결과 metadata 로만 전달"이라고 한다.
+    # structuredContent 가 아니라 _meta 에 실려 올 수 있으니, 원시 응답의 구조를 확인한다(값은 남기지 않는다).
+    raw = getattr(mcp, "last_raw", {}) or {}
+    meta = raw.get("_meta") or {}
+    def _shape(o, depth=0):
+        if isinstance(o, dict):
+            return {k: (_shape(v, depth+1) if depth < 3 else "…") for k, v in o.items()}
+        if isinstance(o, list):
+            return [f"list[{len(o)}]"]
+        if isinstance(o, str):
+            return f"str[{len(o)}]"
+        return type(o).__name__
+    log(f"prepare 원시 응답 최상위 키: {list(raw.keys())}")
+    log(f"prepare _meta 구조: {json.dumps(_shape(meta), ensure_ascii=False)[:800]}")
+    log(f"prepare structuredContent 키: {list(prep.keys())}")
+    publish_token = meta.get("publish_token") or prep.get("publish_token")
+    log(f"publish_token 발견 여부: {'있음 (len %d)' % len(publish_token) if publish_token else '없음'}")
+
     if DRY:
         log("[DRY_RUN] 실제 게시는 건너뜀")
         return 0
 
     args = {
         "connector_id": connector, "publish_session_id": prep["publish_session_id"],
+        **({"publish_token": publish_token} if publish_token else {}),
         "mode": "DIRECT_POST", "media_type": "PHOTO",
         "privacy_level": "PUBLIC_TO_EVERYONE", "allow_comment": True,
         "commercial_content_disclosure": {"enabled": False, "your_brand": False, "branded_content": False},
