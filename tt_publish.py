@@ -371,7 +371,9 @@ def main():
     log(f"prepare 원시 응답 최상위 키: {list(raw.keys())}")
     log(f"prepare _meta 구조: {json.dumps(_shape(meta), ensure_ascii=False)[:800]}")
     log(f"prepare structuredContent 키: {list(prep.keys())}")
-    publish_token = meta.get("publish_token") or prep.get("publish_token")
+    # 실측(2026-09-22 dry run): _meta 에 'tiktok_publish_token'(330자) 으로 실려 온다.
+    publish_token = (meta.get("tiktok_publish_token") or meta.get("publish_token")
+                     or prep.get("publish_token"))
     log(f"publish_token 발견 여부: {'있음 (len %d)' % len(publish_token) if publish_token else '없음'}")
 
     if DRY:
