@@ -32,6 +32,7 @@ on:
 
 permissions:
   contents: write
+  issues: write   # 실패 알림 이슈 생성 (2026-09-22: 이게 없어 createIssue 가 거부됐다)
 
 concurrency:
   group: tiktok-daily
@@ -65,11 +66,22 @@ jobs:
         run: python3 tt_publish.py
 
       # 인증이 깨지면 재시도 크론이 전부 같은 이유로 실패한다. 조용히 넘기지 말고 바로 알린다.
-      - name: 인증 실패 알림
+      - name: 실패 알림
         if: failure()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # 발행 경로가 막힌 것(위젯 필수)과 인증 실패는 조치가 완전히 다르다 — 사유 파일로 구분한다.
+          if [ "$(cat tiktok_block_reason.txt 2>/dev/null)" = "widget_required" ]; then
+            TITLE="⛔ 틱톡 무인 발행 막힘 — 힉스필드 위젯 필수 ($(TZ=Asia/Seoul date +%F))"
+            if ! gh issue list --state open --search "위젯 필수 in:title" --json title -q '.[].title' | grep -q "위젯 필수"; then
+              gh issue create --title "$TITLE" --body "힉스필드 MCP 의 tiktok_publish 가 publish_token 을 요구합니다. 이 토큰은 사람이 발행 폼 위젯을 제출해야만 발급됩니다(2026-09-22부터). 이미지 업로드와 발행 준비까지는 정상입니다.
+
+          당장은 오늘치 이미지를 틱톡 앱에서 직접 올리거나, 위젯을 지원하는 클라이언트(claude.ai 채팅 + 힉스필드 커넥터)에서 발행 폼을 제출해야 합니다.
+          무인 발행을 되살리려면 힉스필드가 아닌 다른 경로가 필요합니다."
+            fi
+            exit 0
+          fi
           TITLE="🔑 힉스필드 재인증 필요 ($(TZ=Asia/Seoul date +%F))"
           if ! gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
             gh issue create --title "$TITLE" --body "틱톡 발행이 인증 문제로 실패했습니다.

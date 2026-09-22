@@ -365,7 +365,19 @@ def main():
     if song_id:
         args["music_sound_id"] = song_id
 
-    pub = mcp.tool("tiktok_publish", args)
+    try:
+        pub = mcp.tool("tiktok_publish", args)
+    except RuntimeError as e:
+        # 2026-09-22: 힉스필드가 tiktok_publish 에 publish_token 을 새로 요구하기 시작했다.
+        # 이 토큰은 사람이 발행 폼 위젯을 제출해야만 발급되고, prepare 응답에는 없다.
+        # 9/17 20:58 까지 이 코드 그대로 성공했으니 그 사이에 서버가 바뀐 것이다.
+        # 인증 문제와 섞이지 않게 사유를 파일로 남겨 워크플로가 맞는 안내를 띄우게 한다.
+        if "publish_token" in str(e):
+            open(os.path.join(BASE, "tiktok_block_reason.txt"), "w").write("widget_required\n")
+            raise RuntimeError(
+                "틱톡 무인 발행 경로 막힘: 힉스필드가 publish_token(발행 폼 위젯 제출 시에만 발급)을 "
+                "요구한다. 이미지 업로드·발행 준비까지는 정상. 사람이 위젯을 제출하거나 다른 경로가 필요.") from e
+        raise
     pid = pub["publish_id"]
     log(f"게시 요청 완료: {pid}")
 

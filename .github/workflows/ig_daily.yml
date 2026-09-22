@@ -27,6 +27,7 @@ on:
 
 permissions:
   contents: write
+  issues: write   # 실패 알림 이슈 생성 (2026-09-22: 이게 없어 createIssue 가 거부됐다)
 
 # 여러 크론이 겹쳐 돌면 플래그 커밋 전에 두 번 발행될 수 있다(8/14 중복 사고).
 # 같은 그룹은 한 번에 하나만 돌고, 진행 중인 것을 취소하지 않는다.
@@ -54,7 +55,21 @@ jobs:
           TARGET_DATE: ${{ github.event.inputs.target_date }}
         run: python server_ig_publish.py
 
+      # 2026-09-22: 토큰이 만료돼 하루 4번 조용히 실패했는데 아무도 몰랐다. 실패는 바로 이슈로 올린다.
+      - name: 실패 알림
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="🔑 인스타 발행 실패 ($(TZ=Asia/Seoul date +%F))"
+          if ! gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
+            gh issue create --title "$TITLE" --body "official 계정 인스타 발행이 실패했습니다. 로그를 확인하세요.
+
+          'Session has expired' 라면 토큰 만료입니다 — Meta 개발자 콘솔에서 토큰을 다시 발급해 IG_ACCESS_TOKEN 시크릿에 넣어야 합니다. 주간 갱신(ig_token_refresh.yml)이 살아 있으면 만료 전에 자동으로 연장됩니다."
+          fi
+
       - name: posted 상태 커밋
+        if: success()
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"

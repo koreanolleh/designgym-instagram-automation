@@ -1,0 +1,44 @@
+name: 인스타 토큰 주간 갱신
+
+# 2026-09-22: official 토큰이 60일 만료로 조용히 죽어 화요일 발행이 통째로 실패했다.
+# Instagram 로그인 토큰은 만료 전에 갱신하면 60일이 다시 붙는다. 매주 갱신하면 죽을 일이 없다.
+# 갱신은 발급 24시간 뒤부터 가능하므로 주 1회면 충분하고, 실패하면 이슈로 알린다.
+
+on:
+  schedule:
+    - cron: '0 18 * * 0'   # UTC 일 18:00 = KST 월 03:00 (지연돼도 월요일 아침 안에 끝난다)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 두 계정 토큰 갱신
+        id: refresh
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_CEO_ACCESS_TOKEN: ${{ secrets.IG_CEO_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: python3 ig_refresh_token.py
+
+      - name: 갱신 실패 알림
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="🔑 인스타 토큰 갱신 실패 ($(TZ=Asia/Seoul date +%F))"
+          if ! gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
+            gh issue create --title "$TITLE" --body "인스타 토큰 주간 갱신이 실패했습니다. 로그에서 어느 계정인지 확인하세요.
+
+          이미 만료된 토큰은 갱신이 안 됩니다 — Meta 개발자 콘솔의
+          '이용 사례 → Instagram 로그인이 포함된 API 설정'에서 토큰을 다시 발급해
+          해당 시크릿(IG_ACCESS_TOKEN / IG_CEO_ACCESS_TOKEN)에 넣어야 합니다.
+
+          아직 유효한데 실패했다면 일시 오류일 수 있으니 workflow_dispatch 로 한 번 더 돌려보세요."
+          fi
