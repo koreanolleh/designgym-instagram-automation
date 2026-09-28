@@ -3,6 +3,22 @@
   "plan_idx": 1,
   "history": [
     {
+      "week_of": "2026-09-14",
+      "days": [
+        {
+          "product": "mat_active_steps",
+          "setup": "set_terrazzo_window",
+          "angles": [
+            "ang_low_floor",
+            "ang_topdown_feet",
+            "ang_near_edge"
+          ],
+          "props": "props_mug_book",
+          "shadow": "shadow_monstera"
+        }
+      ]
+    },
+    {
       "week_of": "2026-09-21",
       "days": [
         {
@@ -38,12 +54,14 @@
       "days": [
         {
           "product": "mat_before_sunrise",
-          "setup": "set_terrazzo_window",
+          "setup": "set_bookshelf_wall",
           "angles": [
-            "ang_low_floor",
-            "ang_topdown_feet",
-            "ang_three_quarter"
-          ]
+            "ang_near_edge",
+            "ang_through_frame",
+            "ang_low_floor"
+          ],
+          "props": "props_plant_pot",
+          "shadow": "shadow_curtain"
         },
         {
           "product": "band",
@@ -51,16 +69,19 @@
           "angles": [
             "ang_three_quarter",
             "ang_through_frame"
-          ]
+          ],
+          "props": "props_water_towel",
+          "shadow": "shadow_mullion"
         },
         {
           "product": "kettlebell_mint",
           "setup": "set_tile_bathlight",
           "angles": [
-            "ang_in_hand",
             "ang_shadow_edge",
             "ang_low_floor"
-          ]
+          ],
+          "props": "props_timer_socks",
+          "shadow": "shadow_none"
         }
       ]
     }
@@ -69,22 +90,22 @@
     "Tuesday": {
       "date": "2026-09-29",
       "product": "요가매트 Before sunrise",
-      "hook": "테라조 바닥 + 창가 하드 그림자 / 로우앵글 - 바닥에 폰을 붙이고, 탑다운 - 서서 내려다보며 내 발이 살짝, 허리 높이 사선 - 방이 함께 보이게",
+      "hook": "책장 벽 앞, 오후 반사광 / 작은 화분 / 커튼 주름 / 가까이서 가장자리와 두께가 보이게, 문틀 너머 - 옆방에서 흘깃, 로우앵글 - 바닥에 폰을 붙이고",
       "images": [
         {
           "path": "images/2026-09-28/tue_1_mat_before_sunrise.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/c9250646-5168-4cec-8efa-270fa5a7076f.jpg"
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/1d150fe3-0a43-4521-97ad-7f882538d0dd.jpg"
         },
         {
           "path": "images/2026-09-28/tue_2_mat_before_sunrise.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/a0e338a7-65e4-441e-be7d-0a5b1e5b14cb.jpg"
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/f8f04944-86af-4ada-8eb1-3c021a6421b4.jpg"
         },
         {
           "path": "images/2026-09-28/tue_3_mat_before_sunrise.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/424d5eef-d97f-4036-bde2-9b3a0321d95b.jpg"
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/9b75f26e-c43b-4763-ad3c-d3b4c1f4a2ed.jpg"
         }
       ],
-      "caption": "움직임에도 취향이 있습니다.\n\n펼쳐두는 것만으로 공간이 정돈되는 8mm.\n숨기지 않아도 되는 운동.",
+      "caption": "움직임에도 취향이 있습니다.\n\n매일 밟는 자리부터 고르는 일.\n그게 운동의 시작이라고 생각합니다.",
       "hashtags": "#디자인짐 #요가매트 #홈트 #홈요가 #공간의취향",
       "tiktok_title": "움직임에도 취향이 있으니까 #디자인짐 #요가매트 #홈트\n\n---",
       "posted": false,
@@ -94,15 +115,15 @@
     "Thursday": {
       "date": "2026-10-01",
       "product": "힙업밴드 (3개입)",
-      "hook": "미장 콘크리트 + 검정 창틀, 대각선 빛 / 허리 높이 사선 - 방이 함께 보이게, 문틀 너머 - 옆방에서 흘깃",
+      "hook": "미장 콘크리트 + 검정 창틀, 대각선 빛 / 물병 + 개어둔 수건 / 창틀 격자 / 허리 높이 사선 - 방이 함께 보이게, 문틀 너머 - 옆방에서 흘깃",
       "images": [
         {
           "path": "images/2026-09-28/thu_1_band.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/ee3a8e47-acae-453e-963b-12a76266c094.jpg"
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/83a9a8c1-548f-4f3c-90fb-7f2cfd3d3e3a.jpg"
         },
         {
           "path": "images/2026-09-28/thu_2_band.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/b355b499-fbfd-446a-b806-a6d9e2f3cd28.jpg"
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/be65051f-49a8-4d93-bdbe-b34e9f3928ba.jpg"
         }
       ],
       "caption": "눈에 보이는 자리에 둡니다.\n\n보이면 한 세트 더 하게 되고,\n보여도 지저분하지 않으니까.",
@@ -115,24 +136,20 @@
     "Sunday": {
       "date": "2026-10-04",
       "product": "문 케틀벨 4.5kg (라이트민트)",
-      "hook": "화이트 타일 + 차가운 아침 빛 / 내 손에 들고 - 얼굴 없이, 그림자 경계가 제품을 가로지르게, 로우앵글 - 바닥에 폰을 붙이고",
+      "hook": "화이트 타일 + 차가운 아침 빛 / 타이머 + 개어둔 양말 / 무늬 그림자 없음 / 그림자 경계가 제품을 가로지르게, 로우앵글 - 바닥에 폰을 붙이고",
       "images": [
         {
           "path": "images/2026-09-28/sun_1_kettlebell_mint.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/9898aabb-2ace-4c49-a00b-703c2eb99c3a.jpg"
-        },
-        {
-          "path": "images/2026-09-28/sun_2_kettlebell_mint.jpg",
           "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/9af2f609-c867-4494-b041-954366ee7dc9.jpg"
         },
         {
-          "path": "images/2026-09-28/sun_3_kettlebell_mint.jpg",
+          "path": "images/2026-09-28/sun_2_kettlebell_mint.jpg",
           "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/0de8512e-f539-45d0-8c0c-ed20d677b3e6.jpg"
         }
       ],
-      "caption": "쇠는 내려놓을 때마다 소리가 남습니다.\n\n아파트에서는 그게 가장 신경 쓰이는 일.\n이건 조용합니다.\n\n내 공간에 어울리는 나만의 홈트레이닝.\n디자인짐.",
+      "caption": "아파트에서 운동할 때\n가장 먼저 신경 쓰이는 건 소리입니다.\n\n내려놓아도 조용한 무게를 골랐습니다.\n\n내 공간에 어울리는 나만의 홈트레이닝.\n디자인짐.",
       "hashtags": "#디자인짐 #케틀벨 #문케틀벨 #층간소음 #아파트홈트",
-      "tiktok_title": "내려놓아도 조용한 무게 #디자인짐 #케틀벨 #문케틀벨\n\n---",
+      "tiktok_title": "소리가 남지 않는 무게 #디자인짐 #케틀벨 #문케틀벨\n\n---",
       "posted": false,
       "ig_posted": null,
       "tiktok_posted": null

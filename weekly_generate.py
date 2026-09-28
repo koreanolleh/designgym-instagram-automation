@@ -47,7 +47,7 @@ def model_for(lib, product_key):
     return "nano_banana_pro" if lib["products"][product_key].get("element") else "marketing_studio_image"
 
 
-def build_snap_prompt(lib, product_key, setup_key, angle_key):
+def build_snap_prompt(lib, product_key, setup_key, angle_key, props_key=None, shadow_key=None):
     """아이폰으로 방금 찍은 것처럼 보이는 한 컷. 하루치는 세트 하나 + 앵글 여러 개다.
 
     구성은 [스타일][카메라][장소·빛][제품 규격][금지사항] 순서다. 제품 규격은 종전과 같은
@@ -58,7 +58,14 @@ def build_snap_prompt(lib, product_key, setup_key, angle_key):
     setup = lib["setups"][setup_key]
     angle = lib["angles"][angle_key]
 
-    parts = [sh["iphone"], "", angle["prompt"], "", setup["prompt"], ""]
+    parts = [sh["iphone"], "", angle["prompt"], "", setup["prompt"]]
+    # 소품과 그림자는 방에 붙박이가 아니다. 같은 방이 돌아와도 물건이 바뀌어야 다른 사진으로 읽힌다
+    # (2026-09-28: 테라조 방이 빨간 머그·이어폰·몬스테라 그림자를 통째로 달고 재등장해 반려).
+    if props_key:
+        parts += [lib["prop_sets"][props_key]["prompt"]]
+    if shadow_key:
+        parts += [lib["shadow_motifs"][shadow_key]["prompt"]]
+    parts += [sh["tidy_rule"], ""]
 
     if p.get("element"):
         parts += [f"THE PRODUCT IS <<<{p['element']}>>> - reproduce this exact registered product: its printed "
@@ -145,7 +152,8 @@ def pool_key_for(lib, product_key):
 
 
 HISTORY_WEEKS = 8          # 최근 몇 주치 조합을 기억해 되풀이를 피할지
-SETUP_COOLDOWN_WEEKS = 2   # 같은 방은 이 기간 안에 다시 쓰지 않는다
+SETUP_COOLDOWN_WEEKS = 2   # 같은 방은 이 기간 안에 다시 쓰지 않는다 (방 10개 / 주 3일)
+PROP_COOLDOWN_WEEKS = 1    # 소품·그림자는 가짓수가 적어 한 주만 피한다 — 대신 매주 반드시 바뀐다
 
 
 def recent_combos(existing):
@@ -160,14 +168,17 @@ def recent_combos(existing):
         for day in wk.get("days", []):
             pairs.add((day.get("product"), day.get("setup")))
             anglesets.add(frozenset(day.get("angles") or []))
-    hot_setups = {day.get("setup")
-                  for wk in hist[-SETUP_COOLDOWN_WEEKS:]
-                  for day in wk.get("days", [])}
-    return pairs, anglesets, hot_setups
+    recent = [day for wk in hist[-SETUP_COOLDOWN_WEEKS:] for day in wk.get("days", [])]
+    near = [day for wk in hist[-PROP_COOLDOWN_WEEKS:] for day in wk.get("days", [])]
+    hot_setups = {day.get("setup") for day in recent}
+    hot_props = {day.get("props") for day in near if day.get("props")}
+    hot_shadows = {day.get("shadow") for day in near if day.get("shadow")}
+    return pairs, anglesets, hot_setups, hot_props, hot_shadows
 
 
 def pick_setup_and_angles(lib, product_key, day_idx, n, week_no,
-                          used_pairs, used_anglesets, hot_setups):
+                          used_pairs, used_anglesets, hot_setups,
+                          hot_props=None, hot_shadows=None):
     """그 날 컷의 방과 앵글을 고른다.
 
     예전에는 배분안 하나에 제품·방·앵글이 통째로 묶여 있어서, 배분안이 4주마다 돌아오면
@@ -206,7 +217,18 @@ def pick_setup_and_angles(lib, product_key, day_idx, n, week_no,
             chosen = cand
             break
     chosen = chosen or [angles[(week_no + day_idx + k) % len(angles)] for k in range(n)]
-    return setup, chosen
+
+    def pick(pool, hot, salt):
+        keys = list(pool)
+        for bump in range(len(keys)):
+            cand = keys[(week_no * 2 + cycle + day_idx * salt + bump) % len(keys)]
+            if cand not in (hot or ()):
+                return cand
+        return keys[(week_no + day_idx) % len(keys)]
+
+    props = pick(lib["prop_sets"], hot_props, 3)
+    shadow = pick(lib["shadow_motifs"], hot_shadows, 5)
+    return setup, chosen, props, shadow
 
 
 def caption_for(lib, product_key, seen, is_closer, week_no=0, angle_keys=None, used=None):
@@ -318,20 +340,25 @@ def main():
     week_no = monday.isocalendar()[1]
 
     # 배분안은 제품만 정한다. 방과 앵글은 최근 기록을 보고 여기서 고른다.
-    used_pairs, used_anglesets, hot_setups = recent_combos(existing)
+    used_pairs, used_anglesets, hot_setups, hot_props, hot_shadows = recent_combos(existing)
     day_plan = []
     for i, (day, pk) in enumerate(zip(DAYS, plan)):
-        setup, angles = pick_setup_and_angles(
-            lib, pk, i, IMAGE_COUNT[day], week_no, used_pairs, used_anglesets, hot_setups)
+        setup, angles, props, shadow = pick_setup_and_angles(
+            lib, pk, i, IMAGE_COUNT[day], week_no, used_pairs, used_anglesets,
+            hot_setups, hot_props, hot_shadows)
         used_pairs.add((pk, setup))
         used_anglesets.add(frozenset(angles))
-        hot_setups.add(setup)          # 같은 주 안에서도 방이 겹치지 않게
-        day_plan.append((day, pk, setup, angles))
+        hot_setups.add(setup)          # 같은 주 안에서도 방·소품·그림자가 겹치지 않게
+        hot_props.add(props)
+        hot_shadows.add(shadow)
+        day_plan.append((day, pk, setup, angles, props, shadow))
 
     log(f"대상 주 {week_of} / 배분안 #{plan_idx}")
-    for day, pk, setup, angles in day_plan:
+    for day, pk, setup, angles, props, shadow in day_plan:
         log(f"  {KR[day]} ({IMAGE_COUNT[day]}장): {lib['products'][pk]['label']} / "
-            f"{lib['setups'][setup]['hook']} / " + ", ".join(lib['angles'][a]['hook'] for a in angles))
+            f"{lib['setups'][setup]['hook']} / {lib['prop_sets'][props]['hook']} / "
+            f"{lib['shadow_motifs'][shadow]['hook']} / "
+            + ", ".join(lib['angles'][a]['hook'] for a in angles))
     if DRY:
         log("[DRY_RUN] 생성 없이 계획만 출력하고 종료")
         return 0
@@ -344,9 +371,9 @@ def main():
         log(f"잔액 조회 실패(무시): {e}")
     # 컷 단위로 펼친다 — (요일, 그 요일 안의 순번, 제품, 세트, 앵글)
     shots = []
-    for day, pk, setup, angles in day_plan:
+    for day, pk, setup, angles, props, shadow in day_plan:
         for n, angle in enumerate(angles):
-            shots.append((day, n, pk, setup, angle))
+            shots.append((day, n, pk, setup, angle, props, shadow))
 
     if bal_before is not None:
         log(f"생성 전 잔액 {bal_before}")
@@ -356,9 +383,9 @@ def main():
                 "(장당 2크레딧). 충전 후 다시 실행하세요.")
 
     reqs = []
-    for i, (day, n, pk, setup, angle) in enumerate(shots):
+    for i, (day, n, pk, setup, angle, props, shadow) in enumerate(shots):
         params = {"model": model_for(lib, pk), "aspect_ratio": "4:5", "resolution": "2k",
-                  "prompt": build_snap_prompt(lib, pk, setup, angle)}
+                  "prompt": build_snap_prompt(lib, pk, setup, angle, props, shadow)}
         med = medias_for(lib, pk)
         if med:
             params["medias"] = med
@@ -385,7 +412,7 @@ def main():
     img_dir = os.path.join(BASE, "images", week_of)
     os.makedirs(img_dir, exist_ok=True)
     by_day = {}
-    for i, (day, n, pk, setup, angle) in enumerate(shots):
+    for i, (day, n, pk, setup, angle, props, shadow) in enumerate(shots):
         url = results.get(i)
         if not url:
             log(f"  {KR[day]} {n+1}번째 컷 실패 — 건너뜀")
@@ -401,7 +428,7 @@ def main():
 
     posts, missing, used = {}, [], {}
     used_titles = set()            # 한 주 안에서 같은 문구가 두 번 걸리지 않게 제목을 모아둔다
-    for day, pk, setup, angles in day_plan:
+    for day, pk, setup, angles, props, shadow in day_plan:
         images = by_day.get(day)
         date = (monday + timedelta(days=OFFSET[day])).strftime("%Y-%m-%d")
         if not images:
@@ -411,7 +438,8 @@ def main():
         used[pool_key_for(lib, pk)] = seen + 1
         cap, tags, tt = caption_for(lib, pk, seen, day == CLOSER, monday.isocalendar()[1],
                                     angle_keys=angles, used=used_titles)
-        hook = (f"{lib['setups'][setup]['hook']} / "
+        hook = (f"{lib['setups'][setup]['hook']} / {lib['prop_sets'][props]['hook']} / "
+                f"{lib['shadow_motifs'][shadow]['hook']} / "
                 + ", ".join(lib['angles'][a]['hook'] for a in angles))
         posts[day] = {
             "date": date, "product": lib["products"][pk]["label"], "hook": hook,
@@ -442,8 +470,9 @@ def main():
     history = (existing.get("history") or [])
     history = [h for h in history if h.get("week_of") != week_of]
     history.append({"week_of": week_of,
-                    "days": [{"product": pk, "setup": setup, "angles": angles}
-                             for day, pk, setup, angles in day_plan if day in posts]})
+                    "days": [{"product": pk, "setup": setup, "angles": angles,
+                              "props": props, "shadow": shadow}
+                             for day, pk, setup, angles, props, shadow in day_plan if day in posts]})
     history = history[-HISTORY_WEEKS:]
 
     json.dump({"week_of": week_of, "plan_idx": plan_idx, "history": history, "posts": posts},

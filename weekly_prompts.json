@@ -8,8 +8,9 @@
     "mat_artwork_rule": "MAT ARTWORK SCALE - the repeated failure is drawing the shapes TOO SMALL. Fix it exactly like this: there are only THREE shapes on the whole mat and each one is ENORMOUS - as tall as the mat is wide, so it TOUCHES OR NEARLY TOUCHES BOTH LONG EDGES, leaving only a thin cream margin of a couple of centimetres at the top and bottom. The three shapes sit side by side down the length with narrow cream gaps between them and together they cover the mat almost end to end. DO NOT draw small circles floating in the middle of the mat with wide empty cream borders along the sides. Each shape is a big soft rounded blob with irregular watercolour edges and visible mottled paper-like texture - hand-painted, not a clean vector circle.",
     "mat_logo_offframe": "FRAMING - KEEP THE BRANDED END OUT OF SHOT: the real mat carries a small printed wordmark near one short end. Compose so that end is cropped away by the frame edge, or is hidden behind the subject. Under no circumstances draw a wordmark, a logo, a monogram, a pictogram or any lettering onto the mat yourself - an invented mark is worse than no mark. The mat surface inside the frame carries printed artwork only.",
     "iphone": "photo shot on iPhone, casual handheld snapshot, slightly tilted framing. True-to-life colours, realistic phone camera dynamic range - highlights near the window blow out a little and shadows crush a little, slight sensor noise, a touch of handheld imperfection. It should look like something the owner grabbed on the way past, not a shoot.",
-    "iphone_negative": "NOT staged, NOT a studio photo, NO professional lighting, NO softbox, NO seamless backdrop, NO product-catalogue look, NO perfectly centred composition, NO glossy retouching. NO text, NO lettering, NO wordmark, NO logo and NO blurred smudge of fake lettering anywhere in frame - an invented mark is worse than no mark, so keep any branded part of the product out of shot.",
-    "mat_artwork_guard": "MAT FRAMING RULE - the whole WIDTH of the mat and at least TWO THIRDS of its LENGTH must be inside the frame, so all of its printed shapes are recognisable together. Never fill the frame with a detail of the print alone: a crop that shows only part of the artwork makes the pattern unreliable."
+    "iphone_negative": "NOT staged, NOT a studio photo, NO professional lighting, NO softbox, NO seamless backdrop, NO product-catalogue look, NO perfectly centred composition, NO glossy retouching. NO invented text, lettering, wordmark or logo anywhere in frame - a made-up mark is worse than no mark. Keep any branded part of the product out of shot, or so small and oblique that nothing reads as letters.",
+    "mat_artwork_guard": "MAT FRAMING RULE - the whole WIDTH of the mat and at least TWO THIRDS of its LENGTH must be inside the frame, so all of its printed shapes are recognisable together. Never fill the frame with a detail of the print alone: a crop that shows only part of the artwork makes the pattern unreliable.",
+    "tidy_rule": "TIDY: the room is picked up. NO clothing tossed or heaped on the floor, no crumpled sweatshirt, no discarded socks, no bags or clutter. Anything present is placed deliberately and squared off."
   },
   "products": {
     "mat_active_steps": {
@@ -40,7 +41,7 @@
       "label": "힙업밴드 (3개입)",
       "media": "86ffefa1-7898-4dee-8c72-bd4e683bc3ea",
       "kind": "band",
-      "spec": "THE 3-PIECE SET IS THREE DIFFERENT DESIGNS AT THREE DIFFERENT LENGTHS - never three copies of one pattern and never three equal lengths. Real measured spec (circumference / flat length when laid down, all 8cm wide):\n  (1) SHORTEST, flat about 33cm long: cream and warm beige ground with large TEAL-BLUE organic shapes at both ends, the most minimal of the three\n  (2) MEDIUM, flat about 38cm long: deep NAVY and mid-blue ground with cream palm leaves and a muted brown shape\n  (3) LONGEST, flat about 43cm long: cream ground with a big MUSTARD-YELLOW shape, brown palm fronds and a maroon circle\nPROPORTION IS CRITICAL: each band is a SHORT CHUNKY STRIP, only about 4 to 5.5 times longer than it is wide (33-43cm long by 8cm wide). Do NOT draw them long and thin like ribbons or belts. Thick woven jacquard elastic with fine stitched edges; the inner face has fine silicone anti-slip lines. Each band carries a narrow BLACK fabric label wrapped around its MIDDLE, printed in small white with a minimal line-art dumbbell pictogram above the wordmark \"Design:Gym\". Soft floppy fabric - laid down it collapses into a FLAT two-layer strip with softly rounded folded ends; it can never stand up or hold a round hoop shape."
+      "spec": "THE 3-PIECE SET IS THREE DIFFERENT DESIGNS AT THREE DIFFERENT LENGTHS - never three copies of one pattern and never three equal lengths. Real measured spec (circumference / flat length when laid down, all 8cm wide):\n  (1) SHORTEST, flat about 33cm long: cream and warm beige ground with large TEAL-BLUE organic shapes at both ends, the most minimal of the three\n  (2) MEDIUM, flat about 38cm long: deep NAVY and mid-blue ground with cream palm leaves and a muted brown shape\n  (3) LONGEST, flat about 43cm long: cream ground with a big MUSTARD-YELLOW shape, brown palm fronds and a maroon circle\nPROPORTION IS CRITICAL: each band is a SHORT CHUNKY STRIP, only about 4 to 5.5 times longer than it is wide (33-43cm long by 8cm wide). Do NOT draw them long and thin like ribbons or belts. Thick woven jacquard elastic with fine stitched edges; the inner face has fine silicone anti-slip lines. Each band carries a narrow BLACK fabric label wrapped around its MIDDLE. The label is tiny and seen at an angle, so any marking on it reads as a faint pale smudge - do NOT render legible letters or a drawn logo on it. Soft floppy fabric - laid down it collapses into a FLAT two-layer strip with softly rounded folded ends; it can never stand up or hold a round hoop shape. THE THREE PRINTS ARE ONLY THOSE DESCRIBED ABOVE - copy them from the reference photograph. Do NOT invent new motifs: no hands, no faces, no figures, no lettering, no patterns other than the organic shapes and palm fronds listed."
     },
     "kettlebell_grey": {
       "label": "문 케틀벨 4.5kg (라이트그레이)",
@@ -148,7 +149,7 @@
     "mat": [
       {
         "t": "움직임에도 취향이 있으니까",
-        "c": "움직임에도 취향이 있습니다.\n\n펼쳐두는 것만으로 공간이 정돈되는 8mm.\n숨기지 않아도 되는 운동.",
+        "c": "움직임에도 취향이 있습니다.\n\n매일 밟는 자리부터 고르는 일.\n그게 운동의 시작이라고 생각합니다.",
         "h": "#디자인짐 #요가매트 #홈트 #홈요가 #공간의취향"
       },
       {
@@ -224,8 +225,8 @@
     ],
     "kettlebell": [
       {
-        "t": "내려놓아도 조용한 무게",
-        "c": "쇠는 내려놓을 때마다 소리가 남습니다.\n\n아파트에서는 그게 가장 신경 쓰이는 일.\n이건 조용합니다.",
+        "t": "소리가 남지 않는 무게",
+        "c": "아파트에서 운동할 때\n가장 먼저 신경 쓰이는 건 소리입니다.\n\n내려놓아도 조용한 무게를 골랐습니다.",
         "h": "#디자인짐 #케틀벨 #문케틀벨 #층간소음 #아파트홈트"
       },
       {
@@ -291,43 +292,43 @@
   "setups": {
     "set_terrazzo_window": {
       "hook": "테라조 바닥 + 창가 하드 그림자",
-      "prompt": "Location: a bright corner of a hip Korean apartment. Pale terrazzo floor flecked with grey and rust. A chrome stool leg intrudes at one edge of frame, a glossy red ceramic cup sits on the floor, white wired earbuds lie coiled nearby, monstera leaf shadows fall across the ground. Light: strong direct daylight through a window out of frame, throwing HARD crisp-edged window shadows over everything."
+      "prompt": "Location: a bright corner of a hip Korean apartment. Pale terrazzo floor flecked with grey and rust, plain white skirting. Light: strong direct daylight through a window out of frame, hard and crisp."
     },
     "set_oak_linen": {
       "hook": "오크 마루 + 리넨 커튼, 오후 빛",
-      "prompt": "Location: a calm room in a hip Korean apartment. Light oak floorboards, a sheer linen curtain half drawn at one side, a slim aluminium side table, a tinted brown glass tumbler with water, a paperback left face-down on the floor. Light: afternoon daylight diffused through the linen on one side and falling hard and direct on the other, so the frame has both soft and crisp shadows at once."
+      "prompt": "Location: a calm room in a hip Korean apartment. Light oak floorboards, a sheer linen curtain half drawn at one side. Light: afternoon daylight diffused through the linen on one side and falling direct on the other, so the frame holds both soft and crisp shadows."
     },
     "set_concrete_loft": {
       "hook": "미장 콘크리트 + 검정 창틀, 대각선 빛",
-      "prompt": "Location: a stripped-back loft-style Korean apartment. Grey micro-cement floor, a black steel window frame, a brushed stainless water bottle standing on the floor, a grey marl sweatshirt tossed down in a heap. Light: late morning sun cutting through the steel frame, laying hard diagonal bars of light and shadow across the floor."
+      "prompt": "Location: a stripped-back loft-style Korean apartment. Grey micro-cement floor, a black steel window frame. Light: late morning sun cutting through the steel frame."
     },
     "set_warm_evening": {
       "hook": "따뜻한 늦은 오후, 긴 그림자",
-      "prompt": "Location: a warm minimal Korean apartment late in the afternoon. Light oak floor, a matte ceramic mug half full, a folded waffle towel, a small trailing plant on the floor. Light: low golden sun coming in almost sideways, drawing long soft-edged shadows and catching dust in the air."
+      "prompt": "Location: a warm minimal Korean apartment late in the afternoon. Light oak floor, plain plastered wall. Light: low golden sun coming in almost sideways, long soft-edged shadows, dust catching in the air."
     },
     "set_tile_bathlight": {
       "hook": "화이트 타일 + 차가운 아침 빛",
-      "prompt": "Location: a spare white-tiled room in a hip Korean apartment, grout lines running square to the floor. A slim black metal shelf edge at one side, a clear glass bottle of water, a rolled grey towel, a pair of white socks dropped on the floor. Light: cool early-morning daylight from a high window, flat and even with one hard-edged bright rectangle thrown across the floor."
+      "prompt": "Location: a spare white-tiled room in a hip Korean apartment, grout lines running square to the floor, a slim black metal shelf edge at one side. Light: cool early-morning daylight from a high window, flat and even."
     },
     "set_rug_evening_lamp": {
       "hook": "러그 옆 저녁, 램프 하나 켜둔 방",
-      "prompt": "Location: a lived-in Korean apartment in the evening. Warm oak floor with the corner of a nubby oatmeal rug at one edge of frame, a paper lantern floor lamp switched on out of frame, a ceramic cup and a phone face-down on the floor, a cardigan slung over a low chair. Light: one warm lamp low and to the side, so the product is lit from one direction and the far side of the frame falls into soft shadow."
+      "prompt": "Location: a lived-in Korean apartment in the evening. Warm oak floor with the corner of a nubby oatmeal rug at one edge of frame. Light: one warm paper-lantern floor lamp low and to the side, so the far side of the frame falls into soft shadow."
     },
     "set_balcony_morning": {
       "hook": "베란다 창가, 아침 역광",
-      "prompt": "Location: a narrow balcony-side strip of a Korean apartment. Pale grey vinyl flooring, a low white windowsill lined with two small pots, a folded drying rack leaning at one edge, a stainless tumbler on the floor. Light: bright morning sun straight through the window so the frame is backlit, with a long bright wash across the floor and the near side falling into cool shade."
+      "prompt": "Location: a narrow balcony-side strip of a Korean apartment. Pale grey vinyl flooring, a low white windowsill, a folded drying rack leaning at one edge. Light: bright morning sun straight through the window so the frame is backlit."
     },
     "set_bookshelf_wall": {
       "hook": "책장 벽 앞, 오후 반사광",
-      "prompt": "Location: in front of a full-height pale wood bookshelf in a Korean apartment. Warm oak floor, stacked art books and a small brass bowl on a lower shelf, a pair of reading glasses left on the floor, a woven basket half in frame. Light: indirect afternoon light bounced off a white wall, soft and even with only faint shadows."
+      "prompt": "Location: in front of a full-height pale wood bookshelf in a Korean apartment. Warm oak floor, stacked art books on a lower shelf. Light: indirect afternoon light bounced off a white wall, soft and even."
     },
     "set_kitchen_edge": {
       "hook": "주방 끝 타일 경계, 한낮",
-      "prompt": "Location: the edge of an open kitchen in a Korean apartment, where square matte tiles meet oak flooring and the joint line runs through the frame. A stainless kettle base and a chopping board stand at the counter edge, a glass of water and a linen cloth on the floor. Light: hard midday light from a side window, bright and slightly contrasty."
+      "prompt": "Location: the edge of an open kitchen in a Korean apartment, where square matte tiles meet oak flooring and the joint line runs through the frame, a stainless kettle base at the counter edge. Light: hard midday light from a side window, bright and slightly contrasty."
     },
     "set_hallway_doorlight": {
       "hook": "복도 바닥, 문틈으로 들어온 빛",
-      "prompt": "Location: a narrow hallway in a Korean apartment. Warm oak boards running lengthwise, a slim console with keys and a folded scarf, a pair of trainers pushed against the skirting. Light: a single bright wedge spilling through a half-open door across the floor, the rest of the hallway dim and warm."
+      "prompt": "Location: a narrow hallway in a Korean apartment. Warm oak boards running lengthwise, a slim console against the wall. Light: a single bright wedge spilling through a half-open door across the floor, the rest dim and warm."
     }
   },
   "angles": {
@@ -393,5 +394,69 @@
       "prompt": "Camera: framed so the hard edge of a window shadow cuts diagonally across the product, half of it in bright sun and half in shade, shot slightly off square."
     }
   },
-  "brand_tail": "\n\n내 공간에 어울리는 나만의 홈트레이닝.\n디자인짐."
+  "brand_tail": "\n\n내 공간에 어울리는 나만의 홈트레이닝.\n디자인짐.",
+  "prop_sets": {
+    "props_none": {
+      "hook": "소품 없음",
+      "prompt": "PROPS: none. Nothing else on the floor - just the product and the empty floor around it."
+    },
+    "props_water_towel": {
+      "hook": "물병 + 개어둔 수건",
+      "prompt": "PROPS: a clear glass bottle of water standing upright and one neatly folded waffle towel squared off beside it."
+    },
+    "props_mug_book": {
+      "hook": "머그 + 쌓아둔 책",
+      "prompt": "PROPS: a matte ceramic mug and two art books stacked square, edges aligned."
+    },
+    "props_brass_bowl": {
+      "hook": "황동 그릇 + 리넨 천",
+      "prompt": "PROPS: a small brass bowl holding a hair tie, and a rolled linen cloth set neatly beside it."
+    },
+    "props_timer_socks": {
+      "hook": "타이머 + 개어둔 양말",
+      "prompt": "PROPS: a small round kitchen timer and one pair of white socks folded together in a neat pair."
+    },
+    "props_plant_pot": {
+      "hook": "작은 화분",
+      "prompt": "PROPS: one small potted plant in a terracotta pot placed tidily to one side."
+    },
+    "props_tumbler_cap": {
+      "hook": "텀블러 + 개어둔 캡",
+      "prompt": "PROPS: a brushed stainless tumbler and a cap folded flat, placed squarely."
+    },
+    "props_basket": {
+      "hook": "우드 바스켓",
+      "prompt": "PROPS: a low woven basket with a folded linen throw sitting neatly inside it."
+    }
+  },
+  "shadow_motifs": {
+    "shadow_none": {
+      "hook": "무늬 그림자 없음",
+      "prompt": "SHADOW: no patterned shadow at all - just even light and the product's own soft shadow."
+    },
+    "shadow_blinds": {
+      "hook": "블라인드 가로줄",
+      "prompt": "SHADOW: horizontal blind slats throw evenly spaced bright stripes across the floor."
+    },
+    "shadow_mullion": {
+      "hook": "창틀 격자",
+      "prompt": "SHADOW: the window mullion casts a clean cross of shadow over the floor."
+    },
+    "shadow_curtain": {
+      "hook": "커튼 주름",
+      "prompt": "SHADOW: the rippled edge of a curtain throws a soft wavy band of shade across part of the frame."
+    },
+    "shadow_railing": {
+      "hook": "난간 세로줄",
+      "prompt": "SHADOW: thin vertical railing shadows fall in a row across the floor."
+    },
+    "shadow_monstera": {
+      "hook": "몬스테라 잎",
+      "prompt": "SHADOW: monstera leaf shadows fall across the floor."
+    },
+    "shadow_frame": {
+      "hook": "문틀 빛 쐐기",
+      "prompt": "SHADOW: a hard-edged wedge of light from a doorway cuts diagonally across the floor, the rest in shade."
+    }
+  }
 }
