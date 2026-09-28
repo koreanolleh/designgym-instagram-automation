@@ -64,7 +64,7 @@ def build_snap_prompt(lib, product_key, setup_key, angle_key, props_key=None, sh
     if props_key:
         parts += [lib["prop_sets"][props_key]["prompt"]]
     if shadow_key:
-        parts += [lib["shadow_motifs"][shadow_key]["prompt"]]
+        parts += [lib["shadow_motifs"][shadow_key]["prompt"], sh["shadow_is_light_only"]]
     parts += [sh["tidy_rule"], ""]
 
     if p.get("element"):

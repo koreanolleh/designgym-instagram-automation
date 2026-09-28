@@ -10,7 +10,8 @@
     "iphone": "photo shot on iPhone, casual handheld snapshot, slightly tilted framing. True-to-life colours, realistic phone camera dynamic range - highlights near the window blow out a little and shadows crush a little, slight sensor noise, a touch of handheld imperfection. It should look like something the owner grabbed on the way past, not a shoot.",
     "iphone_negative": "NOT staged, NOT a studio photo, NO professional lighting, NO softbox, NO seamless backdrop, NO product-catalogue look, NO perfectly centred composition, NO glossy retouching. NO invented text, lettering, wordmark or logo anywhere in frame - a made-up mark is worse than no mark. Keep any branded part of the product out of shot, or so small and oblique that nothing reads as letters.",
     "mat_artwork_guard": "MAT FRAMING RULE - the whole WIDTH of the mat and at least TWO THIRDS of its LENGTH must be inside the frame, so all of its printed shapes are recognisable together. Never fill the frame with a detail of the print alone: a crop that shows only part of the artwork makes the pattern unreliable.",
-    "tidy_rule": "TIDY: the room is picked up. NO clothing tossed or heaped on the floor, no crumpled sweatshirt, no discarded socks, no bags or clutter. Anything present is placed deliberately and squared off."
+    "tidy_rule": "TIDY: the room is picked up. NO clothing tossed or heaped on the floor, no crumpled sweatshirt, no discarded socks, no bags or clutter. Anything present is placed deliberately and squared off.",
+    "shadow_is_light_only": "SHADOWS ARE LIGHT ONLY: any shadow pattern is darkness falling ON a surface, never a change to that surface. Where a shadow crosses the product it only darkens it - the product stays perfectly FLAT and SMOOTH, its printed artwork keeps its exact shape, and nothing ripples, wrinkles, warps, puckers, embosses or melts. The pattern must follow the surface's real geometry in clean perspective."
   },
   "products": {
     "mat_active_steps": {
@@ -444,7 +445,7 @@
     },
     "shadow_curtain": {
       "hook": "커튼 주름",
-      "prompt": "SHADOW: the rippled edge of a curtain throws a soft wavy band of shade across part of the frame."
+      "prompt": "SHADOW: light filtered through a sheer curtain lays a soft band of alternating light and shade across part of the frame - a gentle gradient of brightness only, with no hard edges."
     },
     "shadow_railing": {
       "hook": "난간 세로줄",
