@@ -283,7 +283,8 @@ def to_web_jpeg(url, width=1080, quality=92):
     """생성 원본(PNG)을 발행용 JPEG으로. 인스타 8MB 한도와 틱톡 JPEG 요구를 한 번에 만족시킨다."""
     import io
     from PIL import Image
-    with urllib.request.urlopen(url, timeout=180) as r:
+    with urllib.request.urlopen(
+            urllib.request.Request(url, headers={"User-Agent": "curl/8.7.1"}), timeout=180) as r:
         im = Image.open(io.BytesIO(r.read())).convert("RGB")
     w, h = im.size
     im = im.resize((width, round(h * width / w)), Image.LANCZOS)
@@ -295,8 +296,8 @@ def to_web_jpeg(url, width=1080, quality=92):
 def upload_bytes(mcp, data, filename):
     """힉스필드에 올려 영구 URL을 받는다. 생성 결과 URL 대신 이걸 발행에 쓴다."""
     up = mcp.tool("media_upload", {"filename": filename, "content_type": "image/jpeg"})["uploads"][0]
-    req = urllib.request.Request(up["upload_url"], data=data,
-                                 headers={"Content-Type": "image/jpeg"}, method="PUT")
+    req = urllib.request.Request(up["upload_url"], data=data, method="PUT",
+                                 headers={"Content-Type": "image/jpeg", "User-Agent": "curl/8.7.1"})
     with urllib.request.urlopen(req, timeout=180) as r:
         if r.status != 200:
             raise RuntimeError(f"업로드 실패 {r.status}")

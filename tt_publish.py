@@ -28,6 +28,12 @@ MCP = "https://mcp.higgsfield.ai/mcp"
 TOKEN_URL = "https://mcp.higgsfield.ai/oauth2/token"
 DRY = os.environ.get("DRY_RUN") == "1"
 
+# 힉스필드 업로드가 Cloudflare 뒤로 옮겨가면서 Python 기본 UA(Python-urllib/3.x)를 막는다
+# (2026-09-30 실측: error 1010 → 403). 모든 요청에 평범한 UA 를 붙인다.
+UA = "curl/8.7.1"
+urllib.request.install_opener(urllib.request.build_opener())
+urllib.request.OpenerDirector.addheaders = [("User-Agent", UA)]
+
 
 def log(m):
     print(f"[{datetime.now(KST):%H:%M:%S}] {m}", flush=True)
@@ -259,7 +265,8 @@ def today_entry():
 def to_jpeg(url):
     """틱톡은 PNG를 거부한다. 1080px JPEG으로 변환해 바이트를 돌려준다."""
     from PIL import Image
-    with urllib.request.urlopen(url, timeout=120) as r:
+    with urllib.request.urlopen(
+            urllib.request.Request(url, headers={"User-Agent": UA}), timeout=120) as r:
         im = Image.open(io.BytesIO(r.read())).convert("RGB")
     w, h = im.size
     im = im.resize((1080, round(h * 1080 / w)))
@@ -344,8 +351,8 @@ def main():
         host = urllib.parse.urlsplit(up["upload_url"]).netloc
         signed = urllib.parse.parse_qs(urllib.parse.urlsplit(up["upload_url"]).query).get("X-Amz-SignedHeaders", [""])[0]
         log(f"  업로드 대상 {host} / 서명헤더 {signed}")
-        req = urllib.request.Request(up["upload_url"], data=img,
-                                     headers={"Content-Type": "image/jpeg"}, method="PUT")
+        req = urllib.request.Request(up["upload_url"], data=img, method="PUT",
+                                     headers={"Content-Type": "image/jpeg", "User-Agent": UA})
         try:
             with urllib.request.urlopen(req, timeout=180) as r:
                 if r.status != 200:
