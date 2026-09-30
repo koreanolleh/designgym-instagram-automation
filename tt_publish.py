@@ -333,14 +333,26 @@ def main():
         raise RuntimeError(f"{day} 이미지 URL이 없다")
     photo_urls = []
     for n, src in enumerate(srcs, 1):
-        img = to_jpeg(src)
+        # 어느 단계에서 막히는지 로그로 구분한다(2026-09-30: 403 이 어디서 나는지 불명확했다)
+        try:
+            img = to_jpeg(src)
+        except urllib.error.HTTPError as e:
+            raise SystemExit(f"[{n}번째] 이미지 내려받기 실패 {e.code} — {src}") from e
+        log(f"  {n}번째 이미지 변환 완료 ({len(img)//1000}KB)")
         up = mcp.tool("media_upload", {"filename": f"{day.lower()}_{n}.jpg",
                                        "content_type": "image/jpeg"})["uploads"][0]
+        host = urllib.parse.urlsplit(up["upload_url"]).netloc
+        signed = urllib.parse.parse_qs(urllib.parse.urlsplit(up["upload_url"]).query).get("X-Amz-SignedHeaders", [""])[0]
+        log(f"  업로드 대상 {host} / 서명헤더 {signed}")
         req = urllib.request.Request(up["upload_url"], data=img,
                                      headers={"Content-Type": "image/jpeg"}, method="PUT")
-        with urllib.request.urlopen(req, timeout=180) as r:
-            if r.status != 200:
-                raise RuntimeError(f"업로드 실패 {r.status} ({n}번째)")
+        try:
+            with urllib.request.urlopen(req, timeout=180) as r:
+                if r.status != 200:
+                    raise RuntimeError(f"업로드 실패 {r.status} ({n}번째)")
+        except urllib.error.HTTPError as e:
+            body = e.read().decode(errors="replace")[:400]
+            raise SystemExit(f"[{n}번째] 업로드 PUT 실패 {e.code} → {host}\n{body}") from e
         mcp.tool("media_confirm", {"type": "image", "media_id": up["media_id"]})
         photo_urls.append(up["url"])
     log(f"이미지 업로드 완료 ({len(photo_urls)}장)")
