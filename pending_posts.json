@@ -130,9 +130,10 @@
       "caption": "눈에 보이는 자리에 둡니다.\n\n보이면 한 세트 더 하게 되고,\n보여도 지저분하지 않으니까.",
       "hashtags": "#디자인짐 #힙업밴드 #홈트 #운동루틴 #리빙스타그램",
       "tiktok_title": "굴러다녀도 괜찮은 것들 #디자인짐 #힙업밴드 #홈트\n\n---",
-      "posted": false,
-      "ig_posted": null,
-      "tiktok_posted": null
+      "posted": true,
+      "ig_posted": true,
+      "tiktok_posted": null,
+      "posted_on": "2026-10-01"
     },
     "Sunday": {
       "date": "2026-10-04",
