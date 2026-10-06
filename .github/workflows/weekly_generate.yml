@@ -72,22 +72,30 @@ jobs:
       - name: 옵시디언 볼트에 초안 반영
         if: github.event.inputs.dry_run != '1'
         env:
-          VAULT_PUSH_TOKEN: ${{ secrets.VAULT_PUSH_TOKEN }}
+          # VAULT_PUSH_TOKEN 은 읽기 전용이라 push 가 403 으로 조용히 실패했다(2026-10 확인).
+          # 쓰기 권한이 있는 GH_PAT 를 쓰고, 실패하면 반드시 드러나게 exit 1 한다.
+          VAULT_PUSH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           if [ -z "$VAULT_PUSH_TOKEN" ]; then
-            echo "⚠️ VAULT_PUSH_TOKEN 없음 — 옵시디언 반영 건너뜀"; exit 0
+            echo "::error::GH_PAT 없음 — 옵시디언 반영 불가"; exit 1
           fi
           git clone --depth 1 "https://x-access-token:$VAULT_PUSH_TOKEN@github.com/koreanolleh/obsidian-vault.git" /tmp/vault || {
-            echo "⚠️ 볼트 clone 실패 — 옵시디언 반영 건너뜀"; exit 0; }
+            echo "::error::볼트 clone 실패"; exit 1; }
           OBSIDIAN_VAULT=/tmp/vault python3 make_weekly_note.py
           cd /tmp/vault
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A "03_프로젝트/디자인짐_콘텐츠_자동화/인스타_자동화/주간초안"
-          git diff --staged --quiet || {
+          if git diff --staged --quiet; then
+            echo "변경 없음 — push 생략"
+          else
             git commit -m "📝 $(TZ=Asia/Seoul date +%F) 주간초안 반영 (크레딧 사용량 포함)"
-            for i in 1 2 3; do git push && break || { git pull --rebase --autostash; sleep 3; }; done
-          }
+            for i in 1 2 3; do
+              git push && { echo "✅ 볼트 push 완료"; exit 0; }
+              git pull --rebase --autostash; sleep 3
+            done
+            echo "::error::볼트 push 3회 실패 — 옵시디언에 초안이 반영되지 않았습니다"; exit 1
+          fi
 
       # 알림 실패가 생성 전체를 실패로 만들지 않도록 continue-on-error.
       # 이미지·큐·옵시디언 노트는 이 앞 단계에서 이미 커밋됐다.
