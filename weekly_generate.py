@@ -82,9 +82,11 @@ def build_snap_prompt(lib, product_key, setup_key, angle_key, props_key=None, sh
         parts += ["THE PRODUCT - copy the reference exactly: " + p["spec"]]
 
     # 사람은 사진 찍는 본인의 발이나 손까지만. 모델컷은 이 체계에서 만들지 않는다.
+    # 등장하는 사람은 언제나 여자다(2026-10-06 지시). 성별을 안 적으면 남자 발이 나온다.
     if angle_key in ("ang_topdown_feet", "ang_in_hand"):
         parts += ["", "The only body part anywhere in frame belongs to the person holding the phone, exactly "
-                      "as the camera note says. No face, no second person, no model."]
+                      "as the camera note says. No face, no second person, no model.",
+                  sh["person_is_woman"]]
     else:
         parts += ["", "No people at all."]
 

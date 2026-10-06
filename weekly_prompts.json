@@ -11,7 +11,8 @@
     "iphone_negative": "NOT staged, NOT a studio photo, NO professional lighting, NO softbox, NO seamless backdrop, NO product-catalogue look, NO perfectly centred composition, NO glossy retouching. NO invented text, lettering, wordmark or logo anywhere in frame - a made-up mark is worse than no mark. Keep any branded part of the product out of shot, or so small and oblique that nothing reads as letters.",
     "mat_artwork_guard": "MAT FRAMING RULE - the whole WIDTH of the mat and at least TWO THIRDS of its LENGTH must be inside the frame, so all of its printed shapes are recognisable together. Never fill the frame with a detail of the print alone: a crop that shows only part of the artwork makes the pattern unreliable.",
     "tidy_rule": "TIDY: the room is picked up. NO clothing tossed or heaped on the floor, no crumpled sweatshirt, no discarded socks, no bags or clutter. Anything present is placed deliberately and squared off.",
-    "shadow_is_light_only": "SHADOWS ARE LIGHT ONLY: any shadow pattern is darkness falling ON a surface, never a change to that surface. Where a shadow crosses the product it only darkens it - the product stays perfectly FLAT and SMOOTH, its printed artwork keeps its exact shape, and nothing ripples, wrinkles, warps, puckers, embosses or melts. The pattern must follow the surface's real geometry in clean perspective."
+    "shadow_is_light_only": "SHADOWS ARE LIGHT ONLY: any shadow pattern is darkness falling ON a surface, never a change to that surface. Where a shadow crosses the product it only darkens it - the product stays perfectly FLAT and SMOOTH, its printed artwork keeps its exact shape, and nothing ripples, wrinkles, warps, puckers, embosses or melts. The pattern must follow the surface's real geometry in clean perspective.",
+    "person_is_woman": "ANY human body part in frame belongs to ONE young Korean woman in her late twenties and must read unmistakably female: slender wrists and ankles, slim fingers and toes, smaller narrow feet with neat short unpainted nails, smooth hairless skin with natural texture. NEVER a man's hand or foot - no broad or thick feet, no large knuckly hands, no body hair, no men's trousers or socks. If any clothing shows at the edge of frame it is her own leggings or cropped activewear."
   },
   "products": {
     "mat_active_steps": {
@@ -347,7 +348,7 @@
         "mat",
         "object"
       ],
-      "prompt": "Camera: phone held at chest height pointing straight down at the floor. The photographer's own bare feet clip the bottom corner of the frame - no other person, no face, nothing above the ankles."
+      "prompt": "Camera: phone held at chest height pointing straight down at the floor. The photographer is a young Korean woman and her own bare feet clip the bottom corner of the frame - slim, narrow, clearly a woman's feet - no other person, no face, nothing above the ankles."
     },
     "ang_three_quarter": {
       "hook": "허리 높이 사선 - 방이 함께 보이게",
@@ -384,7 +385,7 @@
       "kinds": [
         "object"
       ],
-      "prompt": "Camera: the photographer holds the product in their own hand at arm's length and shoots it with the other hand. Only a hand and forearm are visible - no face, no body, no second person."
+      "prompt": "Camera: a young Korean woman holds the product in her own hand at arm's length and shoots it with the other hand. Only her hand and forearm are visible - slim fingers, neat short unpainted nails, clearly a woman's hand - no face, no body, no second person."
     },
     "ang_shadow_edge": {
       "hook": "그림자 경계가 제품을 가로지르게",
