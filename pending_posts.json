@@ -101,13 +101,13 @@
         },
         {
           "product": "mat_active_steps",
-          "setup": "set_kitchen_edge",
+          "setup": "set_oak_linen",
           "angles": [
-            "ang_low_floor",
-            "ang_topdown_feet"
+            "ang_three_quarter",
+            "ang_near_edge"
           ],
-          "props": "props_basket",
-          "shadow": "shadow_frame"
+          "props": "props_water_towel",
+          "shadow": "shadow_mullion"
         },
         {
           "product": "band",
@@ -155,11 +155,11 @@
       "images": [
         {
           "path": "images/2026-10-05/thu_1_mat_active_steps.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/6b1d2379-1d59-4ab2-921f-32d50b285711.jpg"
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20261006_021047_8f1c496d-897e-4a44-a9ad-ec6298027571.png"
         },
         {
           "path": "images/2026-10-05/thu_2_mat_active_steps.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/bc131f79-b58e-46a9-9152-e75140360c51.jpg"
+          "image_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/hf_20261006_021112_7b0858fd-002a-4d90-a9e1-5574cfb90f58.png"
         }
       ],
       "caption": "가장 오래 내려다보게 될 바닥이라\n무늬부터 골랐습니다.\n\n거실에 펴둬도 어울리는 요가매트.",
