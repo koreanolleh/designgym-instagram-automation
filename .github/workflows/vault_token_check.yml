@@ -4,14 +4,14 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: 두 토큰으로 볼트 접근 시도
+      - name: 실제 push 권한 확인 (dry-run)
         run: |
           for t in VAULT GH; do
             [ "$t" = VAULT ] && TOK="${{ secrets.VAULT_PUSH_TOKEN }}" || TOK="${{ secrets.GH_PAT }}"
             if [ -z "$TOK" ]; then echo "$t: 시크릿 없음"; continue; fi
-            code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $TOK" \
-                   https://api.github.com/repos/koreanolleh/obsidian-vault)
-            push=$(curl -s -H "Authorization: Bearer $TOK" \
-                   https://api.github.com/repos/koreanolleh/obsidian-vault | grep -o '"push": *[a-z]*' | head -1)
-            echo "$t: repo 조회 $code / $push"
+            rm -rf /tmp/v && git clone -q --depth 1 \
+              "https://x-access-token:$TOK@github.com/koreanolleh/obsidian-vault.git" /tmp/v 2>/dev/null \
+              || { echo "$t: clone 실패"; continue; }
+            out=$(cd /tmp/v && git push --dry-run 2>&1 | tail -2)
+            echo "$t: $out"
           done
