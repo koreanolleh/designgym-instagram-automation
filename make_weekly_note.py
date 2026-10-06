@@ -54,7 +54,10 @@ def main():
     label = week_label(monday)
     week_dir = os.path.join(OBSIDIAN_BASE, label)
     note_path = os.path.join(week_dir, f"{label}.md")
-    if os.path.exists(note_path):
+    # 평소엔 덮어쓰지 않는다 — 노트는 사장님이 캡션을 고치는 원본이다.
+    # 이미지나 캡션을 교체한 뒤 노트를 다시 찍어야 할 때만 FORCE_NOTE=1 로 부른다.
+    # 그 전에 반드시 sync_from_obsidian.py 를 돌려 수정본을 큐로 끌어와야 한다.
+    if os.path.exists(note_path) and os.environ.get("FORCE_NOTE") != "1":
         print("노트 이미 있음 — 스킵")
         return
 
