@@ -293,45 +293,45 @@
   "_element_note": "매트는 힉스필드 Elements에 제품으로 등록돼 있다(element 필드). 프롬프트에 <<<element_id>>>를 박으면 등록된 제품 사진이 그대로 반영된다 — 무늬를 말로 설명하는 것보다 훨씬 정확하다. 단 Elements는 marketing_studio_image가 지원하지 않으므로 그런 컷은 nano_banana_pro로 생성한다. 2026-09-07: 이걸 안 써서 매트 무늬가 반복해서 틀렸다.",
   "_caption_note": "캡션은 제품군별 등장 순번으로 고른다(weekly_generate.caption_for). 풀이 작으면 몇 주 만에 같은 문구가 돌아와 '내용이 다 똑같다'는 지적을 받는다(2026-09-14). 제품당 최소 4개 이상 유지하고, 같은 제품이라도 각도를 달리할 것 — 두께·그립감·소음·인테리어·무게/횟수·루틴처럼 서로 다른 이유를 말한다.",
   "setups": {
-    "set_terrazzo_window": {
-      "hook": "테라조 바닥 + 창가 하드 그림자",
-      "prompt": "Location: a bright corner of a hip Korean apartment. Pale terrazzo floor flecked with grey and rust, plain white skirting. Light: strong direct daylight through a window out of frame, hard and crisp."
+    "set_gallery_white": {
+      "hook": "갤러리 화이트큐브 — 천창 빛",
+      "prompt": "Location: a small private gallery room. Seamless white walls with no skirting, a pale grey polished micro-cement floor, no furniture at all. Light: daylight falling from a high clerestory window out of frame, one clean soft-edged pool of light on the floor and a lot of calm empty space around it."
     },
-    "set_oak_linen": {
-      "hook": "오크 마루 + 리넨 커튼, 오후 빛",
-      "prompt": "Location: a calm room in a hip Korean apartment. Light oak floorboards, a sheer linen curtain half drawn at one side. Light: afternoon daylight diffused through the linen on one side and falling direct on the other, so the frame holds both soft and crisp shadows."
+    "set_newbuild_oak": {
+      "hook": "신축 미니멀 — 넓은 원목, 큰 창",
+      "prompt": "Location: a newly finished minimal apartment. Wide-plank pale oak flooring laid long and even, flawless white walls, a floor-to-ceiling window with a very slim frame, almost no furniture. Light: broad clean daylight from the tall window, gentle and even, one soft shadow running away from the product."
+    },
+    "set_hotel_linen": {
+      "hook": "호텔 스위트 — 리넨과 우드, 늦은 오후",
+      "prompt": "Location: a quiet suite in a design hotel. Warm walnut flooring, a heavy oatmeal linen curtain pushed to one side, the corner of a low upholstered bench at the frame edge. Light: low late-afternoon sun coming in almost sideways, warm, long soft-edged shadows."
     },
     "set_concrete_loft": {
-      "hook": "미장 콘크리트 + 검정 창틀, 대각선 빛",
-      "prompt": "Location: a stripped-back loft-style Korean apartment. Grey micro-cement floor, a black steel window frame. Light: late morning sun cutting through the steel frame."
+      "hook": "콘크리트 로프트 — 검정 스틸창, 높은 천장",
+      "prompt": "Location: a stripped-back loft with a high ceiling. Grey micro-cement floor, a tall black steel-framed window divided into slim panes, bare plaster walls. Light: late-morning sun cutting through the steel frame so the mullions throw long hard stripes across the floor."
     },
-    "set_warm_evening": {
-      "hook": "따뜻한 늦은 오후, 긴 그림자",
-      "prompt": "Location: a warm minimal Korean apartment late in the afternoon. Light oak floor, plain plastered wall. Light: low golden sun coming in almost sideways, long soft-edged shadows, dust catching in the air."
+    "set_travertine_arch": {
+      "hook": "트래버틴 바닥 + 아치 벽, 한낮 강한 빛",
+      "prompt": "Location: a warm Mediterranean-feeling room. Honey travertine stone flooring with soft veining, a rounded arched doorway in a hand-plastered cream wall. Light: strong midday sun through an unseen opening, crisp and bright, the arch casting a clean curved shadow."
     },
-    "set_tile_bathlight": {
-      "hook": "화이트 타일 + 차가운 아침 빛",
-      "prompt": "Location: a spare white-tiled room in a hip Korean apartment, grout lines running square to the floor, a slim black metal shelf edge at one side. Light: cool early-morning daylight from a high window, flat and even."
+    "set_sunroom_glass": {
+      "hook": "유리 선룸 — 격자 창, 역광",
+      "prompt": "Location: a glazed sunroom. White-painted glazing bars making a grid of small panes along one whole wall, pale limestone floor tiles, two or three large leafy plants set back. Light: bright backlight straight through the glass, the window grid printed across the floor in sharp light and shade."
     },
-    "set_rug_evening_lamp": {
-      "hook": "러그 옆 저녁, 램프 하나 켜둔 방",
-      "prompt": "Location: a lived-in Korean apartment in the evening. Warm oak floor with the corner of a nubby oatmeal rug at one edge of frame. Light: one warm paper-lantern floor lamp low and to the side, so the far side of the frame falls into soft shadow."
+    "set_studio_north": {
+      "hook": "작업실 — 북향 큰 창, 고른 빛",
+      "prompt": "Location: an artist's working studio, swept and tidy. Pale grey resin floor, a large north-facing window, one plain plywood shelf and a wooden stool set well back. Light: even cool north daylight, very soft shadows, the whole room calm and shadowless at the edges."
     },
-    "set_balcony_morning": {
-      "hook": "베란다 창가, 아침 역광",
-      "prompt": "Location: a narrow balcony-side strip of a Korean apartment. Pale grey vinyl flooring, a low white windowsill, a folded drying rack leaning at one edge. Light: bright morning sun straight through the window so the frame is backlit."
+    "set_japanese_wood": {
+      "hook": "일본식 미니멀 — 라이스페이퍼 스크린, 낮은 빛",
+      "prompt": "Location: a Japanese-minimal room. Wide dark-honey wooden floorboards, a rice-paper sliding screen filling one side, bare walls. Light: soft diffused daylight glowing through the paper screen, low and even, with one faint grid of the screen's wooden lattice on the floor."
     },
-    "set_bookshelf_wall": {
-      "hook": "책장 벽 앞, 오후 반사광",
-      "prompt": "Location: in front of a full-height pale wood bookshelf in a Korean apartment. Warm oak floor, stacked art books on a lower shelf. Light: indirect afternoon light bounced off a white wall, soft and even. THE BOOKS CARRY NO READABLE TITLES: they are turned spine-inward, or shot at such an angle and so softly that no lettering forms. Never invent book titles or author names."
+    "set_marble_cool": {
+      "hook": "대리석 파우더룸 — 차가운 아침 빛",
+      "prompt": "Location: a spare powder room finished in stone. Pale grey-veined marble floor slabs with very fine tight joints, a matching marble ledge at one edge, a slim brushed-steel rail. Light: cool early-morning daylight from a high window, clean and slightly blue."
     },
-    "set_kitchen_edge": {
-      "hook": "주방 끝 타일 경계, 한낮",
-      "prompt": "Location: the edge of an open kitchen in a Korean apartment, where square matte tiles meet oak flooring and the joint line runs through the frame, a stainless kettle base at the counter edge. Light: hard midday light from a side window, bright and slightly contrasty."
-    },
-    "set_hallway_doorlight": {
-      "hook": "복도 바닥, 문틈으로 들어온 빛",
-      "prompt": "Location: a narrow hallway in a Korean apartment. Warm oak boards running lengthwise, a slim console against the wall. Light: a single bright wedge spilling through a half-open door across the floor, the rest dim and warm."
+    "set_terrace_stone": {
+      "hook": "야외 테라스 — 석재 바닥, 오후 직광",
+      "prompt": "Location: a private rooftop terrace. Large sand-coloured stone pavers, a low rendered parapet wall, a clipped olive tree in a big pot set back, open sky beyond. Light: direct afternoon sun, hard-edged shadows on the stone, warm and bright."
     }
   },
   "angles": {
@@ -407,17 +407,9 @@
       "hook": "물병 + 개어둔 수건",
       "prompt": "PROPS: a clear glass bottle of water standing upright and one neatly folded waffle towel squared off beside it."
     },
-    "props_mug_book": {
-      "hook": "머그 + 쌓아둔 책",
-      "prompt": "PROPS: a matte ceramic mug and two hardback books stacked square, edges aligned. The books lie FACE DOWN or spine-away with plain untitled cloth covers - no jacket, no title, no lettering visible."
-    },
     "props_brass_bowl": {
       "hook": "황동 그릇 + 리넨 천",
       "prompt": "PROPS: a small brass bowl holding a hair tie, and a rolled linen cloth set neatly beside it."
-    },
-    "props_timer_socks": {
-      "hook": "타이머 + 개어둔 양말",
-      "prompt": "PROPS: a small round kitchen timer and one pair of white socks folded together in a neat pair."
     },
     "props_plant_pot": {
       "hook": "작은 화분",
@@ -427,9 +419,17 @@
       "hook": "텀블러 + 개어둔 캡",
       "prompt": "PROPS: a brushed stainless tumbler and a cap folded flat, placed squarely."
     },
-    "props_basket": {
-      "hook": "우드 바스켓",
-      "prompt": "PROPS: a low woven basket with a folded linen throw sitting neatly inside it."
+    "props_ceramic_vase": {
+      "hook": "무광 세라믹 화병 + 마른 가지",
+      "prompt": "PROPS: one hand-thrown matte ceramic vase holding a single dried branch, placed deliberately to one side."
+    },
+    "props_stone_tray": {
+      "hook": "돌 트레이 + 양초",
+      "prompt": "PROPS: a small stone tray with one unlit pillar candle standing on it, set square to the frame."
+    },
+    "props_linen_stool": {
+      "hook": "원목 스툴 위 접은 리넨",
+      "prompt": "PROPS: a low solid-wood stool at one edge of frame with a neatly folded linen cloth laid over it."
     }
   },
   "shadow_motifs": {
