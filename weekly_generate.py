@@ -67,15 +67,19 @@ def build_snap_prompt(lib, product_key, setup_key, angle_key, props_key=None, sh
         parts += [lib["shadow_motifs"][shadow_key]["prompt"], sh["shadow_is_light_only"]]
     parts += [sh["tidy_rule"], ""]
 
+    # 2026-10-12: 제품 전부를 Element 로 등록했다. 실측 스펙은 Element 와 '같이' 걸어야 한다 —
+    # 예전엔 element 가 있으면 매트만 스펙을 붙여서, 밴드·케틀벨이 참조만 보고 모양을 지어냈다
+    # (목요일 케틀벨이 바닥 평평한 초승달이 아니라 그냥 링으로 나와 반려).
     if p.get("element"):
-        parts += [f"THE PRODUCT IS <<<{p['element']}>>> - reproduce this exact registered product: its printed "
-                  "artwork, colours, proportions and thickness must match the reference product photograph "
-                  "precisely. Do not invent a different print or a different colourway."]
-        if p["kind"] == "mat":
-            parts += ["THE MAT: " + sh["mat_body"],
-                      sh["mat_artwork_guard"],
-                      "COLOUR CHECK - the printed artwork must read exactly as follows, with no shape or "
-                      "colour substituted: " + p["spec"]]
+        parts += [f"THE PRODUCT IS <<<{p['element']}>>> - reproduce this exact registered product: its shape, "
+                  "proportions, printed artwork, colours, thickness and its real printed or moulded mark must "
+                  "match the reference product photograph precisely. Do not invent a different form, a "
+                  "different print or a different colourway."]
+    if p["kind"] == "mat":
+        parts += ["THE MAT: " + sh["mat_body"],
+                  sh["mat_artwork_guard"],
+                  "COLOUR CHECK - the printed artwork must read exactly as follows, with no shape or "
+                  "colour substituted: " + p["spec"]]
     elif p["kind"] == "band":
         parts += ["THE BAND: " + p["spec"]]
     else:
@@ -90,9 +94,8 @@ def build_snap_prompt(lib, product_key, setup_key, angle_key, props_key=None, sh
     else:
         parts += ["", sh["no_people_at_all"]]
 
-    if p["kind"] == "mat":
-        parts += [sh["mat_logo_offframe"]]
-    parts += ["", sh["iphone_negative"]]
+    parts += ["", sh["mat_logo_offframe"] if p["kind"] == "mat" else "",
+              sh["iphone_negative"]]
     return "\n".join(x for x in parts if x)
 
 
