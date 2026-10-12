@@ -314,9 +314,19 @@ def main():
 
     pending_path = os.path.join(BASE, "pending_posts.json")
     existing = json.load(open(pending_path, encoding="utf-8"))
+    # 평소엔 같은 주를 두 번 만들지 않는다(크론이 하루에 여러 번 돌기 때문).
+    # 사장님이 컷을 반려해 다시 뽑아야 할 때만 REGEN=1 로 덮어쓴다. 이미 나간 건
+    # 다시 만들지 않는다 — 발행된 날이 하나라도 있으면 거부한다.
     if existing.get("week_of") == week_of:
-        log(f"{week_of} 주차는 이미 만들어져 있음 — 종료 (덮어쓰지 않는다)")
-        return 0
+        if os.environ.get("REGEN") != "1":
+            log(f"{week_of} 주차는 이미 만들어져 있음 — 종료 (덮어쓰지 않는다)")
+            return 0
+        posted = [e.get("date") for e in existing.get("posts", {}).values()
+                  if e.get("ig_posted") or e.get("tiktok_posted")]
+        if posted:
+            log(f"이미 발행된 날이 있어 재생성하지 않는다: {', '.join(sorted(posted))}")
+            return 1
+        log(f"[REGEN] {week_of} 주차를 다시 만든다 (기존 8장은 버려진다)")
 
     # 일요일이 발행일이 되면서 '전 주 일요일 발행'과 '이번 주 생성'이 같은 밤에 붙었다.
     # 생성이 먼저 돌면 아직 안 나간 게시물이 파일째 사라진다. 아직 때가 안 지난 미발행분이

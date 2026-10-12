@@ -24,6 +24,10 @@ on:
         description: '대상 주 월요일 (YYYY-MM-DD). 비우면 이번 주'
         required: false
         default: ''
+      regen:
+        description: '1이면 이미 만든 주차를 다시 뽑는다 (반려 시에만, 크레딧 16 소모)'
+        required: false
+        default: '0'
 
 permissions:
   contents: write
@@ -56,6 +60,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
           WEEK_OF: ${{ github.event.inputs.week_of }}
+          REGEN: ${{ github.event.inputs.regen }}
         run: python3 weekly_generate.py
 
       - name: 결과 커밋
@@ -81,7 +86,9 @@ jobs:
           fi
           git clone --depth 1 "https://x-access-token:$VAULT_PUSH_TOKEN@github.com/koreanolleh/obsidian-vault.git" /tmp/vault || {
             echo "::error::볼트 clone 실패"; exit 1; }
-          OBSIDIAN_VAULT=/tmp/vault python3 make_weekly_note.py
+          # 재생성이면 볼트에 남아 있는 옛 노트를 덮어써야 새 컷이 보인다.
+          OBSIDIAN_VAULT=/tmp/vault FORCE_NOTE=${{ github.event.inputs.regen == '1' && '1' || '0' }} \
+            python3 make_weekly_note.py
           cd /tmp/vault
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

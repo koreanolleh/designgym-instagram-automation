@@ -88,6 +88,10 @@ def main():
         for i, img in enumerate(post.get("images", []), 1):
             fname = f"{day_en.lower()}_{i}.png"
             fpath = os.path.join(week_dir, fname)
+            # FORCE_NOTE 로 다시 찍을 때는 그림도 다시 받아야 한다.
+            # 이게 없으면 노트 글만 새 것이고 그림은 반려된 옛 컷이 그대로 남는다.
+            if os.environ.get("FORCE_NOTE") == "1" and os.path.exists(fpath):
+                os.remove(fpath)
             if not os.path.exists(fpath) and img.get("image_url"):
                 try:
                     urllib.request.urlretrieve(img["image_url"], fpath)
