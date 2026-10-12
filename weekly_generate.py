@@ -88,7 +88,7 @@ def build_snap_prompt(lib, product_key, setup_key, angle_key, props_key=None, sh
                       "as the camera note says. No face, no second person, no model.",
                   sh["person_is_woman"]]
     else:
-        parts += ["", "No people at all."]
+        parts += ["", sh["no_people_at_all"]]
 
     if p["kind"] == "mat":
         parts += [sh["mat_logo_offframe"]]
