@@ -165,7 +165,6 @@
           "setup": "set_travertine_arch",
           "angles": [
             "ang_low_floor",
-            "ang_topdown_feet",
             "ang_three_quarter"
           ],
           "props": "props_none",
@@ -185,7 +184,6 @@
           "product": "dumbbell_blue",
           "setup": "set_marble_cool",
           "angles": [
-            "ang_in_hand",
             "ang_shadow_edge",
             "ang_low_floor"
           ],
@@ -204,10 +202,6 @@
         {
           "path": "images/2026-10-19/tue_1_mat_warm_sunlight.jpg",
           "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/1cd9961d-6143-432e-9a24-876956404bb4.jpg"
-        },
-        {
-          "path": "images/2026-10-19/tue_2_mat_warm_sunlight.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/aef7b4b6-be6d-4a3e-9c2c-222e86c2d0cf.jpg"
         },
         {
           "path": "images/2026-10-19/tue_3_mat_warm_sunlight.jpg",
@@ -248,16 +242,12 @@
       "hook": "대리석 파우더룸 — 차가운 아침 빛 / 돌 트레이 + 양초 / 창틀 격자 / 손으로 윗부분을 쥐고 들어올리듯, 그림자 경계가 제품을 가로지르게, 로우앵글 - 바닥에 폰을 붙이고",
       "images": [
         {
-          "path": "images/2026-10-19/sun_1_dumbbell_blue.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/0ce1cc6b-5d87-458d-bf3d-926192178850.jpg"
-        },
-        {
           "path": "images/2026-10-19/sun_2_dumbbell_blue.jpg",
           "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/f85baf40-d241-4f7f-895e-573c39ef33a8.jpg"
         },
         {
           "path": "images/2026-10-19/sun_3_dumbbell_blue.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/f896b107-f095-4941-b33d-70289e6a1e68.jpg"
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/94a54a35-ef34-4757-98fc-b235e31ce98c.jpg"
         }
       ],
       "caption": "일어나서 열 번, 자기 전에 열 번.\n\n부담이 없으면\n빼먹을 핑계도 생기지 않습니다.\n\n내 공간에 어울리는 나만의 홈트레이닝.\n디자인짐.",
