@@ -312,15 +312,15 @@
     },
     "set_concrete_loft": {
       "hook": "콘크리트 로프트 — 검정 스틸창, 높은 천장",
-      "prompt": "Location: a stripped-back loft with a high ceiling. Grey micro-cement floor, a tall black steel-framed window divided into slim panes, bare plaster walls. Light: late-morning sun cutting through the steel frame so the mullions throw long hard stripes across the floor."
+      "prompt": "Location: a stripped-back loft with a high ceiling. Grey micro-cement floor, a tall black steel-framed window divided into slim panes, bare plaster walls. Light: late-morning sun cutting through the steel frame so the mullions lay long soft-edged stripes across the floor."
     },
     "set_travertine_arch": {
-      "hook": "트래버틴 바닥 + 아치 벽, 한낮 강한 빛",
-      "prompt": "Location: a warm Mediterranean-feeling room. Honey travertine stone flooring with soft veining, a rounded arched doorway in a hand-plastered cream wall. Light: strong midday sun through an unseen opening, crisp and bright, the arch casting a clean curved shadow."
+      "hook": "트래버틴 바닥 + 아치 벽, 한낮",
+      "prompt": "Location: a warm Mediterranean-feeling room. Honey travertine stone flooring with soft veining, a rounded arched doorway in a hand-plastered cream wall. Light: midday sun through an unseen opening, bright but gentle, the arch laying a soft-edged curved shadow."
     },
     "set_sunroom_glass": {
       "hook": "유리 선룸 — 격자 창, 역광",
-      "prompt": "Location: a glazed sunroom. White-painted glazing bars making a grid of small panes along one whole wall, pale limestone floor tiles, two or three large leafy plants set back. Light: bright backlight straight through the glass, the window grid printed across the floor in sharp light and shade."
+      "prompt": "Location: a glazed sunroom. White-painted glazing bars making a grid of small panes along one whole wall, pale limestone floor tiles, two or three large leafy plants set back. Light: soft diffused daylight through the glass, the window grid falling across the floor in gentle, low-contrast light and shade."
     },
     "set_studio_north": {
       "hook": "작업실 — 북향 큰 창, 고른 빛",
@@ -336,7 +336,7 @@
     },
     "set_terrace_stone": {
       "hook": "야외 테라스 — 석재 바닥, 오후 직광",
-      "prompt": "Location: a private rooftop terrace. Large sand-coloured stone pavers, a low rendered parapet wall, a clipped olive tree in a big pot set back, open sky beyond. Light: direct afternoon sun, hard-edged shadows on the stone, warm and bright."
+      "prompt": "Location: a private rooftop terrace. Large sand-coloured stone pavers, a low rendered parapet wall, a clipped olive tree in a big pot set back, open sky beyond. Light: afternoon sun, warm and bright but not harsh, shadows on the stone with softened edges."
     }
   },
   "angles": {
