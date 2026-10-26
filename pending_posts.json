@@ -1,6 +1,6 @@
 {
-  "week_of": "2026-10-19",
-  "plan_idx": 3,
+  "week_of": "2026-10-26",
+  "plan_idx": 0,
   "history": [
     {
       "week_of": "2026-09-14",
@@ -191,74 +191,112 @@
           "shadow": "shadow_mullion"
         }
       ]
+    },
+    {
+      "week_of": "2026-10-26",
+      "days": [
+        {
+          "product": "mat_active_steps",
+          "setup": "set_terrace_stone",
+          "angles": [
+            "ang_near_edge",
+            "ang_through_frame",
+            "ang_shadow_edge"
+          ],
+          "props": "props_tumbler_cap",
+          "shadow": "shadow_blinds"
+        },
+        {
+          "product": "dumbbell_ivory",
+          "setup": "set_gallery_white",
+          "angles": [
+            "ang_close_object",
+            "ang_in_hand"
+          ],
+          "props": "props_linen_stool",
+          "shadow": "shadow_frame"
+        },
+        {
+          "product": "mat_warm_sunlight",
+          "setup": "set_newbuild_oak",
+          "angles": [
+            "ang_through_frame",
+            "ang_shadow_edge",
+            "ang_low_floor"
+          ],
+          "props": "props_water_towel",
+          "shadow": "shadow_railing"
+        }
+      ]
     }
   ],
   "posts": {
     "Tuesday": {
-      "date": "2026-10-20",
-      "product": "요가매트 Warm sunlight",
-      "hook": "트래버틴 바닥 + 아치 벽, 한낮 / 소품 없음 / 몬스테라 잎(연하게) / 로우앵글 - 바닥에 폰을 붙이고, 허리 높이 사선 - 방이 함께 보이게",
+      "date": "2026-10-27",
+      "product": "요가매트 Active steps",
+      "hook": "야외 테라스 — 석재 바닥, 오후 직광 / 텀블러 + 개어둔 캡 / 블라인드 가로줄 / 가까이서 가장자리와 두께가 보이게, 문틀 너머 - 옆방에서 흘깃, 그림자 경계가 제품을 가로지르게",
       "images": [
         {
-          "path": "images/2026-10-19/tue_1_mat_warm_sunlight.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/8ecb660b-8041-4d70-9d2c-518dbb7d98d7.jpg"
+          "path": "images/2026-10-26/tue_1_mat_active_steps.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/2746b3a7-e8c6-429a-8d24-e966ebfbb46b.jpg"
         },
         {
-          "path": "images/2026-10-19/tue_3_mat_warm_sunlight.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/d95201d9-1e0b-43f9-bf09-a014dfc48d15.jpg"
+          "path": "images/2026-10-26/tue_2_mat_active_steps.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/5abebb61-b652-47f6-a6a3-c04601bd6b69.jpg"
+        },
+        {
+          "path": "images/2026-10-26/tue_3_mat_active_steps.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/7a2fded3-6b0f-43a3-afae-c611434e48f1.jpg"
         }
       ],
-      "caption": "빛이 가장 좋은 자리를 매트에 내줍니다.\n\n운동은 그다음 이야기.",
-      "hashtags": "#디자인짐 #요가매트 #홈요가 #리빙스타그램 #홈트",
-      "tiktok_title": "빛이 가장 좋은 자리에 #디자인짐 #요가매트 #홈요가\n\n---",
-      "posted": true,
-      "ig_posted": true,
-      "tiktok_posted": true,
-      "posted_on": "2026-10-20"
+      "caption": "8mm.\n\n무릎이 닿는 동작에서\n이 숫자의 의미가 드러납니다.",
+      "hashtags": "#디자인짐 #요가매트 #8mm매트 #홈요가 #홈트",
+      "tiktok_title": "두께가 말해주는 것 #디자인짐 #요가매트 #8mm매트\n\n---",
+      "posted": false,
+      "ig_posted": null,
+      "tiktok_posted": null
     },
     "Thursday": {
-      "date": "2026-10-22",
-      "product": "문 케틀벨 4.5kg (라이트민트)",
-      "hook": "작업실 — 북향 큰 창, 고른 빛 / 작은 화분 / 커튼 주름 / 손으로 윗부분을 쥐고 들어올리듯, 허리 높이 사선 - 방이 함께 보이게",
+      "date": "2026-10-29",
+      "product": "소프트 실리콘 모던 덤벨 1kg (아이보리)",
+      "hook": "갤러리 화이트큐브 — 천창 빛 / 원목 스툴 위 접은 리넨 / 문틀 빛 쐐기 / 가까이 - 제품이 화면 절반, 손으로 윗부분을 쥐고 들어올리듯",
       "images": [
         {
-          "path": "images/2026-10-19/thu_1_kettlebell_mint.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/f49f188c-48bd-4ee6-80f6-378e332e9c1d.jpg"
+          "path": "images/2026-10-26/thu_1_dumbbell_ivory.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/fac99637-c665-4cd5-8673-eee460f60326.jpg"
         },
         {
-          "path": "images/2026-10-19/thu_2_kettlebell_mint.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/01addfe7-151b-4a34-971f-b56e7f3bac00.jpg"
+          "path": "images/2026-10-26/thu_2_dumbbell_ivory.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/0aad0649-ec74-411e-a167-8c736b115f56.jpg"
         }
       ],
-      "caption": "운동이 끝나도 거실 한가운데.\n\n오브제로 보이는 도구는\n치울 이유가 없습니다.",
-      "hashtags": "#디자인짐 #케틀벨 #문케틀벨 #홈짐 #거실인테리어",
-      "tiktok_title": "구석에 밀어두지 않는 #디자인짐 #케틀벨 #문케틀벨\n\n---",
-      "posted": true,
-      "ig_posted": true,
-      "tiktok_posted": true,
-      "posted_on": "2026-10-22"
+      "caption": "1kg으로 뭐가 되냐고 묻습니다.\n\n스무 번을 채워보면 답이 나옵니다.\n무게보다 횟수.",
+      "hashtags": "#디자인짐 #덤벨 #1kg덤벨 #팔운동 #어깨운동",
+      "tiktok_title": "1kg의 태도 #디자인짐 #덤벨 #1kg덤벨\n\n---",
+      "posted": false,
+      "ig_posted": null,
+      "tiktok_posted": null
     },
     "Sunday": {
-      "date": "2026-10-25",
-      "product": "소프트 실리콘 모던 덤벨 1kg (라이트블루)",
-      "hook": "대리석 파우더룸 — 차가운 아침 빛 / 돌 트레이 + 양초 / 창틀 격자 / 그림자 경계가 제품을 가로지르게, 로우앵글 - 바닥에 폰을 붙이고",
+      "date": "2026-11-01",
+      "product": "요가매트 Warm sunlight",
+      "hook": "신축 미니멀 — 넓은 원목, 큰 창 / 물병 + 개어둔 수건 / 난간 세로줄 / 문틀 너머 - 옆방에서 흘깃, 그림자 경계가 제품을 가로지르게, 로우앵글 - 바닥에 폰을 붙이고",
       "images": [
         {
-          "path": "images/2026-10-19/sun_2_dumbbell_blue.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/f85baf40-d241-4f7f-895e-573c39ef33a8.jpg"
+          "path": "images/2026-10-26/sun_1_mat_warm_sunlight.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/5947cadd-17b7-4165-a5b4-400fb3579766.jpg"
         },
         {
-          "path": "images/2026-10-19/sun_3_dumbbell_blue.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/94a54a35-ef34-4757-98fc-b235e31ce98c.jpg"
+          "path": "images/2026-10-26/sun_2_mat_warm_sunlight.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/6c802797-a1ed-45e0-aea0-03d9a013d486.jpg"
         }
       ],
-      "caption": "일어나서 열 번, 자기 전에 열 번.\n\n부담이 없으면\n빼먹을 핑계도 생기지 않습니다.\n\n내 공간에 어울리는 나만의 홈트레이닝.\n디자인짐.",
-      "hashtags": "#디자인짐 #덤벨 #1kg덤벨 #홈트 #운동루틴",
-      "tiktok_title": "가벼움이 만드는 지속 #디자인짐 #덤벨 #1kg덤벨\n\n---",
-      "posted": true,
-      "ig_posted": true,
-      "tiktok_posted": true,
-      "posted_on": "2026-10-25"
+      "caption": "매일 밟고 지나갈 그림이라\n무늬를 가장 오래 골랐습니다.\n\n취향이 먼저인 요가매트.\n\n내 공간에 어울리는 나만의 홈트레이닝.\n디자인짐.",
+      "hashtags": "#디자인짐 #요가매트 #디자인소품 #인테리어소품 #홈요가",
+      "tiktok_title": "매일 밟고 지나갈 그림 #디자인짐 #요가매트 #디자인소품\n\n---",
+      "posted": false,
+      "ig_posted": null,
+      "tiktok_posted": null
     }
   }
 }
