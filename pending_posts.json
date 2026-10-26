@@ -197,14 +197,14 @@
       "days": [
         {
           "product": "mat_active_steps",
-          "setup": "set_terrace_stone",
+          "setup": "set_hotel_linen",
           "angles": [
             "ang_near_edge",
             "ang_through_frame",
             "ang_shadow_edge"
           ],
           "props": "props_tumbler_cap",
-          "shadow": "shadow_blinds"
+          "shadow": "shadow_none"
         },
         {
           "product": "dumbbell_ivory",
@@ -234,7 +234,7 @@
     "Tuesday": {
       "date": "2026-10-27",
       "product": "요가매트 Active steps",
-      "hook": "야외 테라스 — 석재 바닥, 오후 직광 / 텀블러 + 개어둔 캡 / 블라인드 가로줄 / 가까이서 가장자리와 두께가 보이게, 문틀 너머 - 옆방에서 흘깃, 그림자 경계가 제품을 가로지르게",
+      "hook": "실내 방 / 텀블러 + 개어둔 캡 / 그림자 약하게 / 가까이서 가장자리와 두께가 보이게, 문틀 너머 - 옆방에서 흘깃, 그림자 경계가 제품을 가로지르게",
       "images": [
         {
           "path": "images/2026-10-26/tue_1_mat_active_steps.jpg",
@@ -249,9 +249,9 @@
           "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/7a2fded3-6b0f-43a3-afae-c611434e48f1.jpg"
         }
       ],
-      "caption": "8mm.\n\n무릎이 닿는 동작에서\n이 숫자의 의미가 드러납니다.",
+      "caption": "8mm를 고른 이유는 하나였습니다.\n\n무릎이 닿는 동작에서\n바닥이 느껴지지 않을 것.",
       "hashtags": "#디자인짐 #요가매트 #8mm매트 #홈요가 #홈트",
-      "tiktok_title": "두께가 말해주는 것 #디자인짐 #요가매트 #8mm매트\n\n---",
+      "tiktok_title": "무릎이 먼저 아는 두께 #디자인짐 #요가매트 #홈요가",
       "posted": false,
       "ig_posted": null,
       "tiktok_posted": null
@@ -270,9 +270,9 @@
           "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/0aad0649-ec74-411e-a167-8c736b115f56.jpg"
         }
       ],
-      "caption": "1kg으로 뭐가 되냐고 묻습니다.\n\n스무 번을 채워보면 답이 나옵니다.\n무게보다 횟수.",
+      "caption": "가볍다고 우습게 봤는데\n열다섯 번째부터 팔이 떨립니다.\n\n매일 들 수 있는 무게라서\n매일 듭니다.",
       "hashtags": "#디자인짐 #덤벨 #1kg덤벨 #팔운동 #어깨운동",
-      "tiktok_title": "1kg의 태도 #디자인짐 #덤벨 #1kg덤벨\n\n---",
+      "tiktok_title": "가벼워서 매일 드는 1kg #디자인짐 #덤벨 #홈트",
       "posted": false,
       "ig_posted": null,
       "tiktok_posted": null
@@ -291,9 +291,9 @@
           "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/6c802797-a1ed-45e0-aea0-03d9a013d486.jpg"
         }
       ],
-      "caption": "매일 밟고 지나갈 그림이라\n무늬를 가장 오래 골랐습니다.\n\n취향이 먼저인 요가매트.\n\n내 공간에 어울리는 나만의 홈트레이닝.\n디자인짐.",
+      "caption": "나만의 홈짐을 만드는\n가장 쉬운 방법.\n\n예쁜 매트 고르기.\n\n그 한 장이면 거실이 운동하는 공간이 됩니다.\n\n내 공간에 어울리는 나만의 홈트레이닝.\n디자인짐.",
       "hashtags": "#디자인짐 #요가매트 #디자인소품 #인테리어소품 #홈요가",
-      "tiktok_title": "매일 밟고 지나갈 그림 #디자인짐 #요가매트 #디자인소품\n\n---",
+      "tiktok_title": "홈짐 만들기, 매트 한 장부터 #디자인짐 #요가매트 #홈짐",
       "posted": false,
       "ig_posted": null,
       "tiktok_posted": null
