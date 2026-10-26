@@ -1,0 +1,48 @@
+name: (1회성) 볼트에서 주간초안 이미지 제거
+
+# 볼트 git 의 92%(307MB / 103장)가 인스타 주간초안 PNG 였다. iCloud 에서 git 이
+# 느려지고 lock·교착 사고의 토대가 돼서, 사장님 승인으로 전부 들어낸다.
+# 앞으로 make_weekly_note 는 사진을 내려받지 않고 영구 URL 을 임베드한다.
+# 로컬 iCloud 볼트는 건드리지 않는다 — 원격 클론에서만 작업한다.
+
+on: { workflow_dispatch: {} }
+concurrency: { group: vault-write, cancel-in-progress: false }
+
+jobs:
+  strip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: 이미지 제거 + 노트 정리
+        env:
+          TOKEN: ${{ secrets.GH_PAT }}
+          DIR: 03_프로젝트/디자인짐_콘텐츠_자동화/인스타_자동화/주간초안
+        run: |
+          set -e
+          if [ -z "$TOKEN" ]; then echo "::error::GH_PAT 없음"; exit 1; fi
+          git clone --depth 1 "https://x-access-token:$TOKEN@github.com/koreanolleh/obsidian-vault.git" /tmp/vault
+          echo "=== 제거 전 ==="
+          find "/tmp/vault/$DIR" -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \) | wc -l
+          du -sh "/tmp/vault/$DIR"
+          OBSIDIAN_VAULT=/tmp/vault FORCE_NOTE=1 python3 make_weekly_note.py
+          python3 strip_vault_images.py
+          cd /tmp/vault
+          find "$DIR" -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \) -delete
+          echo "=== 제거 후 ==="
+          du -sh "$DIR"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A "$DIR"
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "🧹 주간초안 이미지 제거 — 사진은 노트에 영구 URL 로 임베드"
+            for i in 1 2 3; do
+              git push && { echo "✅ push 완료"; exit 0; }
+              git pull --rebase --autostash; sleep 3
+            done
+            echo "::error::push 3회 실패"; exit 1
+          fi

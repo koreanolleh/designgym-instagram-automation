@@ -85,19 +85,16 @@ def main():
             f"## {day_kr} ({d.month}/{d.day}) — {post.get('product', '')} / {post.get('hook', '')} ({n_img}장)"
         )
         lines.append("")
-        for i, img in enumerate(post.get("images", []), 1):
-            fname = f"{day_en.lower()}_{i}.png"
-            fpath = os.path.join(week_dir, fname)
-            # FORCE_NOTE 로 다시 찍을 때는 그림도 다시 받아야 한다.
-            # 이게 없으면 노트 글만 새 것이고 그림은 반려된 옛 컷이 그대로 남는다.
-            if os.environ.get("FORCE_NOTE") == "1" and os.path.exists(fpath):
-                os.remove(fpath)
-            if not os.path.exists(fpath) and img.get("image_url"):
-                try:
-                    urllib.request.urlretrieve(img["image_url"], fpath)
-                except Exception as e:
-                    print(f"{fname} 다운로드 실패: {e}")
-            lines.append(f"![[{fname}]]")
+        # 2026-10-26: 사진을 볼트에 내려받지 않고 영구 URL 을 그대로 임베드한다.
+        # 주간초안 PNG 103장이 볼트 git 의 92%(307MB)를 차지해, iCloud 에서 git 이
+        # 느려지고 lock·교착 사고의 토대가 됐다. 옵시디언은 원격 이미지를 그대로
+        # 렌더하므로 사장님 화면은 같고, 주차당 늘어나는 건 이 .md 파일 하나뿐이다.
+        for img in post.get("images", []):
+            url = img.get("image_url")
+            if url:
+                lines.append(f"![]({url})")
+            else:
+                lines.append(f"(이미지 URL 없음: {img.get('path', '')})")
         lines += [
             "",
             "캡션:",
