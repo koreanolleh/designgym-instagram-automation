@@ -283,6 +283,11 @@ def pick_song(mcp, connector):
     except Exception as e:
         log(f"음악 조회 실패, 음악 없이 진행: {e}")
         return None, None
+    # 2026-10-25: 조회는 성공했는데 목록이 비어 왔고, 아래 % len(tracks) 에서
+    # ZeroDivisionError 로 일요일 틱톡이 4번 다 죽었다. 빈 목록도 '실패'로 본다.
+    if not tracks:
+        log("음악 목록이 비어 있음 — 음악 없이 진행")
+        return None, None
     recent = []
     mlog = os.path.join(BASE, "tiktok_music.log")
     if os.path.exists(mlog):
