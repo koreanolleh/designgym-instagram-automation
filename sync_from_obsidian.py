@@ -22,6 +22,12 @@ def find_obsidian_note():
 
 
 def parse_obsidian(content: str) -> dict:
+    # 충돌 마커가 박힌 노트는 캡션을 정상적으로 못 읽는다. 조용히 옛 캡션으로
+    # 발행되는 사고가 있어(2026-10-27 화요일), 눈에 띄게 알리고 반영하지 않는다.
+    if "<<<<<<<" in content or ">>>>>>>" in content:
+        print("⛔ 노트에 git 충돌 마커가 남아 있습니다 — 캡션을 반영하지 않습니다.\n"
+              "   옵시디언에서 충돌을 정리한 뒤 다시 저장하세요.")
+        return {}
     result = {}
     pattern = r"## (" + "|".join(DAYS_KR) + r")[^\n]*\n([\s\S]*?)(?=\n## |\Z)"
     for match in re.finditer(pattern, content):

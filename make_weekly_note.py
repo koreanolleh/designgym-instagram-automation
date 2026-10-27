@@ -40,6 +40,44 @@ def credit_line(week_of: str) -> str:
     return line
 
 
+def existing_texts(note_path: str) -> dict:
+    """이미 있는 노트에서 요일별 캡션·해시태그·틱톡제목을 읽어 둔다.
+
+    노트를 다시 찍을 때 이 글들을 그대로 되살려, 사장님이 옵시디언에서 고친
+    문구가 큐 내용으로 덮어써지지 않게 한다. 덮어쓰면 git 이 같은 줄을 두 곳에서
+    고친 것으로 보고 충돌 마커를 박는다 — 2026-10-27 에 그 충돌 때문에
+    sync_from_obsidian 이 노트를 못 읽어 화요일이 옛 캡션으로 나갔다.
+
+    원격 클론에서 돌 때는 사장님 로컬 수정본이 없으므로 sync_from_obsidian 을
+    먼저 돌릴 수가 없다. 그래서 '덮어쓰지 않는' 쪽으로 막는다.
+    """
+    import re
+    if not os.path.exists(note_path):
+        return {}
+    try:
+        content = open(note_path, encoding="utf-8").read()
+    except Exception:
+        return {}
+    if "<<<<<<<" in content:
+        print("⚠️ 노트에 충돌 마커가 남아 있음 — 기존 문구를 믿을 수 없어 큐 내용을 쓴다")
+        return {}
+    out = {}
+    days_kr = [kr for _en, kr in DAYS]
+    pattern = r"## (" + "|".join(days_kr) + r")[^\n]*\n([\s\S]*?)(?=\n## |\Z)"
+    for m in re.finditer(pattern, content):
+        body = m.group(2)
+        got = {}
+        for key, rx in (("caption", r"캡션:\s*\n([\s\S]*?)\n(?:해시태그|틱톡제목):"),
+                        ("hashtags", r"해시태그:\s*\n([\s\S]*?)(?=\n틱톡제목:|\Z)"),
+                        ("tiktok_title", r"틱톡제목:\s*\n([\s\S]*?)\Z")):
+            hit = re.search(rx, body)
+            if hit and hit.group(1).strip():
+                got[key] = hit.group(1).strip()
+        if got:
+            out[days_kr[days_kr.index(m.group(1))]] = got
+    return out
+
+
 def main():
     with open(PENDING_PATH, encoding="utf-8") as f:
         plan = json.load(f)
@@ -60,6 +98,12 @@ def main():
     if os.path.exists(note_path) and os.environ.get("FORCE_NOTE") != "1":
         print("노트 이미 있음 — 스킵")
         return
+
+    # 다시 찍는 경우, 노트에 이미 있는 문구를 살려 둔다(사장님이 고친 것일 수 있다).
+    # KEEP_TEXT=0 으로 부르면 큐 내용으로 밀어버린다 — 내가 캡션을 새로 썼을 때만 쓴다.
+    keep = {} if os.environ.get("KEEP_TEXT") == "0" else existing_texts(note_path)
+    if keep:
+        print(f"기존 노트의 문구 보존: {', '.join(keep)}")
 
     os.makedirs(week_dir, exist_ok=True)
     lines = [
@@ -95,16 +139,17 @@ def main():
                 lines.append(f"![]({url})")
             else:
                 lines.append(f"(이미지 URL 없음: {img.get('path', '')})")
+        kept = keep.get(day_kr, {})
         lines += [
             "",
             "캡션:",
-            post.get("caption", ""),
+            kept.get("caption") or post.get("caption", ""),
             "",
             "해시태그:",
-            post.get("hashtags", ""),
+            kept.get("hashtags") or post.get("hashtags", ""),
             "",
             "틱톡제목:",
-            post.get("tiktok_title", ""),
+            kept.get("tiktok_title") or post.get("tiktok_title", ""),
             "",
         ]
     with open(note_path, "w", encoding="utf-8") as f:
