@@ -1,0 +1,66 @@
+name: (1회성) 2026-10-30 금요일 저녁 발행
+
+# 목요일(10/29) 분을 사장님 요청으로 하루 미뤘다. 이번 한 번만이다.
+#  - 날짜가 2026-10-30(KST)이 아니면 아무것도 하지 않는다
+#  - 일이 끝나면 스스로를 저장소에서 지운다
+#  - ig_daily / tiktok_daily 의 화·목·일 크론은 건드리지 않았다
+
+on:
+  schedule:
+    # 깃허브 크론은 4~5시간 밀린다(저장소 실측). 금요일 저녁 18~20시 KST를 노린다.
+    - cron: '30 4 * * 5'
+    - cron: '30 5 * * 5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency: { group: oneoff-20261030, cancel-in-progress: false }
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 날짜 확인 (2026-10-30 KST 가 아니면 종료)
+        id: guard
+        run: |
+          TODAY=$(TZ=Asia/Seoul date +%F)
+          if [ "$TODAY" != "2026-10-30" ]; then
+            echo "오늘은 $TODAY — 이 1회성 작업의 날이 아니다. 아무것도 하지 않음"
+            echo "go=0" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=1" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 인스타 발행
+        if: steps.guard.outputs.go == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          gh workflow run ig_daily.yml -f target_date=2026-10-30
+          sleep 20
+          RID=$(gh run list --workflow=ig_daily.yml --limit 1 --json databaseId -q '.[0].databaseId')
+          gh run watch "$RID" --exit-status
+
+      - name: 틱톡 발행
+        if: steps.guard.outputs.go == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          gh workflow run tiktok_daily.yml -f target_date=2026-10-30
+          sleep 20
+          RID=$(gh run list --workflow=tiktok_daily.yml --limit 1 --json databaseId -q '.[0].databaseId')
+          gh run watch "$RID" --exit-status
+
+      - name: 스스로 삭제
+        if: steps.guard.outputs.go == '1'
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git rm -q .github/workflows/oneoff_20261030.yml
+          git commit -q -m "🧹 1회성 금요일 발행 워크플로 제거 (역할 끝남)"
+          git push "https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git" HEAD:main
