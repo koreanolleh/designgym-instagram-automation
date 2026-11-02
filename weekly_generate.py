@@ -87,7 +87,7 @@ def build_snap_prompt(lib, product_key, setup_key, angle_key, props_key=None, sh
 
     # 사람은 사진 찍는 본인의 발이나 손까지만. 모델컷은 이 체계에서 만들지 않는다.
     # 등장하는 사람은 언제나 여자다(2026-10-06 지시). 성별을 안 적으면 남자 발이 나온다.
-    if angle_key in ("ang_topdown_feet", "ang_in_hand"):
+    if angle_key in ("ang_topdown_feet", "ang_in_hand", "ang_stretch_in_hand"):
         parts += ["", "The only body part anywhere in frame belongs to the person holding the phone, exactly "
                       "as the camera note says. No face, no second person, no model.",
                   sh["person_is_woman"]]
@@ -194,7 +194,11 @@ def pick_setup_and_angles(lib, product_key, day_idx, n, week_no,
     """
     kind = "mat" if lib["products"][product_key]["kind"] == "mat" else "object"
     setups = [s for s in lib["setups"]]
-    angles = [a for a, v in lib["angles"].items() if kind in v["kinds"]]
+    # 앵글은 mat/object 두 갈래로 고르되, 제품군 이름(band 등)을 단 앵글은 그 제품에만 걸린다.
+    # 'ang_stretch_in_hand'(밴드를 손에 걸어 늘리는 컷)처럼 한 제품에만 말이 되는 구도를
+    # 케틀벨·덤벨 날에 끌어다 쓰지 않기 위해서다(2026-11-02).
+    tags = {kind, lib["products"][product_key]["kind"]}
+    angles = [a for a, v in lib["angles"].items() if tags & set(v["kinds"])]
     cycle = week_no // max(1, len(lib.get("week_plans") or [1]))
 
     def rotate(bump):
