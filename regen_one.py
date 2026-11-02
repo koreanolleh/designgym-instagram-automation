@@ -14,10 +14,32 @@ weekly_generate 의 REGEN=1 은 그 주 8장을 통째로 다시 만들어 16크
 """
 import json
 import os
+import urllib.request
 
 from tt_publish import Mcp, access_token, BASE
 from weekly_generate import (build_snap_prompt, medias_for, model_for,
                              to_web_jpeg, upload_bytes, log)
+
+
+def upload_pose_ref(mcp, path):
+    """자세 참조 사진을 올려 media_id 를 돌려준다.
+
+    2026-11-02: 밴드를 '양손으로 당기는' 자세를 말로만 적어 두 번 연속 실패했다
+    (한 번은 손등에 걸고, 한 번은 팔뚝에 감았다). 제품 생김새를 Element 로 해결한 것과
+    같은 방법으로, 자세도 실제 사진을 참조로 넣는다. 사이트 상세페이지 Key Point 02 컷.
+    """
+    with open(path, "rb") as f:
+        data = f.read()
+    up = mcp.tool("media_upload", {"filename": os.path.basename(path),
+                                   "content_type": "image/jpeg"})["uploads"][0]
+    req = urllib.request.Request(up["upload_url"], data=data, method="PUT",
+                                 headers={"Content-Type": "image/jpeg",
+                                          "User-Agent": "curl/8.7.1"})
+    with urllib.request.urlopen(req, timeout=180) as r:
+        if r.status != 200:
+            raise RuntimeError(f"자세 참조 업로드 실패 {r.status}")
+    mcp.tool("media_confirm", {"type": "image", "media_id": up["media_id"]})
+    return up["media_id"]
 
 LIB_PATH = os.path.join(BASE, "weekly_prompts.json")
 PENDING_PATH = os.path.join(BASE, "pending_posts.json")
@@ -81,6 +103,11 @@ def main():
     params = {"model": model_for(lib, pk), "aspect_ratio": "4:5", "resolution": "2k",
               "prompt": prompt}
     med = medias_for(lib, pk)
+    ref = os.environ.get("POSE_REF")
+    if ref:
+        mid = upload_pose_ref(mcp, os.path.join(BASE, ref))
+        med = (med or []) + [{"value": mid, "role": "image"}]
+        log(f"자세 참조 사진 첨부: {ref}")
     if med:
         params["medias"] = med
     job = mcp.tool("generate_image_batch", {"requests": [{"index": 0, "params": params}]})["jobs"][0]
