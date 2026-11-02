@@ -21,6 +21,10 @@ on:
         description: '방도 바꿀 때만 setups 키. 비우면 그 날 쓰던 방 그대로'
         required: false
         default: ''
+      pose_ref:
+        description: '자세 참조 사진 경로 (예: brand/pose_ref/band_two_hands.jpg). 비우면 안 씀'
+        required: false
+        default: ''
       dry:
         description: '1이면 프롬프트만 찍고 크레딧을 쓰지 않는다'
         required: false
@@ -53,6 +57,7 @@ jobs:
           SLOT: ${{ github.event.inputs.slot }}
           ANGLE: ${{ github.event.inputs.angle }}
           SETUP: ${{ github.event.inputs.setup }}
+          POSE_REF: ${{ github.event.inputs.pose_ref }}
           DRY: ${{ github.event.inputs.dry }}
         run: python3 regen_one.py
 
