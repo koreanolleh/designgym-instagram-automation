@@ -8,6 +8,10 @@ on:
         description: '1이면 이미 있는 노트를 덮어쓴다 (컷 교체 후)'
         required: false
         default: '0'
+      keep_text:
+        description: '0이면 노트의 문구를 큐 내용으로 밀어버린다 (내가 캡션을 새로 썼을 때만)'
+        required: false
+        default: '1'
 concurrency: { group: vault-sync, cancel-in-progress: false }
 jobs:
   sync:
@@ -21,7 +25,10 @@ jobs:
           if [ -z "$VAULT_PUSH_TOKEN" ]; then echo "::error::GH_PAT 없음"; exit 1; fi
           git clone --depth 1 "https://x-access-token:$VAULT_PUSH_TOKEN@github.com/koreanolleh/obsidian-vault.git" /tmp/vault \
             || { echo "::error::볼트 clone 실패"; exit 1; }
-          OBSIDIAN_VAULT=/tmp/vault FORCE_NOTE=${{ github.event.inputs.force }} python3 make_weekly_note.py
+          OBSIDIAN_VAULT=/tmp/vault \
+            FORCE_NOTE=${{ github.event.inputs.force }} \
+            KEEP_TEXT=${{ github.event.inputs.keep_text }} \
+            python3 make_weekly_note.py
           cd /tmp/vault
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
