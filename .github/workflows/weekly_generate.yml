@@ -49,6 +49,12 @@ jobs:
 
       - run: pip install --quiet pillow
 
+      # 사장님이 옵시디언에서 고친 문구를 캡션 풀에 먼저 반영한다.
+      # 이게 없던 동안(~2026-11-02) 수정 이력 50건이 쌓이기만 하고 한 번도 읽히지 않아,
+      # 고쳐둔 문구가 몇 주 뒤 원문 그대로 다시 나갔다. 생성보다 반드시 먼저 돈다.
+      - name: 사장님 수정 문구 학습
+        run: python3 learn_captions.py
+
       - name: 다음 주 이미지 5종 생성
         env:
           HF_CLIENT_ID: ${{ secrets.HF_CLIENT_ID }}
@@ -68,7 +74,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add pending_posts.json images last_run_credits.json
+          git add pending_posts.json images last_run_credits.json weekly_prompts.json
           git diff --staged --quiet || {
             git commit -m "🎨 $(TZ=Asia/Seoul date +%F) 주간 이미지 생성 (Actions)"
             for i in 1 2 3; do git push && break || { git pull --rebase --autostash; sleep 3; }; done
