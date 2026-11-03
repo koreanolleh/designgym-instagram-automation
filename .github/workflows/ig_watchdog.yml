@@ -1,0 +1,144 @@
+name: 인스타 발행 감시
+
+# 2026-11-03: 그날 예약이 한 번도 안 불려 저녁까지 발행이 안 됐고, 사장님이 먼저 발견했다.
+# 틱톡에는 22:30 감시가 있었지만 인스타에는 없어서 하루가 조용히 날아갈 수 있었다.
+#
+# 틱톡 감시는 알리기만 하는데, 여기서는 한 걸음 더 간다 — 안 나갔으면 발행 워크플로를
+# 직접 호출해 올리고, 그 결과까지 확인해서 이슈로 남긴다. 중복은 발행 스크립트가
+# ig_posted 로 막고, 3일(IG_MAX_LATE_DAYS)보다 오래 밀린 건은 스스로 건너뛴다.
+
+on:
+  schedule:
+    # 발행일 화·목·일. 요일 목록의 정본은 publish_days.py 이고 cron 은 여기서 같이 맞춘다.
+    - cron: '30 13 * * 2,4,0'   # UTC 13:30 = KST 22:30
+  workflow_dispatch:
+    inputs:
+      date:
+        description: '기준 날짜를 콕 집는다 (YYYY-MM-DD). 비우면 자동'
+        required: false
+        default: ''
+      dry:
+        description: '1이면 판정만 하고 발행도 이슈도 만들지 않는다 (점검용)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  issues: write
+  actions: write     # 안 나갔으면 ig_daily 를 직접 호출한다 (read 로는 dispatch 가 거부된다)
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 안 나갔으면 올리고 알린다
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE_DATE: ${{ github.event.inputs.date }}
+          DRY: ${{ github.event.inputs.dry }}
+        run: |
+          set -u
+          # 예약이 밀려 자정을 넘겨 돌면 '오늘'이 다음날이 돼 미발행을 놓친다(발행 스크립트와 동일 보정).
+          if [ -n "$FORCE_DATE" ]; then
+            TODAY="$FORCE_DATE"
+          elif [ "$(TZ=Asia/Seoul date +%H)" -lt 12 ]; then
+            TODAY=$(TZ=Asia/Seoul date -d 'yesterday' +%F)
+          else
+            TODAY=$(TZ=Asia/Seoul date +%F)
+          fi
+          export TODAY
+          echo "기준 날짜: $TODAY"
+
+          # 판정은 항상 원격 최신본으로 한다 — 체크아웃은 발행 직후 커밋보다 뒤처질 수 있다.
+          # python 은 한 줄로 쓴다 — run 블록 들여쓰기가 그대로 코드에 들어가 IndentationError 가 난다.
+          posted() {
+            gh api "repos/${GITHUB_REPOSITORY}/contents/pending_posts.json" \
+              -H 'Accept: application/vnd.github.raw' 2>/dev/null \
+            | python3 -c "import json,os,sys;d=json.load(sys.stdin);e=next((p for p in d['posts'].values() if p.get('date')==os.environ['TODAY']),None);print('ok' if (e is None or e.get('ig_posted')) else 'missing')"
+          }
+
+          STATE=$(posted)
+          echo "판정: $STATE"
+          if [ "$STATE" = "ok" ]; then
+            echo "오늘자 없음 또는 이미 발행됨 — 할 일 없음"
+            exit 0
+          fi
+
+          # 왜 안 나갔는지 먼저 좁힌다 (이슈 본문에 남긴다)
+          RUN=$(gh run list --workflow=ig_daily.yml --limit 10 \
+                  --json conclusion,createdAt,url \
+                  -q "[.[] | select(.createdAt | startswith(\"${TODAY}\"))] | .[0]" 2>/dev/null || true)
+          if [ -z "$RUN" ] || [ "$RUN" = "null" ]; then
+            CAUSE="오늘 발행 워크플로가 **한 번도 실행되지 않았습니다** (GitHub 예약 지연/누락)."
+          else
+            CAUSE="발행 워크플로는 실행됐으나 결과가 '$(echo "$RUN" | python3 -c 'import sys,json;print(json.load(sys.stdin)["conclusion"])')' 입니다: $(echo "$RUN" | python3 -c 'import sys,json;print(json.load(sys.stdin)["url"])')"
+          fi
+          echo "원인: $CAUSE"
+
+          # 호출 전의 마지막 수동 실행 번호를 기억해 둔다. 안 그러면 예전 수동 실행을
+          # 내가 띄운 것으로 착각해 곧바로 '완료'로 보고 재판정에서 거짓 실패가 난다.
+          latest_dispatch() {
+            gh run list --workflow=ig_daily.yml --event=workflow_dispatch --limit 1 \
+              --json databaseId -q '.[0].databaseId // ""' 2>/dev/null || true
+          }
+          BEFORE_ID=$(latest_dispatch)
+
+          if [ "$DRY" = "1" ]; then
+            echo "DRY=1 — 여기서 멈춘다. 실제로는 ig_daily 를 target_date=$TODAY 로 호출하고,"
+            echo "         발행 결과를 플래그로 재확인한 뒤 이슈를 남긴다."
+            exit 0
+          fi
+
+          # 직접 올린다. 날짜를 콕 집어 넘겨, 자정을 넘겨 돌아도 어제분을 올린다.
+          gh workflow run ig_daily.yml -f target_date="$TODAY"
+          echo "ig_daily 호출 — 새 실행이 잡힐 때까지 기다린다 (이전 실행: ${BEFORE_ID:-없음})"
+          RUN_ID=""
+          for i in $(seq 1 12); do
+            sleep 10
+            ID=$(latest_dispatch)
+            if [ -n "$ID" ] && [ "$ID" != "$BEFORE_ID" ]; then RUN_ID="$ID"; break; fi
+          done
+          if [ -n "$RUN_ID" ] && [ "$RUN_ID" != "null" ]; then
+            echo "실행 $RUN_ID 대기"
+            gh run watch "$RUN_ID" --interval 15 >/dev/null 2>&1 || true
+            RUN_URL=$(gh run view "$RUN_ID" --json url -q .url)
+          else
+            RUN_URL="(실행을 찾지 못했습니다)"
+          fi
+
+          # 올라갔는지는 플래그로 확인한다 — 워크플로 성공/실패만 믿지 않는다.
+          # 2026-11-03: 틱톡이 실제로는 올라갔는데 기록 커밋이 겹쳐 실패한 적이 있다.
+          AFTER=$(posted)
+          echo "재판정: $AFTER"
+
+          if [ "$AFTER" = "ok" ]; then
+            TITLE="🔁 $TODAY 인스타 — 감시가 대신 발행했습니다"
+            BODY="예약이 제때 돌지 않아 **감시 워크플로가 $(TZ=Asia/Seoul date '+%H:%M') KST 에 대신 올렸습니다.**
+
+          $CAUSE
+
+          발행 실행: $RUN_URL
+
+          콘텐츠는 나갔으니 급한 조치는 없습니다. 다만 예약 시각보다 늦게 나갔으니, 이 이슈가 반복되면 발행 경로를 맥 쪽 호출로 옮기는 걸 검토하세요."
+          else
+            TITLE="⚠️ $TODAY 인스타 미발행"
+            BODY="오늘자 인스타 게시물이 발행되지 않았고, **감시가 직접 올리려 했지만 그것도 실패했습니다.**
+
+          $CAUSE
+
+          감시가 호출한 실행: $RUN_URL
+
+          조치: 로그를 확인하세요. 'Session has expired' 라면 토큰 만료입니다 — IG_ACCESS_TOKEN 시크릿을 다시 발급해 넣어야 합니다. 수동 재시도: \`gh workflow run ig_daily.yml -f target_date=$TODAY\`"
+          fi
+
+          if gh issue list --state open --search "$TITLE in:title" --json title -q '.[].title' | grep -qF "$TITLE"; then
+            echo "이미 열린 이슈 있음"
+          else
+            gh issue create --title "$TITLE" --body "$BODY"
+            echo "이슈 생성: $TITLE"
+          fi
+
+          # 끝까지 못 올렸으면 실행 자체를 실패로 남긴다 — 녹색 체크로 묻히지 않게.
+          [ "$AFTER" = "ok" ]
