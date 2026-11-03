@@ -92,13 +92,10 @@ jobs:
           python3 hf_auth.py 한 번이면 시크릿까지 자동 갱신됩니다."
           fi
 
+      # 2026-11-03: 인스타 쪽과 push 가 겹쳐 거부되고 리베이스가 충돌해, 영상은
+      # 올라갔는데 tiktok_posted 가 저장소에 없었다 → 22:30 감시가 또 올릴 상황이었다.
+      # push_flags 는 충돌하면 원격 기준으로 되돌린 뒤 내 키·로그줄만 다시 얹는다.
+      # 이 단계가 실패하면 중복 발행으로 이어지므로 조용히 넘기지 않는다.
       - name: 발행 기록 커밋
         if: github.event.inputs.dry_run != '1'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add pending_posts.json tiktok_publish.log tiktok_music.log
-          git diff --staged --quiet || {
-            git commit -m "✅ $(TZ=Asia/Seoul date +%F) 틱톡 발행 (Actions)"
-            for i in 1 2 3; do git push && break || { git pull --rebase --autostash; sleep 3; }; done
-          }
+        run: python3 push_flags.py --message "✅ $(TZ=Asia/Seoul date +%F) 틱톡 발행 (Actions)" pending_posts.json tiktok_publish.log tiktok_music.log

@@ -68,16 +68,9 @@ jobs:
           'Session has expired' 라면 토큰 만료입니다 — Meta 개발자 콘솔에서 토큰을 다시 발급해 IG_ACCESS_TOKEN 시크릿에 넣어야 합니다. 주간 갱신(ig_token_refresh.yml)이 살아 있으면 만료 전에 자동으로 연장됩니다."
           fi
 
+      # 2026-11-03: 틱톡 쪽과 같은 초에 push 가 겹쳐 리베이스가 충돌하고, 실제로는
+      # 올라갔는데 플래그가 저장소에 남지 않았다(중복 발행 위험). push_flags 는
+      # 충돌하면 원격 기준으로 되돌린 뒤 내가 바꾼 키만 다시 얹는다.
       - name: posted 상태 커밋
         if: success()
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add pending_posts.json
-          git diff --staged --quiet && exit 0
-          git commit -m "✅ $(TZ=Asia/Seoul date '+%Y-%m-%d') IG 발행 (Actions)"
-          for i in 1 2 3; do
-            git push && break
-            git pull --rebase --autostash || git rebase --abort
-            sleep 5
-          done
+        run: python3 push_flags.py --message "✅ $(TZ=Asia/Seoul date '+%Y-%m-%d') IG 발행 (Actions)" pending_posts.json
