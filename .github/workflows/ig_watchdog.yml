@@ -10,7 +10,15 @@ name: 인스타 발행 감시
 on:
   schedule:
     # 발행일 화·목·일. 요일 목록의 정본은 publish_days.py 이고 cron 은 여기서 같이 맞춘다.
-    - cron: '30 13 * * 2,4,0'   # UTC 13:30 = KST 22:30
+    #
+    # 시각 잡기: 감시도 같은 예약을 타므로 4~6시간 밀린다. 틱톡 감시처럼 22:30(UTC 13:30)에
+    # 걸면 밀린 뒤 KST 02:30~04:30 에 올라가 — 하루를 건지긴 하지만 새벽 발행이 된다.
+    # 그래서 ig_daily 의 마지막 예약(UTC 07:30)보다 두 시간 뒤에 걸어,
+    #   - 안 밀리면 KST 18:30 (이미 발행됐으면 그냥 'ok' 로 끝난다)
+    #   - 밀리면 KST 22:30~00:30 → 저녁 안에 복구
+    # 두 번째 줄은 첫 줄이 아예 누락됐을 때를 위한 예비다.
+    - cron: '30 9 * * 2,4,0'    # UTC 09:30 = KST 18:30 (밀리면 22:30~00:30)
+    - cron: '30 13 * * 2,4,0'   # UTC 13:30 = KST 22:30 (예비)
   workflow_dispatch:
     inputs:
       date:
@@ -26,6 +34,12 @@ permissions:
   contents: read
   issues: write
   actions: write     # 안 나갔으면 ig_daily 를 직접 호출한다 (read 로는 dispatch 가 거부된다)
+
+# 예약이 두 줄이라 겹쳐 돌 수 있다. 둘이 동시에 ig_daily 를 호출해도 ig_posted 가
+# 중복을 막지만, 괜히 같은 이슈를 두 번 만들지 않도록 한 번에 하나만 돌린다.
+concurrency:
+  group: ig-watchdog
+  cancel-in-progress: false
 
 jobs:
   check:
