@@ -1,23 +1,7 @@
 {
-  "week_of": "2026-11-02",
-  "plan_idx": 1,
+  "week_of": "2026-11-09",
+  "plan_idx": 2,
   "history": [
-    {
-      "week_of": "2026-09-14",
-      "days": [
-        {
-          "product": "mat_active_steps",
-          "setup": "set_terrazzo_window",
-          "angles": [
-            "ang_low_floor",
-            "ang_topdown_feet",
-            "ang_near_edge"
-          ],
-          "props": "props_mug_book",
-          "shadow": "shadow_monstera"
-        }
-      ]
-    },
     {
       "week_of": "2026-09-21",
       "days": [
@@ -265,78 +249,116 @@
           "shadow": "shadow_mullion"
         }
       ]
+    },
+    {
+      "week_of": "2026-11-09",
+      "days": [
+        {
+          "product": "kettlebell_grey",
+          "setup": "set_marble_cool",
+          "angles": [
+            "ang_through_frame",
+            "ang_close_object",
+            "ang_in_hand"
+          ],
+          "props": "props_linen_stool",
+          "shadow": "shadow_monstera"
+        },
+        {
+          "product": "mat_active_steps",
+          "setup": "set_travertine_arch",
+          "angles": [
+            "ang_through_frame",
+            "ang_shadow_edge"
+          ],
+          "props": "props_brass_bowl",
+          "shadow": "shadow_railing"
+        },
+        {
+          "product": "band",
+          "setup": "set_studio_north",
+          "angles": [
+            "ang_in_hand",
+            "ang_shadow_edge",
+            "ang_stretch_in_hand"
+          ],
+          "props": "props_stone_tray",
+          "shadow": "shadow_frame"
+        }
+      ]
     }
   ],
   "posts": {
     "Tuesday": {
-      "date": "2026-11-03",
-      "product": "요가매트 Before sunrise",
-      "hook": "일본식 미니멀 — 라이스페이퍼 스크린, 낮은 빛 / 무광 세라믹 화병 + 마른 가지 / 커튼 주름 / 그림자 경계가 제품을 가로지르게, 로우앵글 - 바닥에 폰을 붙이고, 탑다운 - 서서 내려다보며 내 발이 살짝",
+      "date": "2026-11-10",
+      "product": "문 케틀벨 4.5kg (라이트그레이)",
+      "hook": "대리석 파우더룸 — 차가운 아침 빛 / 원목 스툴 위 접은 리넨 / 몬스테라 잎 / 문틀 너머 - 옆방에서 흘깃, 가까이 - 제품이 화면 절반, 손으로 윗부분을 쥐고 들어올리듯",
       "images": [
         {
-          "path": "images/2026-11-02/tue_1_mat_before_sunrise.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/2d32137d-cfcf-4aff-a4ef-9ed5c19946c7.jpg"
+          "path": "images/2026-11-09/tue_1_kettlebell_grey.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/bb3a9f0d-e2d6-4bfc-989d-c39cd03be277.jpg"
         },
         {
-          "path": "images/2026-11-02/tue_2_mat_before_sunrise.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/6b166d42-6726-49c8-afc4-b3b11f92fdf7.jpg"
+          "path": "images/2026-11-09/tue_2_kettlebell_grey.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/ac82d78c-4692-4a0d-91fb-9711272e83f8.jpg"
         },
         {
-          "path": "images/2026-11-02/tue_3_mat_before_sunrise.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/30de6b3b-079a-4fbf-bad5-977005c33d67.jpg"
+          "path": "images/2026-11-09/tue_3_kettlebell_grey.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/4448efc3-0966-42eb-9d6d-9109ca273595.jpg"
         }
       ],
-      "caption": "Before sunrise.\n새벽하늘 색을 그대로 옮긴 요가매트.\n\n방에 펴두면 그림이 되고,\n밟고 서면 운동이 됩니다.",
-      "hashtags": "#디자인짐 #요가매트 #비포선라이즈 #홈요가 #방꾸미기",
-      "tiktok_title": "새벽하늘 색을 그대로 옮긴 요가매트 #디자인짐 #요가매트 #홈요가\n\n---",
-      "posted": true,
-      "ig_posted": true,
-      "tiktok_posted": true,
-      "posted_on": "2026-11-03"
+      "caption": "운동기구처럼 보이지 않는 것.\n\n그게 매일 운동기구를 꺼내게 되어\n운동을 할 수 있는 이유가 됩니다.",
+      "hashtags": "#디자인짐 #케틀벨 #홈짐 #인테리어소품 #홈트",
+      "tiktok_title": "도구와 오브제 사이 #디자인짐 #케틀벨 #홈짐\n\n---",
+      "posted": false,
+      "ig_posted": null,
+      "tiktok_posted": null
     },
     "Thursday": {
-      "date": "2026-11-05",
-      "product": "힙업밴드 (3개입)",
-      "hook": "콘크리트 로프트 — 검정 스틸창, 높은 천장 / 소품 없음 / 블라인드 가로줄 / 허리 높이 사선 - 방이 함께 보이게",
+      "date": "2026-11-12",
+      "product": "요가매트 Active steps",
+      "hook": "트래버틴 바닥 + 아치 벽, 한낮 / 황동 그릇 + 리넨 천 / 난간 세로줄 / 문틀 너머 - 옆방에서 흘깃, 그림자 경계가 제품을 가로지르게",
       "images": [
         {
-          "path": "images/2026-11-02/thu_2_band.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/68c61a5c-2eeb-44b4-a51a-1167692f1508.jpg"
+          "path": "images/2026-11-09/thu_1_mat_active_steps.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/60b92389-b13a-4ead-875a-60fc49c89b8c.jpg"
+        },
+        {
+          "path": "images/2026-11-09/thu_2_mat_active_steps.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/499cadeb-da5a-47d4-a8a5-54e25a90e021.jpg"
         }
       ],
-      "caption": "강도가 다른 세 개가 한 세트입니다.\n\n가볍게 풀고 싶은 날,\n제대로 쓰고 싶은 날.\n밴드만 바꾸면 되는 일.",
-      "hashtags": "#디자인짐 #힙업밴드 #천밴드 #하체운동 #홈트",
-      "tiktok_title": "강도가 다른 세 개가 한 세트, 힙업밴드 #디자인짐 #힙업밴드 #하체운동\n\n---",
-      "posted": true,
-      "ig_posted": true,
-      "tiktok_posted": true,
-      "posted_on": "2026-11-05"
+      "caption": "운동이 끝나도 접지 않습니다.\n\n거실에 그대로 두어도 어색하지 않으니까.\n치울 이유가 없으면 다시 서게 됩니다.",
+      "hashtags": "#디자인짐 #요가매트 #홈트인테리어 #거실인테리어 #홈요가",
+      "tiktok_title": "치워야 할 이유가 없어서 #디자인짐 #요가매트 #홈트인테리어\n\n---",
+      "posted": false,
+      "ig_posted": null,
+      "tiktok_posted": null
     },
     "Sunday": {
-      "date": "2026-11-08",
-      "product": "문 케틀벨 4.5kg (라이트민트)",
-      "hook": "유리 선룸 — 격자 창, 역광 / 작은 화분 / 창틀 격자 / 허리 높이 사선 - 방이 함께 보이게, 문틀 너머 - 옆방에서 흘깃, 가까이 - 제품이 화면 절반",
+      "date": "2026-11-15",
+      "product": "힙업밴드 (3개입)",
+      "hook": "작업실 — 북향 큰 창, 고른 빛 / 돌 트레이 + 양초 / 문틀 빛 쐐기 / 손으로 윗부분을 쥐고 들어올리듯, 그림자 경계가 제품을 가로지르게, 양손으로 팽팽하게 당기며 - 상세페이지 자세",
       "images": [
         {
-          "path": "images/2026-11-02/sun_1_kettlebell_mint.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/f237d0a8-4be8-4960-aa18-34376aec7f2a.jpg"
+          "path": "images/2026-11-09/sun_1_band.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/29c02026-2f6f-4556-97f5-1f7f38194f3a.jpg"
         },
         {
-          "path": "images/2026-11-02/sun_2_kettlebell_mint.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/0b3c9060-6e28-4c11-9f4c-2ac2077fe1c6.jpg"
+          "path": "images/2026-11-09/sun_2_band.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/e0e68d1b-131d-412c-96d4-d25b59a5d5af.jpg"
         },
         {
-          "path": "images/2026-11-02/sun_3_kettlebell_mint.jpg",
-          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/da1c2e8b-b59b-4cf0-8ea3-73b242e934b1.jpg"
+          "path": "images/2026-11-09/sun_3_band.jpg",
+          "image_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3EsdfRF7kvmllizYFlucaSxrIC0/ed73a96c-c263-42a6-bb21-effbb271f13a.jpg"
         }
       ],
-      "caption": "운동용품처럼 보이지 않습니다.\n\n거실에 둬도, 침실에 둬도\n원래 거기 있던 물건처럼 놓입니다.\n\n어디에 둬도 어색하지 않으니\n치울 일이 없습니다.\n\n내 공간에 어울리는 나만의 홈트레이닝.\n디자인짐.",
-      "hashtags": "#디자인짐 #케틀벨 #문케틀벨 #인테리어소품 #홈짐",
-      "tiktok_title": "운동용품인지 모르는 오브제, 문 케틀벨 #디자인짐 #케틀벨 #문케틀벨\n\n---",
-      "posted": true,
-      "ig_posted": true,
-      "tiktok_posted": true,
-      "posted_on": "2026-11-08"
+      "caption": "얇은데 두껍고,\n부드러운데 팽팽합니다.\n\n직물 밴드의 촉감.\n\n내 공간에 어울리는 나만의 홈트레이닝.\n디자인짐.",
+      "hashtags": "#디자인짐 #힙업밴드 #천밴드 #홈트 #운동용품",
+      "tiktok_title": "손에 쥐어보면 압니다 #디자인짐 #힙업밴드 #천밴드\n\n---",
+      "posted": false,
+      "ig_posted": null,
+      "tiktok_posted": null
     }
   }
 }
