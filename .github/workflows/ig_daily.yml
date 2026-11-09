@@ -47,6 +47,14 @@ jobs:
 
       - run: pip install requests
 
+      # 2026-11-09: 사장님 수정을 반영하던 맥의 launchd 에이전트가 disabled 상태로
+      # 멈춰 있었고(edit_history 가 10/27 에서 정지), 아무도 몰랐다. 올리기 직전에
+      # 원격 볼트를 읽어 반영하면 맥이 꺼져 있어도 고친 문구로 나간다.
+      - name: 사장님 수정 반영 (원격 볼트)
+        env:
+          VAULT_TOKEN: ${{ secrets.GH_PAT }}
+        run: bash apply_vault_edits.sh
+
       - name: 오늘자 발행
         env:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
@@ -73,4 +81,6 @@ jobs:
       # 충돌하면 원격 기준으로 되돌린 뒤 내가 바꾼 키만 다시 얹는다.
       - name: posted 상태 커밋
         if: success()
-        run: python3 push_flags.py --message "✅ $(TZ=Asia/Seoul date '+%Y-%m-%d') IG 발행 (Actions)" pending_posts.json
+        run: |
+          python3 push_flags.py --message "✅ $(TZ=Asia/Seoul date '+%Y-%m-%d') IG 발행 (Actions)" \
+            pending_posts.json edit_history.json pending_posts_ceo.json edit_history_ceo.json

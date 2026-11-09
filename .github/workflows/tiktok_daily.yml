@@ -50,6 +50,13 @@ jobs:
 
       - run: pip install --quiet pillow
 
+      # 2026-11-09: 사장님 수정을 반영하던 맥의 launchd 에이전트가 disabled 상태로
+      # 멈춰 있었다. 올리기 직전에 원격 볼트를 읽어 반영하면 맥과 무관하게 동작한다.
+      - name: 사장님 수정 반영 (원격 볼트)
+        env:
+          VAULT_TOKEN: ${{ secrets.GH_PAT }}
+        run: bash apply_vault_edits.sh
+
       - name: 오늘자 틱톡 발행
         env:
           HF_CLIENT_ID: ${{ secrets.HF_CLIENT_ID }}
@@ -98,4 +105,7 @@ jobs:
       # 이 단계가 실패하면 중복 발행으로 이어지므로 조용히 넘기지 않는다.
       - name: 발행 기록 커밋
         if: github.event.inputs.dry_run != '1'
-        run: python3 push_flags.py --message "✅ $(TZ=Asia/Seoul date +%F) 틱톡 발행 (Actions)" pending_posts.json tiktok_publish.log tiktok_music.log
+        run: |
+          python3 push_flags.py --message "✅ $(TZ=Asia/Seoul date +%F) 틱톡 발행 (Actions)" \
+            pending_posts.json tiktok_publish.log tiktok_music.log \
+            edit_history.json pending_posts_ceo.json edit_history_ceo.json

@@ -61,6 +61,56 @@ def leaf_apply(doc, trail, value):
     cur[trail[-1]] = value
 
 
+def json_delta(base_text, mine_text):
+    """내가 JSON 파일에 가한 변경을 '다시 얹을 수 있는' 형태로 뽑는다.
+
+    - dict  : 바뀐 잎 목록 — 남이 건드린 다른 키를 지우지 않는다(발행 플래그가 이 경우)
+    - list  : 뒤에 덧붙인 항목들 — edit_history.json 처럼 쌓이기만 하는 파일
+    - 그 외 : 통째로 덮기
+
+    edit_history.json 은 최상위가 배열이라 잎 방식으로는 다룰 수 없다. 경로가 빈
+    잎을 그대로 얹으려 하면 IndexError 로 터지므로 여기서 갈라낸다.
+    """
+    try:
+        mine = json.loads(mine_text)
+    except json.JSONDecodeError:
+        return ("raw", None)
+    try:
+        base = json.loads(base_text) if base_text else None
+    except json.JSONDecodeError:
+        base = None
+
+    if isinstance(mine, dict):
+        return ("leaves", leaf_diff(base if isinstance(base, dict) else {}, mine))
+    if isinstance(mine, list):
+        old = base if isinstance(base, list) else []
+        if mine[:len(old)] == old:                 # 덧붙이기만 했다
+            return ("append", mine[len(old):])
+        return ("raw", None)                       # 중간이 바뀌었으면 통째로
+    return ("raw", None)
+
+
+def json_reapply(path, kind, payload, mine_text):
+    """원격 최신본 위에 json_delta 로 뽑아둔 내 변경만 다시 얹는다."""
+    if kind == "raw":
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(mine_text)
+        return
+    with open(path, encoding="utf-8") as fh:
+        doc = json.load(fh)
+    if kind == "leaves":
+        for trail, val in payload:
+            if trail:
+                leaf_apply(doc, trail, val)
+    else:                                          # append
+        have = {json.dumps(x, sort_keys=True, ensure_ascii=False) for x in doc}
+        for item in payload:
+            if json.dumps(item, sort_keys=True, ensure_ascii=False) not in have:
+                doc.append(item)
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(doc, fh, ensure_ascii=False, indent=2)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--message", required=True)
@@ -79,14 +129,10 @@ def main():
             mine[f] = fh.read()
         base = head_blob(f)
         if f.endswith(".json"):
-            try:
-                changes[f] = leaf_diff(json.loads(base) if base else {},
-                                       json.loads(mine[f]))
-            except json.JSONDecodeError:
-                changes[f] = None          # 통째로 덮는다 (아래에서 처리)
+            changes[f] = json_delta(base, mine[f])
         else:
             old = (base or "").splitlines()
-            changes[f] = [ln for ln in mine[f].splitlines() if ln not in old]
+            changes[f] = ("lines", [ln for ln in mine[f].splitlines() if ln not in old])
 
     git("config user.name github-actions[bot]")
     git("config user.email github-actions[bot]@users.noreply.github.com")
@@ -109,25 +155,21 @@ def main():
 
         for f in files:
             full = os.path.join(BASE, f)
-            if f.endswith(".json") and changes[f] is not None:
-                with open(full, encoding="utf-8") as fh:
-                    doc = json.load(fh)
-                for trail, val in changes[f]:
-                    leaf_apply(doc, trail, val)
-                with open(full, "w", encoding="utf-8") as fh:
-                    json.dump(doc, fh, ensure_ascii=False, indent=2)
-            elif changes[f] is None:
-                with open(full, "w", encoding="utf-8") as fh:
-                    fh.write(mine[f])
-            else:
+            kind, payload = changes[f]
+            if kind == "lines":
                 have = []
                 if os.path.exists(full):
                     with open(full, encoding="utf-8") as fh:
                         have = fh.read().splitlines()
-                add = [ln for ln in changes[f] if ln not in have]
+                add = [ln for ln in payload if ln not in have]
                 if add:
                     with open(full, "a", encoding="utf-8") as fh:
                         fh.write("\n".join(add) + "\n")
+            elif os.path.exists(full):
+                json_reapply(full, kind, payload, mine[f])
+            else:                                   # 원격에 없던 새 파일
+                with open(full, "w", encoding="utf-8") as fh:
+                    fh.write(mine[f])
 
         git("add " + " ".join(files))
         if git("diff --staged --quiet")[0] == 0:

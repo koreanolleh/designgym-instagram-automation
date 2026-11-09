@@ -1,0 +1,44 @@
+name: 옵시디언 수정 반영
+
+# 2026-11-09: 사장님이 노트에서 고친 캡션을 저장소로 가져오던 경로는 맥의
+# launchd(com.designgym.obsidian-sync) 하나뿐이었는데, 그게 disabled 상태로 멈춰
+# 있었다. edit_history 가 10/27 에서 정지했고 아무도 몰랐다. 노트에는
+# "수정하면 자동 반영됩니다(맥 켜져 있을 때)" 라고 적혀 있었지만 사실이 아니었다.
+#
+# 사장님 옵시디언 Git 플러그인이 10분마다 볼트를 push 하므로, 원격 볼트를 읽으면
+# 맥이 꺼져 있어도 같은 내용을 본다. 발행 워크플로도 올리기 직전에 같은 스크립트를
+# 부르지만, 발행이 없는 날의 수정도 쌓여야 월요일 학습(learn_captions)에 들어간다.
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'   # 3시간마다 (예약이 밀려도 하루 여러 번은 돈다)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# 발행 워크플로도 같은 파일을 건드린다. 겹쳐도 push_flags 가 복구하지만,
+# 굳이 같은 일을 동시에 두 번 하지 않는다.
+concurrency:
+  group: vault-edits
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Seoul        # 노트 파일명은 KST 기준 주차로 정해진다
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: 원격 볼트에서 수정 읽기
+        env:
+          VAULT_TOKEN: ${{ secrets.GH_PAT }}
+        run: bash apply_vault_edits.sh
+
+      - name: 바뀐 것만 커밋
+        run: |
+          python3 push_flags.py --message "✏️ $(date '+%m/%d %H:%M') 옵시디언 수정 반영" \
+            pending_posts.json edit_history.json pending_posts_ceo.json edit_history_ceo.json
