@@ -83,10 +83,13 @@ def json_delta(base_text, mine_text):
     if isinstance(mine, dict):
         return ("leaves", leaf_diff(base if isinstance(base, dict) else {}, mine))
     if isinstance(mine, list):
+        # edit_history 는 마지막 50건만 남기고 앞을 잘라낸다. 그래서 "앞부분이 그대로냐"로
+        # 판단하면 거의 항상 통째 덮기로 떨어지고, 경합 때 남의 기록을 지운다.
+        # 앞이 잘렸든 아니든 '내가 새로 넣은 항목'만 뽑아 합친다(잘라내기는 전파하지 않는다).
         old = base if isinstance(base, list) else []
-        if mine[:len(old)] == old:                 # 덧붙이기만 했다
-            return ("append", mine[len(old):])
-        return ("raw", None)                       # 중간이 바뀌었으면 통째로
+        seen = {json.dumps(x, sort_keys=True, ensure_ascii=False) for x in old}
+        return ("append", [x for x in mine
+                           if json.dumps(x, sort_keys=True, ensure_ascii=False) not in seen])
     return ("raw", None)
 
 
