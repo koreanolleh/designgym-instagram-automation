@@ -431,7 +431,7 @@
       "kinds": [
         "object"
       ],
-      "p": "Camera: phone about twenty-five centimetres from the product and held low, almost at floor level and slightly to the side, so the product lies across the lower half of the frame large and sharp, running left to right, with the room blurred far behind it.",
+      "prompt": "Camera: phone about twenty-five centimetres from the product and held low, almost at floor level and slightly to the side, so the product lies across the lower half of the frame large and sharp, running left to right, with the room blurred far behind it.",
       "_note": "2026-11-16: 제품이 화면에서 너무 작다는 반려가 반복돼 추가. 가까운 구도가 ang_close_object 하나뿐이었다."
     }
   },
