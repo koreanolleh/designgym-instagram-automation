@@ -27,9 +27,13 @@ command -v gh >/dev/null 2>&1 || { log "gh 없음 — 건너뜀"; exit 0; }
 mkdir -p "$(dirname "$STATE")"; touch "$STATE"
 
 # 사람 손이 필요한 이슈만 고른다. 🎨(컨펌 요청)는 고장이 아니므로 제외한다.
-# 오래 열려 있는 건 대부분 이미 지난 일이다 — 최근 것만 본다. 첫 실행에서 20건이
-# 한꺼번에 울려 소음이 됐다(2026-11-23). 안 닫고 쌓인 이슈가 알림을 무용지물로 만든다.
-FRESH_DAYS="${ALERT_FRESH_DAYS:-3}"
+#
+# 창(window)을 두는 이유: 첫 실행에서 안 닫힌 묵은 이슈 38건이 한꺼번에 울려 소음이 됐다
+# (2026-11-23). 그날 전부 닫았고, 이제 '열려 있다 = 아직 손봐야 한다'가 성립한다.
+# 그래서 3일 → 14일로 넓혔다. 3일이면 정말 안 고쳐진 고장이 나흘째부터 조용해지는데,
+# 그게 바로 힉스필드 토큰 만료를 6일 동안 놓친 그 구멍이다. 해결하면 이슈를 닫을 것 —
+# 닫지 않고 쌓으면 창을 아무리 잡아도 알림이 다시 죽는다.
+FRESH_DAYS="${ALERT_FRESH_DAYS:-14}"
 SINCE=$(date -v-${FRESH_DAYS}d +%Y-%m-%d 2>/dev/null || date -d "-${FRESH_DAYS} days" +%Y-%m-%d)
 ROWS=$(gh issue list --repo "$REPO" --state open --limit 30 \
          --json number,title,createdAt \
