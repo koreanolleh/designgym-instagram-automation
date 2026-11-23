@@ -29,7 +29,10 @@ AS = "https://mcp.higgsfield.ai"
 REGISTER = f"{AS}/oauth2/register"
 AUTHORIZE = f"{AS}/oauth2/authorize"
 TOKEN = f"{AS}/oauth2/token"
-REDIRECT = "http://127.0.0.1:8765/callback"
+# 2026-11-23: 8765 를 사장님의 다른 서버(bc-outreach/app.py)가 쓰고 있어 재인증이 막혔다.
+# 클라이언트는 매번 새로 등록하므로 포트는 바꿔도 된다 — 막혀 있으면 환경변수로 넘긴다.
+CALLBACK_PORT = int(os.environ.get("HF_CALLBACK_PORT", "8765"))
+REDIRECT = f"http://127.0.0.1:{CALLBACK_PORT}/callback"
 SCOPE = "openid email offline_access"
 STORE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".hf_oauth.json")
 
@@ -64,9 +67,24 @@ def register_client():
 class Catcher(http.server.BaseHTTPRequestHandler):
     code = None
     error = None
+    expect_state = None          # 이번 시도의 state. 다른 값이 오면 남의 탭이다.
+    stale = 0
 
     def do_GET(self):
         q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+        got_state = (q.get("state") or [None])[0]
+        # ★ 2026-11-23: 예전 시도의 브라우저 탭이 열린 채로 남아 있다가 거기서 승인되면,
+        # 그 코드가 새 서버로 들어와 "Client ID from this request does not match" 로 깨졌다.
+        # 이번 시도의 state 와 다른 콜백은 받지 않는다 — 옛 탭이 흐름을 망치지 못하게.
+        if got_state and Catcher.expect_state and got_state != Catcher.expect_state:
+            Catcher.stale += 1
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.end_headers()
+            self.wfile.write("<html><body style='font:16px sans-serif;padding:40px'>"
+                             "오래된 탭입니다 — 이 창은 닫고, 새로 연 승인 화면에서 진행하세요."
+                             "</body></html>".encode())
+            return
         # 승인 전 프리플라이트/오배송 요청이 먼저 닿아도 code가 올 때까지 계속 받는다
         if q.get("code"):
             Catcher.code = q["code"][0]
@@ -102,13 +120,21 @@ def login(keep_local=False):
         "resource": "https://mcp.higgsfield.ai/mcp",
     })
 
-    srv = http.server.HTTPServer(("127.0.0.1", 8765), Catcher)
+    Catcher.code = Catcher.error = None
+    Catcher.expect_state = state
+    try:
+        srv = http.server.HTTPServer(("127.0.0.1", CALLBACK_PORT), Catcher)
+    except OSError as e:
+        raise SystemExit(f"콜백 포트 {CALLBACK_PORT} 를 못 엽니다 ({e}). "
+                         f"다른 프로그램이 쓰고 있으면 HF_CALLBACK_PORT=8766 처럼 바꿔 주세요.")
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     print("브라우저에서 힉스필드 로그인/승인을 진행하세요:")
     print(url)
     webbrowser.open(url)
 
-    for _ in range(600):
+    # 2026-11-23: 5분(600×0.5초)은 너무 짧았다. 사장님이 승인하기 전에 서버가 닫혀
+    # "인증 실패: None" 으로 끝났고, 그 사이 열려 있던 옛 탭에서 승인하면 또 안 돌아온다.
+    for _ in range(int(os.environ.get("HF_WAIT_SECONDS", "1800")) * 2):
         if Catcher.code:
             break
         threading.Event().wait(0.5)
@@ -116,7 +142,9 @@ def login(keep_local=False):
     srv.server_close()
 
     if not Catcher.code:
-        raise SystemExit(f"인증 실패: {Catcher.error}")
+        extra = (f" (옛 탭에서 온 콜백 {Catcher.stale}건을 무시했습니다 — 그 탭들을 닫고 "
+                 f"새로 연 화면에서 승인하세요)") if Catcher.stale else ""
+        raise SystemExit(f"인증 실패: {Catcher.error}{extra}")
 
     tok = post_json(TOKEN, {
         "grant_type": "authorization_code",
