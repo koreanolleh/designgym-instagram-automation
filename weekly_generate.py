@@ -193,7 +193,9 @@ def pick_setup_and_angles(lib, product_key, day_idx, n, week_no,
     (2) 그래도 남는 게 없으면 (제품, 방) 짝이 겹치지 않는 선에서 고른다.
     """
     kind = "mat" if lib["products"][product_key]["kind"] == "mat" else "object"
-    setups = [s for s in lib["setups"]]
+    # 밑줄로 시작하는 키는 메모·보관용이다(_caption_note 와 같은 규칙). 배분에서 뺀다 —
+    # 2026-11-23 에 '유리 선룸'을 _removed_ 로 접어두면서 생긴 규칙.
+    setups = [s for s in lib["setups"] if not s.startswith("_")]
     # 앵글은 mat/object 두 갈래로 고르되, 제품군 이름(band 등)을 단 앵글은 그 제품에만 걸린다.
     # 'ang_stretch_in_hand'(밴드를 손에 걸어 늘리는 컷)처럼 한 제품에만 말이 되는 구도를
     # 케틀벨·덤벨 날에 끌어다 쓰지 않기 위해서다(2026-11-02).
