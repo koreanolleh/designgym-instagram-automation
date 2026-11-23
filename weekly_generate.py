@@ -338,10 +338,26 @@ def main():
     # 일요일이 발행일이 되면서 '전 주 일요일 발행'과 '이번 주 생성'이 같은 밤에 붙었다.
     # 생성이 먼저 돌면 아직 안 나간 게시물이 파일째 사라진다. 아직 때가 안 지난 미발행분이
     # 남아 있으면 덮어쓰지 않고 다음 크론에 넘긴다(크론은 하루에 여러 번 돈다).
-    today = datetime.now(KST).date().isoformat()
-    stuck = [f"{e.get('date')}({d})" for d, e in existing.get("posts", {}).items()
-             if e.get("date") and e["date"] <= today
-             and not (e.get("ig_posted") and e.get("tiktok_posted"))]
+    #
+    # ★ 2026-11-23: 이 가드가 주간 생성을 영구히 막았다. 힉스필드 갱신토큰이 죽어 틱톡이
+    # 11/19·11/22 연속 실패했고(인스타는 정상), tiktok_posted 가 안 채워지자 가드가 매일
+    # "아직 안 나간 게시물이 있음"으로 종료했다 — 워크플로는 success 로 끝나서 아무도 몰랐다.
+    # 발행 스크립트는 MAX_LATE_DAYS(3일)보다 밀린 건을 어차피 건너뛴다. 즉 그보다 오래된
+    # 미발행분은 **영영 안 나간다** — 그걸 붙잡고 다음 주를 막으면 한 채널 장애가 전체를 세운다.
+    # 그래서 '아직 나갈 수 있는' 미발행분만 가드로 본다.
+    STALE_DAYS = int(os.environ.get("STUCK_GRACE_DAYS", "3"))
+    today_d = datetime.now(KST).date()
+    today = today_d.isoformat()
+    stuck, abandoned = [], []
+    for d, e in existing.get("posts", {}).items():
+        dt = e.get("date")
+        if not dt or dt > today or (e.get("ig_posted") and e.get("tiktok_posted")):
+            continue
+        late = (today_d - datetime.strptime(dt, "%Y-%m-%d").date()).days
+        (stuck if late <= STALE_DAYS else abandoned).append(f"{dt}({d})")
+    if abandoned:
+        log(f"⚠️ {STALE_DAYS}일 넘게 밀려 이제 못 나가는 미발행분 — 가드에서 제외하고 진행: "
+            f"{', '.join(sorted(abandoned))}")
     if stuck and not DRY:
         log(f"지난 주차에 아직 안 나간 게시물이 있음 — 덮어쓰지 않고 종료: {', '.join(sorted(stuck))}")
         return 0
